@@ -1,0 +1,10 @@
+/**
+ * Le package {@code fr.univartois.butinfo.sae.fractals.complex.sequence} fournit les
+ * classes représentant des suites de nombres complexes.
+ *
+ * @author Romain Wallon
+ *
+ * @version 0.1.0
+ */
+
+package fr.univartois.butinfo.sae.fractals.complex.sequence;
