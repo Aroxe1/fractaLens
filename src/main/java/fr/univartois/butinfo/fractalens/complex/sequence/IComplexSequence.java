@@ -14,9 +14,9 @@
  * Tous droits réservés.
  */
 
-package fr.univartois.butinfo.sae.fractals.complex.sequence;
+package fr.univartois.butinfo.fractalens.complex.sequence;
 
-import fr.univartois.butinfo.sae.fractals.complex.IComplex;
+import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 /**
  * L'interface IComplexSequence définit les opérations permettant d'itérer sur les termes

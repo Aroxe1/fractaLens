@@ -8,4 +8,4 @@ plugins {
 }
 
 // Le nom du projet.
-rootProject.name = 'fractales-base'
+rootProject.name = 'fractalens-base'

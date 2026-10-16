@@ -7,4 +7,4 @@
  * @version 0.1.0
  */
 
-package fr.univartois.butinfo.sae.fractals.generator;
+package fr.univartois.butinfo.fractalens.generator;

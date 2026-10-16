@@ -14,7 +14,7 @@
  * Tous droits réservés.
  */
 
-package fr.univartois.butinfo.sae.fractals.image;
+package fr.univartois.butinfo.fractalens.image;
 
 import java.awt.Color;
 import java.io.IOException;

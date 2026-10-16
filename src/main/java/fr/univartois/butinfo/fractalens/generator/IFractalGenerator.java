@@ -14,11 +14,11 @@
  * Tous droits réservés.
  */
 
-package fr.univartois.butinfo.sae.fractals.generator;
+package fr.univartois.butinfo.fractalens.generator;
 
 import java.awt.Color;
 
-import fr.univartois.butinfo.sae.fractals.image.IFractalImage;
+import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 /**
  * L'interface IFractalGenerator définit les méthodes nécessaires aux différentes étapes

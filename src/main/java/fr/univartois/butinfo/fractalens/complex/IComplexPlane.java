@@ -14,7 +14,7 @@
  * Tous droits réservés.
  */
 
-package fr.univartois.butinfo.sae.fractals.complex;
+package fr.univartois.butinfo.fractalens.complex;
 
 /**
  * L'interface IComplexPlane permet de faire le lien entre une position sur une image et
