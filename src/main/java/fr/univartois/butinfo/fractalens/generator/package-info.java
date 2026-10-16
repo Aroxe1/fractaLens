@@ -1,5 +1,5 @@
 /**
- * Le package {@code fr.univartois.butinfo.sae.fractals.generator} fournit les classes
+ * Le package {@code fr.univartois.butinfo.fractalens.generator} fournit les classes
  * permettant de générer des fractales de différentes formes et dans différents formats.
  *
  * @author Romain Wallon

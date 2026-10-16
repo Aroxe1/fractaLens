@@ -1,5 +1,5 @@
 /**
- * Le package {@code fr.univartois.butinfo.sae.fractals.image} fournit les classes
+ * Le package {@code fr.univartois.butinfo.fractalens.image} fournit les classes
  * permettant de créer et sauvegarder les fractales dans des fichiers image.
  *
  * @author Romain Wallon
