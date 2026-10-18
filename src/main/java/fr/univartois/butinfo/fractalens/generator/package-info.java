@@ -1,6 +1,6 @@
 /**
- * Le package {@code fr.univartois.butinfo.fractalens.generator} fournit les classes
- * permettant de générer des fractales de différentes formes et dans différents formats.
+ * The {@code fr.univartois.butinfo.fractalens.generator} package provides the classes for
+ * generating different kinds of fractals in different formats.
  *
  * @author Romain Wallon
  *

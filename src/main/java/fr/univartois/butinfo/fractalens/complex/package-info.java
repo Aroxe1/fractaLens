@@ -1,6 +1,6 @@
 /**
- * Le package {@code fr.univartois.butinfo.fractalens.complex} fournit les classes
- * permettant de réaliser des opérations sur des nombres complexes.
+ * The {@code fr.univartois.butinfo.fractalens.complex} package provides classes for
+ * making operations on complex numbers.
  *
  * @author Romain Wallon
  *

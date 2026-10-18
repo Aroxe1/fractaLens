@@ -1,6 +1,6 @@
 /**
- * Le package {@code fr.univartois.butinfo.fractalens.complex.sequence} fournit les
- * classes représentant des suites de nombres complexes.
+ * The {@code fr.univartois.butinfo.fractalens.complex.sequence} package provides classes
+ * for dealing with complex number sequences.
  *
  * @author Romain Wallon
  *

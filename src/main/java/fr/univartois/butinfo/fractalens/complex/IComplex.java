@@ -1,24 +1,30 @@
 /*
- * Ce logiciel est distribué à des fins éducatives.
+ * FractaLens - A Fractal Generator Library Developed in Lens.
+ * Copyright (c) 2022-2026 Romain Wallon - Université d'Artois.
  *
- * Il est fourni "tel quel", sans garantie d'aucune sorte, explicite
- * ou implicite, notamment sans garantie de qualité marchande, d'adéquation
- * à un usage particulier et d'absence de contrefaçon.
- * En aucun cas, les auteurs ou titulaires du droit d'auteur ne seront
- * responsables de tout dommage, réclamation ou autre responsabilité, que ce
- * soit dans le cadre d'un contrat, d'un délit ou autre, en provenance de,
- * consécutif à ou en relation avec le logiciel ou son utilisation, ou avec
- * d'autres éléments du logiciel.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * (c) 2022-2026 Romain Wallon - Université d'Artois.
- * Tous droits réservés.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 package fr.univartois.butinfo.fractalens.complex;
 
 /**
- * L'interface IComplex définit les méthodes nécessaires pour la manipulation
- * d'un nombre complexe.
+ * The IComplex interface defines the methods for making operations on complex numbers.
  *
  * @author Romain Wallon
  *
@@ -27,82 +33,82 @@ package fr.univartois.butinfo.fractalens.complex;
 public interface IComplex {
 
     /**
-     * Donne la partie réelle de ce nombre complexe.
+     * Gives the real part of this complex number.
      *
-     * @return La partie réelle de ce nombre complexe.
+     * @return The real part of this complex number.
      */
     double getRealPart();
 
     /**
-     * Donne la partie imaginaire de ce nombre complexe.
+     * Gives the imaginary part of this complex number.
      *
-     * @return La partie imaginaire de ce nombre complexe.
+     * @return The imaginary part of this complex number.
      */
     double getImaginaryPart();
 
     /**
-     * Donne le module de ce nombre complexe.
+     * Gives the modulus of this complex number.
      *
-     * @return Le module de ce nombre complexe.
+     * @return The modulus of this complex number.
      */
     double abs();
 
     /**
-     * Donne l'opposé de ce nombre complexe.
+     * Gives the opposite of this complex number.
      *
-     * @return L'opposé de ce nombre complexe.
+     * @return The opposite of this complex number.
      */
     IComplex negate();
 
     /**
-     * Donne le conjugué de ce nombre complexe.
+     * Gives the conjugate of this complex number.
      *
-     * @return Le conjugué de ce nombre complexe.
+     * @return The conjugate of this complex number.
      */
     IComplex conjugate();
 
     /**
-     * Ajoute ce nombre complexe à un autre nombre complexe.
+     * Adds this complex number to an other one.
      *
-     * @param other Le nombre complexe à ajouter à ce nombre.
+     * @param other The complex number to add to this one.
      *
-     * @return Le résultat de {@code this + other}.
+     * @return The result of {@code this + other}.
      */
     IComplex add(IComplex other);
 
     /**
-     * Soustrait un nombre complexe de ce nombre complexe.
+     * Subtracts a complex number from this one.
      *
-     * @param other Le nombre complexe à soustraire de ce nombre.
+     * @param other The complex number to subtract from this one.
      *
-     * @return Le résultat de {@code this - other}.
+     * @return The result of {@code this - other}.
      */
     IComplex subtract(IComplex other);
 
     /**
-     * Multiplie ce nombre complexe par une valeur réelle.
+     * Multiplies this complex number by a real value.
      *
-     * @param value La valeur par laquelle multiplier ce nombre.
+     * @param value The value by which to multiply this number.
      *
-     * @return Le résultat de {@code value * this}.
+     * @return The result of {@code this * value}.
      */
     IComplex multiply(double value);
 
     /**
-     * Multiplie ce nombre complexe par un autre nombre complexe.
+     * Multiplies this complex number by an other one.
      *
-     * @param other Le nombre complexe à mulitplier par ce nombre.
+     * @param other The complex number to multiply this one with.
      *
-     * @return Le résultat de {@code this * other}.
+     * @return The result of {@code this * other}.
      */
     IComplex multiply(IComplex other);
 
     /**
-     * Divise ce nombre complexe par un autre nombre complexe.
+     * Divides this complex number by an other one.
      *
-     * @param other Le nombre complexe qui divise ce nombre.
+     * @param other The complex number to divide this one by.
      *
-     * @return Le résultat de {@code this / other}.
+     * @return The result of {@code this / other}.
      */
     IComplex divide(IComplex other);
 

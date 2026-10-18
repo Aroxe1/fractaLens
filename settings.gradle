@@ -1,11 +1,11 @@
 /*
- * La configuration du projet Gradle.
+ * The settings file is used to specify the project's configuration.
  */
 
 plugins {
-    // Le plugin foojay-resolver permet de télécharger automatiquement un JDK.
+    // Apply the foojay-resolver plugin to allow automatic download of JDKs.
     id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 }
 
-// Le nom du projet.
-rootProject.name = 'fractalens-base'
+// Define the name of the project.
+rootProject.name = 'fractalens'

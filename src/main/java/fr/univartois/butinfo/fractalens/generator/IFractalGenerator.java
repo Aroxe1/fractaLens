@@ -1,17 +1,24 @@
 /*
- * Ce logiciel est distribué à des fins éducatives.
+ * FractaLens - A Fractal Generator Library Developed in Lens.
+ * Copyright (c) 2022-2026 Romain Wallon - Université d'Artois.
  *
- * Il est fourni "tel quel", sans garantie d'aucune sorte, explicite
- * ou implicite, notamment sans garantie de qualité marchande, d'adéquation
- * à un usage particulier et d'absence de contrefaçon.
- * En aucun cas, les auteurs ou titulaires du droit d'auteur ne seront
- * responsables de tout dommage, réclamation ou autre responsabilité, que ce
- * soit dans le cadre d'un contrat, d'un délit ou autre, en provenance de,
- * consécutif à ou en relation avec le logiciel ou son utilisation, ou avec
- * d'autres éléments du logiciel.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * (c) 2022-2026 Romain Wallon - Université d'Artois.
- * Tous droits réservés.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 package fr.univartois.butinfo.fractalens.generator;
@@ -21,8 +28,8 @@ import java.awt.Color;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 /**
- * L'interface IFractalGenerator définit les méthodes nécessaires aux différentes étapes
- * de la génération d'une image de fractale.
+ * The IFractalGenerator interface defines the methods corresponding to the different
+ * steps of a fractal generation based on a complex number sequence.
  *
  * @author Romain Wallon
  *
@@ -31,26 +38,26 @@ import fr.univartois.butinfo.fractalens.image.IFractalImage;
 public interface IFractalGenerator {
 
     /**
-     * Génère l'image de fractale dans sa totalité.
+     * Generates a full fractal image.
      *
-     * @return L'image générée.
+     * @return The generated image.
      */
     IFractalImage generateImage();
 
     /**
-     * Détermine la couleur d'un pixel donné de l'image.
-     * Cette méthode itère sur la suite considérée par ce générateur pour évaluer le
-     * nombre d'itérations nécessaires pour décider si la suite diverge ou non.
+     * Computes the color of a given pixel.
+     * This method iterates of the sequence considered by this generator to evaluate the
+     * number of iterations required to decide whether this sequence diverges.
      *
-     * @param row La ligne du pixel.
-     * @param column La colonne du pixel.
+     * @param row The row of the pixel.
+     * @param column The column of the pixel.
      *
-     * @return La couleur calculée pour le pixel.
+     * @return The computed color for the pixel.
      */
     Color computePixelColor(int row, int column);
 
     /**
-     * Sauvegarde l'image générée dans le fichier de sortie.
+     * Saves the generated image in the output file.
      */
     void saveImage();
 

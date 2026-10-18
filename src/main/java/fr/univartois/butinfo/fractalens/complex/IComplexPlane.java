@@ -1,24 +1,31 @@
 /*
- * Ce logiciel est distribué à des fins éducatives.
+ * FractaLens - A Fractal Generator Library Developed in Lens.
+ * Copyright (c) 2022-2026 Romain Wallon - Université d'Artois.
  *
- * Il est fourni "tel quel", sans garantie d'aucune sorte, explicite
- * ou implicite, notamment sans garantie de qualité marchande, d'adéquation
- * à un usage particulier et d'absence de contrefaçon.
- * En aucun cas, les auteurs ou titulaires du droit d'auteur ne seront
- * responsables de tout dommage, réclamation ou autre responsabilité, que ce
- * soit dans le cadre d'un contrat, d'un délit ou autre, en provenance de,
- * consécutif à ou en relation avec le logiciel ou son utilisation, ou avec
- * d'autres éléments du logiciel.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * (c) 2022-2026 Romain Wallon - Université d'Artois.
- * Tous droits réservés.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 package fr.univartois.butinfo.fractalens.complex;
 
 /**
- * L'interface IComplexPlane permet de faire le lien entre une position sur une image et
- * un nombre dans le plan complexe.
+ * The IComplexPlane interface defines how to link a position in an image to a number on
+ * the complex plane.
  *
  * @author Romain Wallon
  *
@@ -27,12 +34,13 @@ package fr.univartois.butinfo.fractalens.complex;
 public interface IComplexPlane {
 
     /**
-     * Détermine le nombre complexe à la position donnée dans une image.
+     * Determines the complex number corresponding to a pixel at a given position in an
+     * image.
      *
-     * @param row La ligne dans l'image.
-     * @param column La colonne dans l'image.
+     * @param row The row of the pixel in the image.
+     * @param column The column of the pixel in the image.
      *
-     * @return Le nombre complexe à la position donnée.
+     * @return The complex number at the given position.
      */
     IComplex asComplex(int row, int column);
 

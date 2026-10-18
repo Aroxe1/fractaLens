@@ -1,17 +1,24 @@
 /*
- * Ce logiciel est distribué à des fins éducatives.
+ * FractaLens - A Fractal Generator Library Developed in Lens.
+ * Copyright (c) 2022-2026 Romain Wallon - Université d'Artois.
  *
- * Il est fourni "tel quel", sans garantie d'aucune sorte, explicite
- * ou implicite, notamment sans garantie de qualité marchande, d'adéquation
- * à un usage particulier et d'absence de contrefaçon.
- * En aucun cas, les auteurs ou titulaires du droit d'auteur ne seront
- * responsables de tout dommage, réclamation ou autre responsabilité, que ce
- * soit dans le cadre d'un contrat, d'un délit ou autre, en provenance de,
- * consécutif à ou en relation avec le logiciel ou son utilisation, ou avec
- * d'autres éléments du logiciel.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * (c) 2022-2026 Romain Wallon - Université d'Artois.
- * Tous droits réservés.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+ * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 package fr.univartois.butinfo.fractalens.complex;
@@ -21,8 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 /**
- * La classe ComplexPlaneTest permet de tester votre implémentation de la classe
- * {@link IComplexPlane}.
+ * The ComplexPlaneTest tests the base implementation of {@link IComplexPlane}.
  *
  * @author Romain Wallon
  *
@@ -31,33 +37,33 @@ import org.junit.jupiter.api.Test;
 class ComplexPlaneTest {
 
     /**
-     * Crée un nouveau nombre complexe.
+     * Creates a new complex number.
      *
-     * @param realPart La partie réelle du nombre complexe.
-     * @param imaginaryPart La partie imaginaire du nombre complexe.
+     * @param realPart The real part of the complex number.
+     * @param imaginaryPart The imaginary part of the complex number.
      *
-     * @return Le nombre complexe créé.
+     * @return The created complex number.
      */
     private static IComplex createComplex(double realPart, double imaginaryPart) {
-        // TODO Créez ici une instance de votre classe implémentant IComplex.
+        // TODO Create here an instance of your class implementing IComplex.
         return null;
     }
 
     /**
-     * Crée un nouveau plan complexe.
+     * Creates a new complex plane.
      *
-     * @param height La hauteur du plan complexe.
-     * @param width La largeur du plan complexe.
+     * @param height The height of the complex plane.
+     * @param width The width of the complex plane.
      *
-     * @return Le plan complexe créé.
+     * @return The created complex plane.
      */
     private static IComplexPlane createPlane(int height, int width) {
-        // TODO Créez ici une instance de votre classe implémentant IComplexPlane.
+        // TODO Create here an instance of your class implementing IComplexPlane.
         return null;
     }
 
     /**
-     * Méthode de test pour
+     * Test method for
      * {@link fr.univartois.butinfo.fractalens.complex.IComplexPlane#asComplex(int, int)}.
      */
     @Test

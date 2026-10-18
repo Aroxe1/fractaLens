@@ -1,33 +1,52 @@
 /*
- * La configuration de Gradle pour compiler et exécuter le projet.
+ * Gradle's configuration to compile and run the project.
  */
 
-// Les plugins permettant à Gradle de gérer le projet en tant qu'application Java.
+// The plugins allowing Gradle to manage the project as a Java application.
 plugins {
     id 'application'
+    id 'jacoco'
     id 'java'
+    id 'org.sonarqube' version '3.5.0.2730'
 }
 
-// La version du langage Java utilisée dans le projet.
+// The version of Java used in the project.
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
-// Les dépôts d'où les dépendances doivent être téléchargées.
+// The repositories from which dependencies should be downloaded.
 repositories {
     mavenCentral()
 }
 
-// Les dépendances du projet.
+// The dependencies of the project.
 dependencies {
-    // Dépendances pour les tests unitaires.
+    // Dependencies for unit tests.
     testImplementation libs.junit.jupiter
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
-// Configuration de JUnit Jupiter pour les tests unitaires.
+// The configuration of JUnit Jupiter for unit tests.
 tasks.named('test') {
+    // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+
+    // Ensure that the JaCoCo report is generated after tests are run.
+    finalizedBy jacocoTestReport
+}
+
+// The configuration of JaCoCo for code coverage reporting.
+jacoco {
+    toolVersion = '0.8.15'
+}
+
+// The configuration of the SonarQube static analysis.
+sonar {
+    properties {
+        property("sonar.host.url", "http://sonarqube.univ-artois.fr")
+        property("sonar.projectKey", "fractalens")
+    }
 }
