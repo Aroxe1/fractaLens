@@ -18,7 +18,7 @@ public class JuliaSequence implements  IComplexSequence
 
     @Override
     public IComplex computeNext(IComplex previous) {
-        return null;
+        return previous.multiply(previous).add(c);
     }
 
     @Override
