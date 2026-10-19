@@ -34,7 +34,7 @@ public class ComplexSequenceIterator implements Iterator<IComplex> {
     @Override
     public boolean hasNext() {
         return iterations < maxIterations
-                && current.modulus() <= 2;
+                && current.abs() <= 2;
     }
 
     @Override
