@@ -4,7 +4,7 @@ public class ComplexPlane implements IComplexPlane {
     private int width;
     private int height;
 
-    public ComplexPlane(int width, int height) {
+    public ComplexPlane(int width , int height) {
         this.width = width;
         this.height = height;
     }
