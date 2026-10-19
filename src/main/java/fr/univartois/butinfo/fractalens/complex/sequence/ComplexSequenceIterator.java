@@ -14,7 +14,7 @@ import java.util.Objects;
  * terms are computed through IComplexSequence.computeNext(IComplex).</p>
  *
  * <p>Integration: adjust the package declaration and the two API method names
- * (computeNext, abs) to match the existing repository interfaces.</p>
+ * (computeNext, modulus) to match the existing repository interfaces.</p>
  */
 public final class ComplexSequenceIterator implements Iterator<IComplex> {
 
@@ -50,7 +50,8 @@ public final class ComplexSequenceIterator implements Iterator<IComplex> {
     /** Returns whether one more term can be computed. No calculation occurs here. */
     @Override
     public boolean hasNext() {
-        return iterations < maxIterations && current.abs() <= ESCAPE_RADIUS;
+        return iterations < maxIterations
+                && current.abs() <= 2;
     }
 
     /** Computes and returns exactly one new term of the complex sequence. */
@@ -64,4 +65,3 @@ public final class ComplexSequenceIterator implements Iterator<IComplex> {
         return current;
     }
 }
-
