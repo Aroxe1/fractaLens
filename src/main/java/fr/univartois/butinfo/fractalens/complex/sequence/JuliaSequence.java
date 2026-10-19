@@ -6,7 +6,15 @@ import java.util.Iterator;
 
 public class JuliaSequence implements  IComplexSequence
 {
+    private IComplex z0;
+    private IComplex c;
+    private int maxIterations;
 
+    public JuliaSequence(IComplex z0, IComplex c, int maxIterations) {
+        this.z0 = z0;
+        this.c = c;
+        this.maxIterations = maxIterations;
+    }
 
     @Override
     public IComplex computeNext(IComplex previous) {
