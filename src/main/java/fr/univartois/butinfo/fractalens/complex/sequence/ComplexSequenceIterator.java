@@ -50,7 +50,7 @@ public final class ComplexSequenceIterator implements Iterator<IComplex> {
     /** Returns whether one more term can be computed. No calculation occurs here. */
     @Override
     public boolean hasNext() {
-        return iterations < maxIterations && current.modulus() <= ESCAPE_RADIUS;
+        return iterations < maxIterations && current.abs() <= ESCAPE_RADIUS;
     }
 
     /** Computes and returns exactly one new term of the complex sequence. */
