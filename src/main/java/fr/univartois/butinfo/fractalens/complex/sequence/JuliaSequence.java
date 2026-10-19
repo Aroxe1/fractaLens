@@ -23,7 +23,24 @@ public class JuliaSequence implements  IComplexSequence
 
     @Override
     public Iterator<IComplex> iterator() {
-        return null;
+        return new Iterator<IComplex>() {
+            private IComplex actual = z0;
+            private int iteration = 0;
+
+            @Override
+            public boolean hasNext() {
+                return iteration < maxIterations;
+            }
+            @Override
+            public IComplex next() {
+
+                IComplex result = actual;
+                actual = computeNext(actual);
+                iteration++;
+
+                return actual;
+            }
+        };
     }
 
 }
