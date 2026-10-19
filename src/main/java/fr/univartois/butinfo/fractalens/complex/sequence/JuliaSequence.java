@@ -29,7 +29,7 @@ public class JuliaSequence implements  IComplexSequence
 
             @Override
             public boolean hasNext() {
-                return iteration < maxIterations;
+                return iteration < maxIterations && actual.abs() <= 2;
             }
             @Override
             public IComplex next() {
@@ -38,7 +38,7 @@ public class JuliaSequence implements  IComplexSequence
                 actual = computeNext(actual);
                 iteration++;
 
-                return actual;
+                return result;
             }
         };
     }
