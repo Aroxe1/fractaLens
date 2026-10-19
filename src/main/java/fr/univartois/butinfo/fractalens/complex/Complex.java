@@ -1,5 +1,7 @@
 package fr.univartois.butinfo.fractalens.complex;
 
+import java.util.Objects;
+
 public class Complex implements IComplex{
     private double real;
     private double imaginary;
@@ -54,8 +56,8 @@ public class Complex implements IComplex{
 
     @Override
     public IComplex multiply(IComplex other){
-        double c = real * other.getRealPart();
-        double d = imaginary * other.getImaginaryPart();
+        double c = other.getRealPart();
+        double d = other.getImaginaryPart();
         double re = real * c - imaginary * d;
         double im = real * d + imaginary * c;
         return new Complex(re, im);
@@ -66,6 +68,31 @@ public class Complex implements IComplex{
         double d = other.getImaginaryPart();
         double denominator = c * c + d * d;
         return multiply(other.conjugate()).multiply(1 / denominator);
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (this == obj){
+            return true;
+        }
+        if(!(obj instanceof IComplex)){
+            return false;
+        }
+        IComplex other = (IComplex) obj;
+        return Double.compare(real, other.getRealPart()) == 0 && Double.compare(imaginary, other.getImaginaryPart()) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(real, imaginary);
+    }
+
+    @Override
+    public String toString(){
+        if(imaginary < 0){
+            return real + " - " + (-imaginary) + "i";
+        }
+        return real + " + " + imaginary + "i";
     }
 
 }
