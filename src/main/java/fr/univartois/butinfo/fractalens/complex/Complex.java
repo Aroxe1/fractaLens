@@ -18,7 +18,7 @@ public class Complex implements IComplex{
     }
     @Override
     public double abs(){
-        return Math.sqrt(Math.pow(real, 2) + Math.pow(2, imaginary));
+        return Math.sqrt(real * real + imaginary * imaginary);
     }
 
     @Override
@@ -54,15 +54,18 @@ public class Complex implements IComplex{
 
     @Override
     public IComplex multiply(IComplex other){
-        double re = real * other.getRealPart();
-        double im = imaginary * other.getImaginaryPart();
+        double c = real * other.getRealPart();
+        double d = imaginary * other.getImaginaryPart();
+        double re = real * c - imaginary * d;
+        double im = real * d + imaginary * c;
         return new Complex(re, im);
     }
 
     public IComplex divide(IComplex other){
-        double re = real / other.getRealPart();
-        double im = imaginary / other.getImaginaryPart();
-        return new Complex(re, im);
+        double c = other.getRealPart();
+        double d = other.getImaginaryPart();
+        double denominator = c * c + d * d;
+        return multiply(other.conjugate()).multiply(1 / denominator);
     }
 
 }
