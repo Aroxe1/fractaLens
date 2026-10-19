@@ -47,9 +47,9 @@ public interface IComplex {
     double getImaginaryPart();
 
     /**
-     * Gives the modulus of this complex number.
+     * Gives the abs of this complex number.
      *
-     * @return The modulus of this complex number.
+     * @return The abs of this complex number.
      */
     double abs();
 
