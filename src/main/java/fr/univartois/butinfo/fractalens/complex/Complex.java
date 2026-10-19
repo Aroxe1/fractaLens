@@ -79,12 +79,12 @@ public class Complex implements IComplex{
             return false;
         }
         IComplex other = (IComplex) obj;
-        return Double.compare(real, other.getRealPart()) == 0 && Double.compare(imaginary, other.getImaginaryPart()) == 0;
+        return real == other.getRealPart() && imaginary == other.getImaginaryPart();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(real, imaginary);
+        return Objects.hash(real + 0.0, imaginary + 0.0);
     }
 
     @Override
