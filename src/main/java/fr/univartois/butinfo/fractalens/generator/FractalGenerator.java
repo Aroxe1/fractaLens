@@ -4,6 +4,7 @@ import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.GrayScaleColorStrategy;
 import fr.univartois.butinfo.fractalens.complex.IColorStrategy;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
+import fr.univartois.butinfo.fractalens.complex.sequence.IComplexSequence;
 import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
 import fr.univartois.butinfo.fractalens.image.BufferedImageAdapter;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
@@ -11,18 +12,21 @@ import fr.univartois.butinfo.fractalens.image.IFractalImage;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.function.BiFunction;
 
 /**
  * Generates a fractal image using the Julia set.
  */
 public class FractalGenerator implements IFractalGenerator {
 
+    private BiFunction<IComplex, Integer, IComplexSequence> sequence;
     private IColorStrategy colorStrategy;
     private int height;
     private int width;
     private int maxIterations;
     private IComplex c;
     private IFractalImage image;
+
 
     /**
      * Creates a fractal generator with the specified dimensions and iteration limit.
@@ -38,6 +42,7 @@ public class FractalGenerator implements IFractalGenerator {
         this.maxIterations = maxIterations;
         this.c = c;
         this.colorStrategy = new GrayScaleColorStrategy();
+        this.sequence = (z0, iterations) -> new JuliaSequence(z0, c, iterations);
     }
 
     /**
@@ -77,8 +82,7 @@ public class FractalGenerator implements IFractalGenerator {
 
         IComplex complex = new Complex(x, y);
 
-        JuliaSequence sequence =
-                new JuliaSequence(complex, c, maxIterations);
+        IComplexSequence sequence = this.sequence.apply(complex, maxIterations);
 
         int iteration = 0;
 
@@ -86,7 +90,7 @@ public class FractalGenerator implements IFractalGenerator {
             iteration++;
         }
 
-        return colorStrategy.getColor(iteration, maxIterations);
+        return colorStrategy.getColor(maxIterations-iteration, maxIterations);
     }
 
     /**
