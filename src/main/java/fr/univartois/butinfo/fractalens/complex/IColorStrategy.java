@@ -4,9 +4,9 @@ import java.awt.Color;
 public interface IColorStrategy {
 
     /**
-     * @param iterations    nombre d'itérations avant divergence
-     * @param maxIterations nombre maximum d'itérations
-     * @return la couleur du pixel
+     * @param iteration number of iterations before divergence
+     * @param maxIteration maximum number of iterations
+     * @return the color of the pixel
      */
     Color getColor(int iteration, int maxIteration);
 }
