@@ -37,7 +37,7 @@ public class FractalGenerator implements IFractalGenerator {
         this.height = height;
         this.maxIterations = maxIterations;
         this.c = c;
-        this.colorStrategy = new GrayScaleColorStrategy();
+        this.colorStrategy = new GrayScaleColorStrategy(maxIterations);
     }
 
     /**
@@ -86,7 +86,7 @@ public class FractalGenerator implements IFractalGenerator {
             iteration++;
         }
 
-        return colorStrategy.getColor(iteration, maxIterations);
+        return colorStrategy.getColor(iteration);
     }
 
     /**
