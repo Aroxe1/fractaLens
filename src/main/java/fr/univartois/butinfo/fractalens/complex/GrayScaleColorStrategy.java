@@ -1,7 +1,16 @@
 package fr.univartois.butinfo.fractalens.complex;
 import java.awt.Color;
 
-public class GrayScaleColorStrategy implements IColorStrategy {
+public class GrayScaleColorStrategy extends AbstractColorStrategy implements IColorStrategy {
+
+    /**
+     * Creates a new instance of {@link GrayScaleColorStrategy}.
+     *
+     * @param maxIteration the maximum number of iterations
+     */
+    public GrayScaleColorStrategy(int maxIteration) {
+        super(maxIteration);
+    }
 
     /**
      * Determines the grayscale color to apply to a pixel, based on the number of
@@ -11,12 +20,11 @@ public class GrayScaleColorStrategy implements IColorStrategy {
      * maximum. If the maximum is zero or negative, black is returned.
      *
      * @param iteration The number of iterations performed.
-     * @param maxIteration The maximum number of iterations allowed.
      *
      * @return The grayscale color corresponding to the pixel.
      */
     @Override
-    public Color getColor(int iteration, int maxIteration) {
+    public Color getColor(int iteration) {
         if(maxIteration <= 0){
             return Color.BLACK;
         }

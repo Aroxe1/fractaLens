@@ -64,7 +64,11 @@ public class BufferedImageAdapter implements IFractalImage{
      */
     @Override
     public void saveAs(String path) throws IOException {
-        ImageIO.write(image, "png", new File(path));
+        String[] parts = path.split("\\.");
+        String format = parts[parts.length - 1];
+        if (!ImageIO.write(image, format, new File(path))) {
+            throw new IOException("Unsupported image format: " + format);
+        }
     }
 
 }
