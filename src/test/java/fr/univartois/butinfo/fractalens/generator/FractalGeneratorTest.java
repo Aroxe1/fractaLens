@@ -47,17 +47,17 @@ class FractalGeneratorTest {
         FractalGenerator generator =
                 new FractalGenerator(4, 4, 10, new Complex(0, 0));
 
-        GrayScaleColorStrategy strategy = new GrayScaleColorStrategy();
+        GrayScaleColorStrategy strategy = new GrayScaleColorStrategy(10);
 
         // Checks the color of a stable point.
         assertEquals(
-                strategy.getColor(10, 10),
+                strategy.getColor(10),
                 generator.computePixelColor(2, 2)
         );
 
         // Checks the color of a diverging point.
         assertEquals(
-                strategy.getColor(0, 10),
+                strategy.getColor(0),
                 generator.computePixelColor(0, 0)
         );
     }
