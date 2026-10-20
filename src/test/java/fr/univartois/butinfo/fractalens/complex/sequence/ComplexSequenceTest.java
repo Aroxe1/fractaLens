@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 import fr.univartois.butinfo.fractalens.complex.Complex;
 
@@ -130,5 +130,39 @@ class ComplexSequenceTest {
 
         assertTrue(nbIterations < nbTerms);
     }
+    /**
+     * Tests the values returned by the iterator.
+     */
+    @Test
+    void testIteratorNext() {
+        IComplex z0 = createComplex(0.5, 0);
+        IComplex c = createComplex(0, 0);
 
+        IComplexSequence julia = createJuliaSequence(z0, c, 3);
+        ComplexSequenceIterator iterator =
+                new ComplexSequenceIterator(julia, z0, 3);
+
+        assertEquals(z0, iterator.next());
+        assertEquals(createComplex(0.25, 0), iterator.next());
+        assertEquals(createComplex(0.0625, 0), iterator.next());
+    }
+    /**
+     * Tests that the iterator stops after the maximum iterations.
+     */
+    @Test
+    void testIteratorMaxIterations() {
+        IComplex z0 = createComplex(0.5, 0);
+        IComplex c = createComplex(0, 0);
+
+        IComplexSequence julia = createJuliaSequence(z0, c, 2);
+        ComplexSequenceIterator iterator =
+                new ComplexSequenceIterator(julia, z0, 2);
+
+        assertTrue(iterator.hasNext());
+
+        iterator.next();
+        iterator.next();
+
+        assertFalse(iterator.hasNext());
+    }
 }
