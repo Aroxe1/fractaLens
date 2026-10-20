@@ -3,9 +3,9 @@ package fr.univartois.butinfo.fractalens.complex;
 import java.awt.Color;
 
 /**
- * Decorates a color palette by keeping only selected RGB components.
+ * Decorates a color strategy by keeping only selected RGB components.
  */
-public class ColorComponentDecorator implements IColorPalette {
+public class ColorComponentDecorator implements IColorStrategy {
     /**
      * Whether the red component is kept.
      */
@@ -22,19 +22,19 @@ public class ColorComponentDecorator implements IColorPalette {
     /**
      * The decorated color strategy.
      */
-    private final IColorPalette palette;
+    private final IColorStrategy strategy;
 
 
     /**
      * Creates a new instance of {@code ColorComponentDecorator}.
      *
-     * @param palette The color palette to decorate.
+     * @param strategy The color strategy to decorate.
      * @param red Whether to keep the red component.
      * @param green Whether to keep the green component.
      * @param blue Whether to keep the blue component.
      */
-    public ColorComponentDecorator(IColorPalette palette, boolean red, boolean green, boolean blue) {
-        this.palette = palette;
+    public ColorComponentDecorator(IColorStrategy strategy, boolean red, boolean green, boolean blue) {
+        this.strategy = strategy;
         this.red = red;
         this.green = green;
         this.blue = blue;
@@ -45,11 +45,11 @@ public class ColorComponentDecorator implements IColorPalette {
      *
      * @param iteration The number of iterations performed.
      *
-     * @return The color as an RGB integer.
+     * @return The color with only the selected components.
      */
     @Override
-    public int getColor(int iteration) {
-        Color color = new Color(palette.getColor(iteration), true);
+    public Color getColor(int iteration) {
+        Color color = strategy.getColor(iteration);
         int r=color.getRed();
         int g=color.getGreen();
         int b=color.getBlue();
@@ -62,7 +62,6 @@ public class ColorComponentDecorator implements IColorPalette {
         if(!blue){
             b=0;
         }
-        return new Color(r, g, b).getRGB();
+        return new Color(r, g, b);
     }
-
 }

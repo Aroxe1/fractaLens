@@ -15,8 +15,8 @@ public class Main {
      * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
-        int width = 600;
-        int height = 800;
+        int width = 800;
+        int height = 600;
         int maxIterations = 100;
         double zoom = 0.004;
 

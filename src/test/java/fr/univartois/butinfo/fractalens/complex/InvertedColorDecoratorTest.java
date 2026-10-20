@@ -7,12 +7,12 @@ import java.awt.Color;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests inversion of colors provided by a color palette.
+ * Tests inversion of colors provided by a color strategy.
  */
 class InvertedColorDecoratorTest {
 
-    private IColorPalette invertedPalette(Color color) {
-        IColorPalette source = iteration -> color.getRGB();
+    private IColorStrategy invertedStrategy(Color color) {
+        IColorStrategy source = iteration -> color;
         return new InvertedColorDecorator(source);
     }
 
@@ -21,7 +21,7 @@ class InvertedColorDecoratorTest {
      */
     @Test
     void testInvertsBlackToWhite() {
-        assertEquals(Color.WHITE.getRGB(), invertedPalette(Color.BLACK).getColor(0));
+        assertEquals(Color.WHITE, invertedStrategy(Color.BLACK).getColor(0));
     }
 
     /**
@@ -29,7 +29,7 @@ class InvertedColorDecoratorTest {
      */
     @Test
     void testInvertsWhiteToBlack() {
-        assertEquals(Color.BLACK.getRGB(), invertedPalette(Color.WHITE).getColor(0));
+        assertEquals(Color.BLACK, invertedStrategy(Color.WHITE).getColor(0));
     }
 
     /**
@@ -40,7 +40,7 @@ class InvertedColorDecoratorTest {
         Color source = new Color(10, 100, 200);
         Color expected = new Color(245, 155, 55);
 
-        assertEquals(expected.getRGB(), invertedPalette(source).getColor(0));
+        assertEquals(expected, invertedStrategy(source).getColor(0));
     }
 
     /**
@@ -48,7 +48,7 @@ class InvertedColorDecoratorTest {
      */
     @Test
     void testInvertsRedToCyan() {
-        assertEquals(Color.CYAN.getRGB(), invertedPalette(Color.RED).getColor(0));
+        assertEquals(Color.CYAN, invertedStrategy(Color.RED).getColor(0));
     }
 
     /**
@@ -56,11 +56,11 @@ class InvertedColorDecoratorTest {
      */
     @Test
     void testPassesIterationToPalette() {
-        IColorPalette source = iteration -> iteration == 7
-                ? new Color(20, 40, 60).getRGB()
-                : Color.BLACK.getRGB();
-        IColorPalette inverted = new InvertedColorDecorator(source);
+        IColorStrategy source = iteration -> iteration == 7
+                ? new Color(20, 40, 60)
+                : Color.BLACK;
+        IColorStrategy inverted = new InvertedColorDecorator(source);
 
-        assertEquals(new Color(235, 215, 195).getRGB(), inverted.getColor(7));
+        assertEquals(new Color(235, 215, 195), inverted.getColor(7));
     }
 }
