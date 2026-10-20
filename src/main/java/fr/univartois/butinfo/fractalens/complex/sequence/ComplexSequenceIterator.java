@@ -4,7 +4,6 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 
 /**
@@ -31,15 +30,14 @@ public final class ComplexSequenceIterator implements Iterator<IComplex> {
      * @param sequence source defining the recurrence
      * @param initial initial term z0 (not returned by next())
      * @param maxIterations maximum number of computed terms
-     * @throws NullPointerException if sequence or initial is null
      * @throws IllegalArgumentException if maxIterations is negative
      */
     public ComplexSequenceIterator(
             IComplexSequence sequence,
             IComplex initial,
             int maxIterations) {
-        this.sequence = Objects.requireNonNull(sequence, "sequence");
-        this.current = Objects.requireNonNull(initial, "initial");
+        this.sequence = sequence;
+        this.current = initial;
         if (maxIterations < 0) {
             throw new IllegalArgumentException("maxIterations must be >= 0");
         }
@@ -61,7 +59,7 @@ public final class ComplexSequenceIterator implements Iterator<IComplex> {
             throw new NoSuchElementException("Complex sequence is exhausted");
         }
         IComplex previous = current;
-        current = Objects.requireNonNull(sequence.computeNext(current), "next term");
+        current = sequence.computeNext(current);
         iterations++;
         return previous;
     }

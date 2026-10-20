@@ -7,12 +7,13 @@ import java.awt.Color;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests RGB inversion by the color strategy decorator.
+ * Tests inversion of colors provided by a color palette.
  */
 class InvertedColorDecoratorTest {
 
-    private IColorStrategy strategyReturning(Color color) {
-        return iteration -> color;
+    private IColorPalette invertedPalette(Color color) {
+        IColorPalette source = iteration -> color.getRGB();
+        return new InvertedColorDecorator(source);
     }
 
     /**
@@ -20,10 +21,7 @@ class InvertedColorDecoratorTest {
      */
     @Test
     void testInvertsBlackToWhite() {
-        IColorStrategy strategy = new InvertedColorDecorator(
-                strategyReturning(new Color(0, 0, 0)));
-
-        assertEquals(new Color(255, 255, 255), strategy.getColor(0));
+        assertEquals(Color.WHITE.getRGB(), invertedPalette(Color.BLACK).getColor(0));
     }
 
     /**
@@ -31,10 +29,7 @@ class InvertedColorDecoratorTest {
      */
     @Test
     void testInvertsWhiteToBlack() {
-        IColorStrategy strategy = new InvertedColorDecorator(
-                strategyReturning(new Color(255, 255, 255)));
-
-        assertEquals(new Color(0, 0, 0), strategy.getColor(0));
+        assertEquals(Color.BLACK.getRGB(), invertedPalette(Color.WHITE).getColor(0));
     }
 
     /**
@@ -42,10 +37,10 @@ class InvertedColorDecoratorTest {
      */
     @Test
     void testInvertsEachComponentIndependently() {
-        IColorStrategy strategy = new InvertedColorDecorator(
-                strategyReturning(new Color(10, 100, 200)));
+        Color source = new Color(10, 100, 200);
+        Color expected = new Color(245, 155, 55);
 
-        assertEquals(new Color(245, 155, 55), strategy.getColor(0));
+        assertEquals(expected.getRGB(), invertedPalette(source).getColor(0));
     }
 
     /**
@@ -53,9 +48,19 @@ class InvertedColorDecoratorTest {
      */
     @Test
     void testInvertsRedToCyan() {
-        IColorStrategy strategy = new InvertedColorDecorator(
-                strategyReturning(Color.RED));
+        assertEquals(Color.CYAN.getRGB(), invertedPalette(Color.RED).getColor(0));
+    }
 
-        assertEquals(Color.CYAN, strategy.getColor(0));
+    /**
+     * Checks that the iteration count is passed to the decorated palette.
+     */
+    @Test
+    void testPassesIterationToPalette() {
+        IColorPalette source = iteration -> iteration == 7
+                ? new Color(20, 40, 60).getRGB()
+                : Color.BLACK.getRGB();
+        IColorPalette inverted = new InvertedColorDecorator(source);
+
+        assertEquals(new Color(235, 215, 195).getRGB(), inverted.getColor(7));
     }
 }

@@ -15,7 +15,10 @@ import org.junit.jupiter.api.io.TempDir;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.GrayScaleColorStrategy;
+import fr.univartois.butinfo.fractalens.complex.IColorPalette;
+import fr.univartois.butinfo.fractalens.complex.IColorStrategy;
 import fr.univartois.butinfo.fractalens.complex.IComplexPlane;
+import fr.univartois.butinfo.fractalens.complex.ColorComponentDecorator;
 import fr.univartois.butinfo.fractalens.image.BufferedImageAdapter;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
@@ -89,9 +92,11 @@ class FractalGeneratorTest {
                 Color expected =
                         generator.computePixelColor(row, column);
 
+                int x = column;
+                int y = row;
                 assertEquals(
                         expected.getRGB(),
-                        saved.getRGB(x, y)
+                        saved.getRGB(column, row)
                 );
             }
         }
@@ -102,12 +107,28 @@ class FractalGeneratorTest {
      */
     @Test
     void testComputePixelColorUsesSuppliedPlaneAndStrategy() {
-        IComplexPlane plane = (row, column) -> new Complex(3, 0);
-        Color expected = Color.MAGENTA;
+        IComplexPlane plane = (row, column) -> new Complex(0, 0);
+        Color expected = Color.GREEN;
+        IColorStrategy strategy =
+                iteration -> iteration == 10 ? expected : Color.MAGENTA;
         FractalGenerator generator = new FractalGenerator(
-                2, 2, 10, new Complex(0, 0), plane,
-                iteration -> iteration == 0 ? expected : Color.GREEN);
+                2, 2, 10, new Complex(0, 0), plane, strategy);
 
         assertEquals(expected, generator.computePixelColor(0, 0));
+    }
+
+    /**
+     * Checks that RGB palette decorators can be used by the image generator.
+     */
+    @Test
+    void testComputePixelColorUsesSuppliedPalette() {
+        IComplexPlane plane = (row, column) -> new Complex(0, 0);
+        IColorPalette palette = new ColorComponentDecorator(
+                iteration -> new Color(120, 200, 60).getRGB(),
+                true, false, false);
+        FractalGenerator generator = new FractalGenerator(
+                2, 2, 10, new Complex(0, 0), plane, palette);
+
+        assertEquals(new Color(120, 0, 0), generator.computePixelColor(0, 0));
     }
 }
