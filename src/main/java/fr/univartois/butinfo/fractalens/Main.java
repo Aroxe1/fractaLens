@@ -40,8 +40,9 @@ public class Main {
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         IFractalImage image = new BufferedImageAdapter(bufferedImage);
         IFractalGenerator generator = new FractalGenerator(
-                image, plane, sequenceFactory, new GrayScaleColorStrategy(),
-                maxIterations, outputPath);
+                width, height, maxIterations, c
+        );
+
 
         // Generate and save the image.
         generator.generateImage();
