@@ -60,8 +60,9 @@ public final class ComplexSequenceIterator implements Iterator<IComplex> {
         if (!hasNext()) {
             throw new NoSuchElementException("Complex sequence is exhausted");
         }
+        IComplex previous = current;
         current = Objects.requireNonNull(sequence.computeNext(current), "next term");
         iterations++;
-        return current;
+        return previous;
     }
 }
