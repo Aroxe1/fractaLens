@@ -1,21 +1,17 @@
 package fr.univartois.butinfo.fractalens.complex;
 import java.awt.Color;
 
-public class GrayScaleColorStrategy implements IColorStrategy {
-
-    /**
-     * The maximum number of iterations, used as a reference to compute the gray level.
-     */
-    private int maxIteration;
+public class GrayScaleColorStrategy extends AbstractColorStrategy implements IColorStrategy {
 
     /**
      * Creates a new instance of {@link GrayScaleColorStrategy}.
      *
      * @param maxIteration the maximum number of iterations
      */
-    public GrayScaleColorStrategy(int maxIteration){
-        this.maxIteration = maxIteration;
+    public GrayScaleColorStrategy(int maxIteration) {
+        super(maxIteration);
     }
+
     /**
      * Determines the grayscale color to apply to a pixel, based on the number of
      * iterations performed before the sequence diverges.
