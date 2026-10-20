@@ -1,9 +1,7 @@
 package fr.univartois.butinfo.fractalens.generator;
 
-import fr.univartois.butinfo.fractalens.complex.Complex;
-import fr.univartois.butinfo.fractalens.complex.GrayScaleColorStrategy;
-import fr.univartois.butinfo.fractalens.complex.IColorStrategy;
-import fr.univartois.butinfo.fractalens.complex.IComplex;
+import fr.univartois.butinfo.fractalens.complex.*;
+import fr.univartois.butinfo.fractalens.complex.sequence.IComplexSequence;
 import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
 import fr.univartois.butinfo.fractalens.image.BufferedImageAdapter;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
@@ -11,6 +9,7 @@ import fr.univartois.butinfo.fractalens.image.IFractalImage;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.function.BiFunction;
 
 public class FractalGenerator implements IFractalGenerator{
 
@@ -20,6 +19,10 @@ public class FractalGenerator implements IFractalGenerator{
     private int maxIterations = 100;
     private IComplex c = new Complex(-0.4, 0.6);
     private IFractalImage image;
+
+    public FractalGenerator(IFractalImage image, IComplexPlane plane, BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory, GrayScaleColorStrategy grayScaleColorStrategy, int maxIterations, String outputPath) {
+
+    }
 
     @Override
     public IFractalImage generateImage() {
