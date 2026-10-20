@@ -12,6 +12,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/**
+ * Generates a fractal image using the Julia set.
+ */
 public class FractalGenerator implements IFractalGenerator{
 
     private IColorStrategy colorStrategy = new GrayScaleColorStrategy();
@@ -21,6 +24,11 @@ public class FractalGenerator implements IFractalGenerator{
     private IComplex c = new Complex(-0.4, 0.6);
     private IFractalImage image;
 
+    /**
+     * Generates the fractal image by calculating the color of each pixel.
+     *
+     * @return the generated fractal image
+     */
     @Override
     public IFractalImage generateImage() {
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -36,6 +44,13 @@ public class FractalGenerator implements IFractalGenerator{
         return image;
     }
 
+    /**
+     * Calculates the color of a pixel based on its position and the number of iterations.
+     *
+     * @param row the row of the pixel
+     * @param column the column of the pixel
+     * @return the color of the pixel
+     */
     @Override
     public Color computePixelColor(int row, int column) {
         double x = (double) column / width * 4 - 2;
@@ -55,6 +70,10 @@ public class FractalGenerator implements IFractalGenerator{
         return colorStrategy.getColor(iteration, maxIterations);
     }
 
+    /**
+     * Saves the generated fractal image to a file named Fractal.png.
+     * Displays an error message if the image cannot be saved.
+     */
     @Override
     public void saveImage() {
         try {
