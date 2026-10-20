@@ -23,8 +23,7 @@ public class JuliaSequence implements  IComplexSequence
 
     @Override
     public Iterator<IComplex> iterator() {
-        return new ComplexSequenceIterator(this, z0, maxIterations);
-/*        return new Iterator<IComplex>() {
+       return new Iterator<IComplex>() {
             private IComplex actual = z0;
             private int iteration = 0;
 
@@ -41,7 +40,7 @@ public class JuliaSequence implements  IComplexSequence
 
                 return result;
             }
-        };*/
+        };
     }
 
 }
