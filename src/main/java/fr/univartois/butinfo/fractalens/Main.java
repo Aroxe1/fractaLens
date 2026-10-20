@@ -3,7 +3,6 @@ package fr.univartois.butinfo.fractalens;
 import java.awt.image.BufferedImage;
 import java.util.function.BiFunction;
 
-import fr.univartois.butinfo.fractalens.color.GrayScaleColorStrategy;
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.ComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
@@ -11,7 +10,7 @@ import fr.univartois.butinfo.fractalens.complex.IComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.ScaledComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.sequence.IComplexSequence;
 import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
-import fr.univartois.butinfo.fractalens.generator.FractalGenerator;
+//import fr.univartois.butinfo.fractalens.generator.FractalGenerator;
 import fr.univartois.butinfo.fractalens.generator.IFractalGenerator;
 import fr.univartois.butinfo.fractalens.image.BufferedImageAdapter;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
@@ -44,13 +43,13 @@ public class Main {
         // Create the image and the fractal generator.
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         IFractalImage image = new BufferedImageAdapter(bufferedImage);
-        IFractalGenerator generator = new FractalGenerator(
-                image, plane, sequenceFactory, new GrayScaleColorStrategy(),
-                maxIterations, outputPath);
+//        IFractalGenerator generator = new FractalGenerator(
+//                image, plane, sequenceFactory, new GrayScaleColorStrategy(),
+//                maxIterations, outputPath);
 
         // Generate and save the image.
-        generator.generateImage();
-        generator.saveImage();
+        // generator.generateImage();
+        // generator.saveImage();
         System.out.println("Julia fractal saved to: " + outputPath);
     }
 }
