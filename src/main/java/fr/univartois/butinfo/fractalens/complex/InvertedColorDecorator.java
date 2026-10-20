@@ -2,19 +2,32 @@ package fr.univartois.butinfo.fractalens.complex;
 
 import java.awt.Color;
 
-public class InvertedColorDecorator implements IColorPalette{
+/**
+ * Decorates a color palette by inverting each RGB component.
+ */
+public class InvertedColorDecorator implements IColorPalette {
     /**
      * The color palette to decorate.
      */
-    private IColorPalette palette;
+    private final IColorPalette palette;
 
     /**
-     * Creates a new instance of {@link InvertedColorDecorator}.
+     * Creates a decorator for the given color palette.
      *
      * @param palette the color palette to decorate
      */
-    public InvertedColorDecorator(IColorPalette palette,int maxIteration){
+    public InvertedColorDecorator(IColorPalette palette) {
         this.palette = palette;
+    }
+
+    /**
+     * Creates a decorator for the given color palette.
+     *
+     * @param palette the color palette to decorate
+     * @param maxIteration retained for compatibility with existing callers
+     */
+    public InvertedColorDecorator(IColorPalette palette, int maxIteration) {
+        this(palette);
     }
 
     /**

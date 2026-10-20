@@ -13,55 +13,55 @@ class ColorComponentDecoratorTest {
 
     private static final Color SOURCE_COLOR = new Color(120, 200, 60);
 
-    private IColorStrategy sourceStrategy() {
-        return iteration -> SOURCE_COLOR;
+    private IColorPalette sourcePalette() {
+        return iteration -> SOURCE_COLOR.getRGB();
     }
 
     @Test
     void testKeepsRedOnly() {
-        IColorStrategy strategy =
-                new ColorComponentDecorator(sourceStrategy(), true, false, false);
+        IColorPalette strategy =
+                new ColorComponentDecorator(sourcePalette(), true, false, false);
 
-        assertEquals(new Color(120, 0, 0), strategy.getColor(0));
+        assertEquals(new Color(120, 0, 0).getRGB(), strategy.getColor(0));
     }
 
     @Test
     void testKeepsGreenOnly() {
-        IColorStrategy strategy =
-                new ColorComponentDecorator(sourceStrategy(), false, true, false);
+        IColorPalette strategy =
+                new ColorComponentDecorator(sourcePalette(), false, true, false);
 
-        assertEquals(new Color(0, 200, 0), strategy.getColor(0));
+        assertEquals(new Color(0, 200, 0).getRGB(), strategy.getColor(0));
     }
 
     @Test
     void testKeepsBlueOnly() {
-        IColorStrategy strategy =
-                new ColorComponentDecorator(sourceStrategy(), false, false, true);
+        IColorPalette strategy =
+                new ColorComponentDecorator(sourcePalette(), false, false, true);
 
-        assertEquals(new Color(0, 0, 60), strategy.getColor(0));
+        assertEquals(new Color(0, 0, 60).getRGB(), strategy.getColor(0));
     }
 
     @Test
     void testKeepsCyanComponents() {
-        IColorStrategy strategy =
-                new ColorComponentDecorator(sourceStrategy(), false, true, true);
+        IColorPalette strategy =
+                new ColorComponentDecorator(sourcePalette(), false, true, true);
 
-        assertEquals(new Color(0, 200, 60), strategy.getColor(0));
+        assertEquals(new Color(0, 200, 60).getRGB(), strategy.getColor(0));
     }
 
     @Test
     void testKeepsMagentaComponents() {
-        IColorStrategy strategy =
-                new ColorComponentDecorator(sourceStrategy(), true, false, true);
+        IColorPalette strategy =
+                new ColorComponentDecorator(sourcePalette(), true, false, true);
 
-        assertEquals(new Color(120, 0, 60), strategy.getColor(0));
+        assertEquals(new Color(120, 0, 60).getRGB(), strategy.getColor(0));
     }
 
     @Test
     void testKeepsYellowComponents() {
-        IColorStrategy strategy =
-                new ColorComponentDecorator(sourceStrategy(), true, true, false);
+        IColorPalette strategy =
+                new ColorComponentDecorator(sourcePalette(), true, true, false);
 
-        assertEquals(new Color(120, 200, 0), strategy.getColor(0));
+        assertEquals(new Color(120, 200, 0).getRGB(), strategy.getColor(0));
     }
 }
