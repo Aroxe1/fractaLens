@@ -15,6 +15,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.GrayScaleColorStrategy;
+import fr.univartois.butinfo.fractalens.complex.IComplexPlane;
 import fr.univartois.butinfo.fractalens.image.BufferedImageAdapter;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
@@ -69,8 +70,7 @@ class FractalGeneratorTest {
     void testGenerateImageUsesCorrectCoordinates(
             @TempDir Path tempDirectory) throws IOException {
 
-        FractalGenerator generator =
-                new FractalGenerator(4, 3, 10, new Complex(0, 0));
+        FractalGenerator generator = new FractalGenerator(4, 3, 10, new Complex(0, 0));
 
         IFractalImage image = generator.generateImage();
 
@@ -80,18 +80,34 @@ class FractalGeneratorTest {
         BufferedImage saved = ImageIO.read(output.toFile());
 
         assertNotNull(saved);
+        assertEquals(image.getWidth(), saved.getWidth());
+        assertEquals(image.getHeight(), saved.getHeight());
 
         for (int row = 0; row < image.getHeight(); row++) {
             for (int column = 0; column < image.getWidth(); column++) {
-
-                Color expected =
-                        generator.computePixelColor(row, column);
+                Color expected = generator.computePixelColor(row, column);
+                int x = column;
+                int y = row;
 
                 assertEquals(
                         expected.getRGB(),
-                        saved.getRGB(column, row)
+                        saved.getRGB(x, y)
                 );
             }
         }
+    }
+
+    /**
+     * Checks that pixel coordinates are mapped through the supplied complex plane.
+     */
+    @Test
+    void testComputePixelColorUsesSuppliedPlaneAndStrategy() {
+        IComplexPlane plane = (row, column) -> new Complex(3, 0);
+        Color expected = Color.MAGENTA;
+        FractalGenerator generator = new FractalGenerator(
+                2, 2, 10, new Complex(0, 0), plane,
+                iteration -> iteration == 0 ? expected : Color.GREEN);
+
+        assertEquals(expected, generator.computePixelColor(0, 0));
     }
 }

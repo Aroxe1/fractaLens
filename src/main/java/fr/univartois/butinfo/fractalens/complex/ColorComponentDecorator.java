@@ -1,25 +1,28 @@
 package fr.univartois.butinfo.fractalens.complex;
 
-import java.awt.*;
+import java.awt.Color;
 
+/**
+ * Decorates a color strategy by keeping only selected RGB components.
+ */
 public class ColorComponentDecorator implements IColorStrategy {
     /**
      * Whether the red component is kept.
      */
-    private boolean red;
+    private final boolean red;
     /**
      * Whether the green component is kept.
      */
-    private boolean green;
+    private final boolean green;
     /**
      * Whether the blue component is kept.
      */
-    private boolean blue;
+    private final boolean blue;
 
     /**
      * The decorated color strategy.
      */
-    private IColorStrategy strategy;
+    private final IColorStrategy strategy;
 
 
     /**
