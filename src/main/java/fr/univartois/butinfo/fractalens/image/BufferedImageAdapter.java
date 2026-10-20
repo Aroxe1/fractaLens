@@ -8,6 +8,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Adapts a {@link BufferedImage} to the {@link IFractalImage} interface.
+ */
 public class BufferedImageAdapter implements IFractalImage{
     /**
      * The adapted image, to which all operations are delegated.

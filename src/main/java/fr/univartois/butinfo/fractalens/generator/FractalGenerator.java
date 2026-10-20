@@ -4,6 +4,7 @@ import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.GrayScaleColorStrategy;
 import fr.univartois.butinfo.fractalens.complex.IColorStrategy;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
+import fr.univartois.butinfo.fractalens.complex.IComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.sequence.IComplexSequence;
 import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
 import fr.univartois.butinfo.fractalens.image.BufferedImageAdapter;
@@ -26,7 +27,6 @@ public class FractalGenerator implements IFractalGenerator {
     private int maxIterations;
     private IComplex c;
     private IFractalImage image;
-
 
     /**
      * Creates a fractal generator with the specified dimensions and iteration limit.
@@ -90,7 +90,7 @@ public class FractalGenerator implements IFractalGenerator {
             iteration++;
         }
 
-        return colorStrategy.getColor(maxIterations-iteration);
+        return colorStrategy.getColor(iteration);
     }
 
     /**

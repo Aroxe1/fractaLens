@@ -1,18 +1,11 @@
 package fr.univartois.butinfo.fractalens;
 
-import java.awt.image.BufferedImage;
-import java.util.function.BiFunction;
-
 import fr.univartois.butinfo.fractalens.complex.*;
-import fr.univartois.butinfo.fractalens.complex.sequence.IComplexSequence;
-import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
 import fr.univartois.butinfo.fractalens.generator.FractalGenerator;
 import fr.univartois.butinfo.fractalens.generator.IFractalGenerator;
-import fr.univartois.butinfo.fractalens.image.BufferedImageAdapter;
-import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 /**
- * Runs the Julia fractal demonstration for sprint 2.
+ * Runs the Julia fractal demonstration for sprint 3.
  */
 public class Main {
 
@@ -27,23 +20,16 @@ public class Main {
         int maxIterations = 100;
         double zoom = 0.004;
 
-        // Create the complex plane with a zoom factor.
-        IComplexPlane plane = new ScaledComplexPlane(new ComplexPlane(width, height), zoom);
-
-        // Create a new Julia sequence for each pixel.
+        // Apply zoom before translation so the translation remains the image center.
+        IComplexPlane plane = new TranslatedComplexPlane(
+                new ScaledComplexPlane(new ComplexPlane(width, height), zoom),
+                new Complex(0, 0));
         IComplex c = new Complex(-0.4, 0.6);
-        BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory =
-                (z0, nbTerms) -> new JuliaSequence(z0, c, nbTerms);
-
-        // Create the image and the fractal generator.
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        IFractalImage image = new BufferedImageAdapter(bufferedImage);
         IFractalGenerator generator = new FractalGenerator(
-                width, height, maxIterations, c
+                width, height, maxIterations, c, plane,
+                new GrayScaleColorStrategy(maxIterations)
         );
 
-
-        // Generate and save the image.
         generator.generateImage();
         generator.saveImage();
         System.out.println("Julia fractal saved to: Fractal.png");
