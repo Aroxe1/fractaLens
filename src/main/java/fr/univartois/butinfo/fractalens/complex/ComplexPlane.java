@@ -4,6 +4,12 @@ public class ComplexPlane implements IComplexPlane {
     private int width;
     private int height;
 
+    /**
+     * Creates a complex plane with a specified width and height.
+     *
+     * @param width width of the plane
+     * @param height height of the plane
+     */
     public ComplexPlane(int width , int height) {
         this.width = width;
         this.height = height;
