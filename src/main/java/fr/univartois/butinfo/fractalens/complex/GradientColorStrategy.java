@@ -1,32 +1,30 @@
 package fr.univartois.butinfo.fractalens.complex;
 
-import java.awt.*;
+import java.awt.Color;
 
-public class GradientColorStrategy extends AbstractColorStrategy implements IColorStrategy{
-    /**
-     * The starting color of the gradient.
-     */
-    private Color color1;
-    /**
-     * The ending color of the gradient.
-     */
-    private Color color2;
+/**
+ * Interpolates between two colors according to the iteration count.
+ */
+public class GradientColorStrategy extends AbstractColorStrategy implements IColorStrategy {
 
     private final Color startColor;
     private final Color endColor;
-    private final int maxIterations;
 
     /**
-     * Creates a new instance of {@code GradientColorStrategy}.
+     * Creates a gradient between two colors.
      *
-     * @param color1 The starting color of the gradient.
-     * @param color2 The ending color of the gradient.
-     * @param maxIteration The maximum number of iterations.
+     * @param startColor the color at zero iterations
+     * @param endColor the color at the maximum number of iterations
+     * @param maxIterations the iteration count at which the end color is reached
+     * @throws IllegalArgumentException if {@code maxIterations} is not positive
      */
-    public GradientColorStrategy(int maxIteration, Color color1, Color color2) {
-        super(maxIteration);
-        this.color1 = color1;
-        this.color2 = color2;
+    public GradientColorStrategy(Color startColor, Color endColor, int maxIterations) {
+        super(maxIterations);
+        this.startColor = startColor;
+        this.endColor = endColor;
+        if (maxIterations <= 0) {
+            throw new IllegalArgumentException("maxIterations must be positive.");
+        }
     }
 
     /**
@@ -37,16 +35,15 @@ public class GradientColorStrategy extends AbstractColorStrategy implements ICol
      */
     @Override
     public Color getColor(int iteration) {
-        if (maxIteration <= 0) {
-            return color1;
-        }
-        int bounded = Math.min(iteration, maxIteration);
-        double ratio = (double) bounded / maxIteration;
-
-        int red = (int) (color1.getRed() + ratio*(color2.getRed()-color1.getRed()));
-        int green = (int) (color1.getGreen() + ratio*(color2.getGreen()- color1.getGreen()));
-        int blue= (int) (color1.getBlue() + ratio*(color2.getBlue()- color1.getBlue()));
-        return new Color(red, green, blue);
+        int boundedIteration = Math.clamp(iteration, 0, maxIteration);
+        double ratio = (double) boundedIteration / maxIteration;
+        return new Color(
+                interpolate(startColor.getRed(), endColor.getRed(), ratio),
+                interpolate(startColor.getGreen(), endColor.getGreen(), ratio),
+                interpolate(startColor.getBlue(), endColor.getBlue(), ratio));
     }
 
+    private static int interpolate(int start, int end, double ratio) {
+        return (int) Math.round(start + ratio * (end - start));
+    }
 }

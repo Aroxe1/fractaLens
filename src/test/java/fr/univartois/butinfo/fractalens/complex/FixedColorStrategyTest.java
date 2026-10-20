@@ -49,6 +49,6 @@ class FixedColorStrategyTest {
     @Test
     void testEmptyPaletteIsRejected() {
         assertThrows(IllegalArgumentException.class,
-                () -> new FixedColorStrategy(List.of()));
+                () -> new FixedColorStrategy(List.<Color>of()));
     }
 }
