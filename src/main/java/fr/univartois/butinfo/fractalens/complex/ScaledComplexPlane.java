@@ -1,20 +1,25 @@
 package fr.univartois.butinfo.fractalens.complex;
 
-public class ScaledComplexPlane implements IComplexPlane{
+/**
+ * Represents a scaled complex plane.
+ */
+public class ScaledComplexPlane implements IComplexPlane {
+
     /**
-     * Le plan complexe.
+     * The complex plane.
      */
     private final IComplexPlane plane;
+
     /**
-     * Le facteur de zoom appliqué aux nombres complexes du plan.
+     * The zoom factor applied to the complex numbers of the plane.
      */
     private final double zoom;
 
     /**
-     * Crée une nouvelle instance de {@link ScaledComplexPlane}.
+     * Creates a new instance of {@link ScaledComplexPlane}.
      *
-     * @param plane Le plan complexe à décorer.
-     * @param zoom Le facteur de zoom par lequel multiplier les nombres complexes.
+     * @param plane the complex plane to decorate
+     * @param zoom the zoom factor used to multiply the complex numbers
      */
     public ScaledComplexPlane(IComplexPlane plane, double zoom){
         this.plane = plane;
@@ -22,13 +27,11 @@ public class ScaledComplexPlane implements IComplexPlane{
     }
 
     /**
-     * Le nombre complexe obtenu depuis le plan est multiplié par le
-     * facteur de zoom.
+     * Multiplies the complex number obtained from the plane by the zoom factor.
      *
-     * @param row La ligne du point dans le plan.
-     * @param column La colonne du point dans le plan.
-     *
-     * @return Le nombre complexe correspondant, mis à l'échelle par le facteur de zoom.
+     * @param row the row of the point in the plane
+     * @param column the column of the point in the plane
+     * @return the corresponding complex number scaled by the zoom factor
      */
     @Override
     public IComplex asComplex(int row, int column) {
