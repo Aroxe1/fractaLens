@@ -41,7 +41,7 @@ public class FractalGenerator implements IFractalGenerator {
         this.height = height;
         this.maxIterations = maxIterations;
         this.c = c;
-        this.colorStrategy = new GrayScaleColorStrategy();
+        this.colorStrategy = new GrayScaleColorStrategy(maxIterations);
         this.sequence = (z0, iterations) -> new JuliaSequence(z0, c, iterations);
     }
 
@@ -90,7 +90,7 @@ public class FractalGenerator implements IFractalGenerator {
             iteration++;
         }
 
-        return colorStrategy.getColor(maxIterations-iteration, maxIterations);
+        return colorStrategy.getColor(maxIterations-iteration);
     }
 
     /**
