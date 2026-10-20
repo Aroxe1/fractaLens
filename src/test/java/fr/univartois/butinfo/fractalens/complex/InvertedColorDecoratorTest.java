@@ -11,6 +11,20 @@ import org.junit.jupiter.api.Test;
  */
 class InvertedColorDecoratorTest {
 
+    @Test
+    void testInvertedGrayscaleWithCyanMask() {
+        IColorStrategy strategy = new ColorComponentDecorator(
+                new InvertedColorDecorator(new GrayScaleColorStrategy(250)),
+                false, true, true);
+
+        assertEquals(Color.BLACK, strategy.getColor(0));
+        assertEquals(Color.CYAN, strategy.getColor(250));
+        Color middle = strategy.getColor(125);
+        assertEquals(0, middle.getRed());
+        assertEquals(127, middle.getGreen());
+        assertEquals(127, middle.getBlue());
+    }
+
     private IColorStrategy invertedStrategy(Color color) {
         IColorStrategy source = iteration -> color;
         return new InvertedColorDecorator(source);
