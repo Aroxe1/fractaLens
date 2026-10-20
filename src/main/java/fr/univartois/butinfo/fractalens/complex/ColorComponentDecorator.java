@@ -49,19 +49,19 @@ public class ColorComponentDecorator implements IColorStrategy {
     @Override
     public Color getColor(int iteration) {
         Color color = strategy.getColor(iteration);
-        int R=color.getRed();
-        int G=color.getGreen();
-        int B=color.getBlue();
+        int r=color.getRed();
+        int g=color.getGreen();
+        int b=color.getBlue();
         if(!red){
-            R=0;
+            r=0;
         }
         if(!green){
-            G=0;
+            g=0;
         }
         if(!blue){
-            B=0;
+            b=0;
         }
-        return new Color(R,G,B);
+        return new Color(r,g,b);
     }
 
 }
