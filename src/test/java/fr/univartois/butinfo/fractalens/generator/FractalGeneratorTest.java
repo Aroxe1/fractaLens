@@ -15,7 +15,6 @@ import org.junit.jupiter.api.io.TempDir;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.GrayScaleColorStrategy;
-import fr.univartois.butinfo.fractalens.complex.IColorPalette;
 import fr.univartois.butinfo.fractalens.complex.IColorStrategy;
 import fr.univartois.butinfo.fractalens.complex.IComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.ColorComponentDecorator;
@@ -118,16 +117,16 @@ class FractalGeneratorTest {
     }
 
     /**
-     * Checks that RGB palette decorators can be used by the image generator.
+     * Checks that RGB strategy decorators can be used by the image generator.
      */
     @Test
     void testComputePixelColorUsesSuppliedPalette() {
         IComplexPlane plane = (row, column) -> new Complex(0, 0);
-        IColorPalette palette = new ColorComponentDecorator(
-                iteration -> new Color(120, 200, 60).getRGB(),
+        IColorStrategy strategy = new ColorComponentDecorator(
+                iteration -> new Color(120, 200, 60),
                 true, false, false);
         FractalGenerator generator = new FractalGenerator(
-                2, 2, 10, new Complex(0, 0), plane, palette);
+                2, 2, 10, new Complex(0, 0), plane, strategy);
 
         assertEquals(new Color(120, 0, 0), generator.computePixelColor(0, 0));
     }

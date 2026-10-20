@@ -9,6 +9,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 class TranslatedComplexPlaneTest {
 
+    @Test
+    void testZoomBeforeTranslationPreservesCenter() {
+        for (double zoom : new double[] {0.001, 0.004}) {
+            IComplexPlane plane = new TranslatedComplexPlane(
+                    new ScaledComplexPlane(new ComplexPlane(800, 800), zoom),
+                    new Complex(0.1, 0.6));
+
+            IComplex center = plane.asComplex(400, 400);
+            assertEquals(0.1, center.getRealPart(), 0.000001);
+            assertEquals(0.6, center.getImaginaryPart(), 0.000001);
+
+            IComplex point = plane.asComplex(300, 500);
+            assertEquals(0.1 + 100 * zoom, point.getRealPart(), 0.000001);
+            assertEquals(0.6 + 100 * zoom, point.getImaginaryPart(), 0.000001);
+        }
+    }
+
     /**
      * Tests that the complex number is correctly translated by an offset.
      */
