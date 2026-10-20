@@ -26,7 +26,6 @@ public class Main {
         int height = 800;
         int maxIterations = 100;
         double zoom = 0.004;
-        String outputPath = "julia.png";
 
         // Create the complex plane with a zoom factor.
         IComplexPlane plane = new ScaledComplexPlane(new ComplexPlane(width, height), zoom);
@@ -47,6 +46,6 @@ public class Main {
         // Generate and save the image.
         generator.generateImage();
         generator.saveImage();
-        System.out.println("Julia fractal saved to: " + outputPath);
+        System.out.println("Julia fractal saved to: Fractal.png");
     }
 }
