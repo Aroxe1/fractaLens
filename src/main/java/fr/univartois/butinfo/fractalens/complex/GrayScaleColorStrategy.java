@@ -4,6 +4,19 @@ import java.awt.Color;
 public class GrayScaleColorStrategy implements IColorStrategy {
 
     /**
+     * The maximum number of iterations, used as a reference to compute the gray level.
+     */
+    private int maxIteration;
+
+    /**
+     * Creates a new instance of {@link GrayScaleColorStrategy}.
+     *
+     * @param maxIteration the maximum number of iterations
+     */
+    public GrayScaleColorStrategy(int maxIteration){
+        this.maxIteration = maxIteration;
+    }
+    /**
      * Determines the grayscale color to apply to a pixel, based on the number of
      * iterations performed before the sequence diverges.
      *
@@ -11,12 +24,11 @@ public class GrayScaleColorStrategy implements IColorStrategy {
      * maximum. If the maximum is zero or negative, black is returned.
      *
      * @param iteration The number of iterations performed.
-     * @param maxIteration The maximum number of iterations allowed.
      *
      * @return The grayscale color corresponding to the pixel.
      */
     @Override
-    public Color getColor(int iteration, int maxIteration) {
+    public Color getColor(int iteration) {
         if(maxIteration <= 0){
             return Color.BLACK;
         }
