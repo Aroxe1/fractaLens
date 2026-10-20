@@ -2,7 +2,6 @@ package fr.univartois.butinfo.fractalens.generator;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.GrayScaleColorStrategy;
-import fr.univartois.butinfo.fractalens.complex.IColorPalette;
 import fr.univartois.butinfo.fractalens.complex.IColorStrategy;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 import fr.univartois.butinfo.fractalens.complex.IComplexPlane;
@@ -13,6 +12,7 @@ import fr.univartois.butinfo.fractalens.image.IFractalImage;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Generates a fractal image using the Julia set.
@@ -40,7 +40,7 @@ public class FractalGenerator implements IFractalGenerator {
                 (row, column) -> new Complex(
                         (double) column / width * 4 - 2,
                         (double) row / height * 4 - 2),
-                (IColorStrategy) new GrayScaleColorStrategy(maxIterations));
+                new GrayScaleColorStrategy(maxIterations));
     }
 
     /**
@@ -58,25 +58,10 @@ public class FractalGenerator implements IFractalGenerator {
         this.width = width;
         this.height = height;
         this.maxIterations = maxIterations;
-        this.c = c;
-        this.plane = plane;
-        this.colorStrategy = colorStrategy;
-    }
-
-    /**
-     * Creates a fractal generator using a color palette encoded as RGB integers.
-     *
-     * @param width width of the image
-     * @param height height of the image
-     * @param maxIterations maximum number of iterations for each pixel
-     * @param c constant used in the Julia sequence
-     * @param plane mapping from image pixels to complex coordinates
-     * @param palette palette used to color each pixel
-     */
-    public FractalGenerator(int width, int height, int maxIterations, IComplex c,
-            IComplexPlane plane, IColorPalette palette) {
-        this(width, height, maxIterations, c, plane,
-                (IColorStrategy) iteration -> new Color(palette.getColor(iteration), true));
+        this.c = Objects.requireNonNull(c, "c must not be null");
+        this.plane = Objects.requireNonNull(plane, "plane must not be null");
+        this.colorStrategy = Objects.requireNonNull(colorStrategy,
+                "colorStrategy must not be null");
     }
 
     /**
