@@ -15,16 +15,17 @@ import org.junit.jupiter.api.io.TempDir;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.GrayScaleColorStrategy;
+import fr.univartois.butinfo.fractalens.complex.IComplexPlane;
 import fr.univartois.butinfo.fractalens.image.BufferedImageAdapter;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 /**
- * Tests du générateur de fractales de Julia.
+ * Tests the Julia fractal generator.
  */
 class FractalGeneratorTest {
 
     /**
-     * Vérifie que l'image générée possède les bonnes dimensions.
+     * Checks that the generated image has the correct dimensions.
      */
     @Test
     void testGenerateImageDimensions() {
@@ -40,7 +41,7 @@ class FractalGeneratorTest {
     }
 
     /**
-     * Vérifie les couleurs des points stables et divergents.
+     * Checks the colors of stable and diverging points.
      */
     @Test
     void testComputePixelColorOnDivergence() {
@@ -49,24 +50,21 @@ class FractalGeneratorTest {
 
         GrayScaleColorStrategy strategy = new GrayScaleColorStrategy(10);
 
-        // Le point (2, 2) correspond au nombre complexe (0, 0).
+        // Checks the color of a stable point.
         assertEquals(
-                strategy.getColor(0),
+                strategy.getColor(10),
                 generator.computePixelColor(2, 2)
         );
 
-        // Le point (0, 0) correspond au nombre complexe (-2, -2).
+        // Checks the color of a diverging point.
         assertEquals(
-                strategy.getColor(10),
+                strategy.getColor(0),
                 generator.computePixelColor(0, 0)
         );
     }
 
     /**
-     * Vérifie que les pixels sont enregistrés aux bonnes coordonnées.
-     *
-     * @param tempDirectory dossier temporaire utilisé pour le test
-     * @throws IOException si l'image ne peut pas être lue ou enregistrée
+     * Checks that pixels are saved at the correct coordinates.
      */
     @Test
     void testGenerateImageUsesCorrectCoordinates(
@@ -93,9 +91,23 @@ class FractalGeneratorTest {
 
                 assertEquals(
                         expected.getRGB(),
-                        saved.getRGB(column, row)
+                        saved.getRGB(x, y)
                 );
             }
         }
+    }
+
+    /**
+     * Checks that pixel coordinates are mapped through the supplied complex plane.
+     */
+    @Test
+    void testComputePixelColorUsesSuppliedPlaneAndStrategy() {
+        IComplexPlane plane = (row, column) -> new Complex(3, 0);
+        Color expected = Color.MAGENTA;
+        FractalGenerator generator = new FractalGenerator(
+                2, 2, 10, new Complex(0, 0), plane,
+                iteration -> iteration == 0 ? expected : Color.GREEN);
+
+        assertEquals(expected, generator.computePixelColor(0, 0));
     }
 }

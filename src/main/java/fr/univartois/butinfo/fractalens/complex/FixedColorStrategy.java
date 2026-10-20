@@ -1,17 +1,32 @@
 package fr.univartois.butinfo.fractalens.complex;
 
-import java.awt.*;
+import java.awt.Color;
+import java.util.List;
 
 /**
  * Applies a fixed color strategy to generate colors based on the iteration count.
  */
 public class FixedColorStrategy implements IColorStrategy {
 
+    private final List<Color> colors;
+    private final int maxIteration;
+    private final Color color;
+
     /**
-     * The maximum number of iterations used to calculate the color intensity.
+     * Creates a strategy that selects a color from a repeating palette.
+     *
+     * @param colors the colors to cycle through, in order
+     * @throws IllegalArgumentException if the palette is empty
+     * @throws NullPointerException if the palette or any of its colors is null
      */
-    private int maxIteration;
-    private Color color;
+    public FixedColorStrategy(List<Color> colors) {
+        this.colors = List.copyOf(colors);
+        if (this.colors.isEmpty()) {
+            throw new IllegalArgumentException("The color palette must not be empty.");
+        }
+        this.maxIteration = 0;
+        this.color = null;
+    }
 
     /**
      * Creates a new instance of {@link FixedColorStrategy}.
@@ -20,6 +35,7 @@ public class FixedColorStrategy implements IColorStrategy {
      * @param color the base color used to generate the final colors
      */
     public FixedColorStrategy(int maxIteration, Color color){
+        this.colors = null;
         this.maxIteration = maxIteration;
         this.color = color;
     }
@@ -32,6 +48,10 @@ public class FixedColorStrategy implements IColorStrategy {
      */
     @Override
     public Color getColor(int iteration) {
+        if (colors != null) {
+            int index = Math.max(0, iteration) % colors.size();
+            return colors.get(index);
+        }
         if(maxIteration<=0){
             return Color.BLACK;
         }

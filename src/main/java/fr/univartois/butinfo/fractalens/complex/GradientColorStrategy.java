@@ -12,6 +12,9 @@ public class GradientColorStrategy extends AbstractColorStrategy implements ICol
      */
     private Color color2;
 
+    private final Color startColor;
+    private final Color endColor;
+    private final int maxIterations;
 
     /**
      * Creates a new instance of {@code GradientColorStrategy}.
@@ -27,16 +30,10 @@ public class GradientColorStrategy extends AbstractColorStrategy implements ICol
     }
 
     /**
-     * Determines the color to apply to a pixel, based on the number of
-     * iterations performed.
+     * Returns the interpolated color for the given iteration count.
      *
-     * If the number of iterations exceeds the maximum, it is capped to the
-     * maximum. If the maximum is zero or negative, the starting color is
-     * returned.
-     *
-     * @param iteration The number of iterations performed.
-     *
-     * @return The color of the gradient corresponding to the pixel.
+     * @param iteration the number of iterations performed
+     * @return the interpolated color
      */
     @Override
     public Color getColor(int iteration) {

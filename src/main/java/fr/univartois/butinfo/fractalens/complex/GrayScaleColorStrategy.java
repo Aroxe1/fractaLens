@@ -11,7 +11,6 @@ public class GrayScaleColorStrategy extends AbstractColorStrategy implements ICo
     public GrayScaleColorStrategy(int maxIteration) {
         super(maxIteration);
     }
-
     /**
      * Determines the grayscale color to apply to a pixel, based on the number of
      * iterations performed before the sequence diverges.

@@ -1,5 +1,8 @@
 package fr.univartois.butinfo.fractalens.complex;
 
+/**
+ * Translates the complex coordinates produced by another complex plane.
+ */
 public class TranslatedComplexPlane implements IComplexPlane{
     /**
      * The complex plane to decorate.
