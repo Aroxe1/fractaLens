@@ -19,12 +19,12 @@ import fr.univartois.butinfo.fractalens.image.BufferedImageAdapter;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 /**
- * Tests the Julia fractal generator.
+ * Tests du générateur de fractales de Julia.
  */
 class FractalGeneratorTest {
 
     /**
-     * Checks that the generated image has the correct dimensions.
+     * Vérifie que l'image générée possède les bonnes dimensions.
      */
     @Test
     void testGenerateImageDimensions() {
@@ -40,7 +40,7 @@ class FractalGeneratorTest {
     }
 
     /**
-     * Checks the colors of stable and diverging points.
+     * Vérifie les couleurs des points stables et divergents.
      */
     @Test
     void testComputePixelColorOnDivergence() {
@@ -49,21 +49,24 @@ class FractalGeneratorTest {
 
         GrayScaleColorStrategy strategy = new GrayScaleColorStrategy(10);
 
-        // Checks the color of a stable point.
+        // Le point (2, 2) correspond au nombre complexe (0, 0).
         assertEquals(
-                strategy.getColor(10),
+                strategy.getColor(0),
                 generator.computePixelColor(2, 2)
         );
 
-        // Checks the color of a diverging point.
+        // Le point (0, 0) correspond au nombre complexe (-2, -2).
         assertEquals(
-                strategy.getColor(0),
+                strategy.getColor(10),
                 generator.computePixelColor(0, 0)
         );
     }
 
     /**
-     * Checks that pixels are saved at the correct coordinates.
+     * Vérifie que les pixels sont enregistrés aux bonnes coordonnées.
+     *
+     * @param tempDirectory dossier temporaire utilisé pour le test
+     * @throws IOException si l'image ne peut pas être lue ou enregistrée
      */
     @Test
     void testGenerateImageUsesCorrectCoordinates(
@@ -80,10 +83,11 @@ class FractalGeneratorTest {
         BufferedImage saved = ImageIO.read(output.toFile());
 
         assertNotNull(saved);
+        assertEquals(image.getWidth(), saved.getWidth());
+        assertEquals(image.getHeight(), saved.getHeight());
 
         for (int row = 0; row < image.getHeight(); row++) {
             for (int column = 0; column < image.getWidth(); column++) {
-
                 Color expected =
                         generator.computePixelColor(row, column);
 
