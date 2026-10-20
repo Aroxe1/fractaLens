@@ -1,36 +1,31 @@
 package fr.univartois.butinfo.fractalens.complex;
 
 import java.awt.Color;
-import java.util.Objects;
 
-/**
- * Decorates a color strategy by inverting each RGB component.
- */
-public class InvertedColorDecorator implements IColorStrategy {
-
-    private final IColorStrategy strategy;
+public class InvertedColorDecorator implements IColorPalette{
+    /**
+     * The color palette to decorate.
+     */
+    private IColorPalette palette;
 
     /**
-     * Creates a decorator for the given color strategy.
+     * Creates a new instance of {@link InvertedColorDecorator}.
      *
-     * @param strategy the strategy to decorate
+     * @param palette the color palette to decorate
      */
-    public InvertedColorDecorator(IColorStrategy strategy) {
-        this.strategy = Objects.requireNonNull(strategy, "strategy must not be null");
+    public InvertedColorDecorator(IColorPalette palette,int maxIteration){
+        this.palette = palette;
     }
 
     /**
-     * Returns the decorated color with each RGB component subtracted from 255.
+     * Inverts the color obtained from the decorated palette.
      *
-     * @param iteration the number of iterations performed
-     * @return the inverted color
+     * @param iteration the number of iterations before divergence
+     * @return the inverted color, encoded as an integer
      */
     @Override
-    public Color getColor(int iteration) {
-        Color color = strategy.getColor(iteration);
-        return new Color(
-                255 - color.getRed(),
-                255 - color.getGreen(),
-                255 - color.getBlue());
+    public int getColor(int iteration) {
+        Color c = new Color(palette.getColor(iteration));
+        return new Color(255 - c.getRed(),255 - c.getGreen(),255 - c.getBlue()).getRGB();
     }
 }

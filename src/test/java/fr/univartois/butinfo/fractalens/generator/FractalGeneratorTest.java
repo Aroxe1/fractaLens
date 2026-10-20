@@ -70,7 +70,8 @@ class FractalGeneratorTest {
     void testGenerateImageUsesCorrectCoordinates(
             @TempDir Path tempDirectory) throws IOException {
 
-        FractalGenerator generator = new FractalGenerator(4, 3, 10, new Complex(0, 0));
+        FractalGenerator generator =
+                new FractalGenerator(4, 3, 10, new Complex(0, 0));
 
         IFractalImage image = generator.generateImage();
 
@@ -85,9 +86,8 @@ class FractalGeneratorTest {
 
         for (int row = 0; row < image.getHeight(); row++) {
             for (int column = 0; column < image.getWidth(); column++) {
-                Color expected = generator.computePixelColor(row, column);
-                int x = column;
-                int y = row;
+                Color expected =
+                        generator.computePixelColor(row, column);
 
                 assertEquals(
                         expected.getRGB(),

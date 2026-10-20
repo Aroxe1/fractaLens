@@ -1,33 +1,32 @@
 package fr.univartois.butinfo.fractalens.complex;
 
-import java.awt.Color;
-import java.util.Objects;
+import java.awt.*;
 
-/**
- * Interpolates between two colors according to the iteration count.
- */
-public class GradientColorStrategy implements IColorStrategy {
+public class GradientColorStrategy extends AbstractColorStrategy implements IColorStrategy{
+    /**
+     * The starting color of the gradient.
+     */
+    private Color color1;
+    /**
+     * The ending color of the gradient.
+     */
+    private Color color2;
 
     private final Color startColor;
     private final Color endColor;
     private final int maxIterations;
 
     /**
-     * Creates a gradient between two colors.
+     * Creates a new instance of {@code GradientColorStrategy}.
      *
-     * @param startColor the color at zero iterations
-     * @param endColor the color at the maximum number of iterations
-     * @param maxIterations the iteration count at which the end color is reached
-     * @throws IllegalArgumentException if {@code maxIterations} is not positive
-     * @throws NullPointerException if either color is null
+     * @param color1 The starting color of the gradient.
+     * @param color2 The ending color of the gradient.
+     * @param maxIteration The maximum number of iterations.
      */
-    public GradientColorStrategy(Color startColor, Color endColor, int maxIterations) {
-        this.startColor = Objects.requireNonNull(startColor, "startColor must not be null");
-        this.endColor = Objects.requireNonNull(endColor, "endColor must not be null");
-        if (maxIterations <= 0) {
-            throw new IllegalArgumentException("maxIterations must be positive.");
-        }
-        this.maxIterations = maxIterations;
+    public GradientColorStrategy(int maxIteration, Color color1, Color color2) {
+        super(maxIteration);
+        this.color1 = color1;
+        this.color2 = color2;
     }
 
     /**
@@ -38,15 +37,16 @@ public class GradientColorStrategy implements IColorStrategy {
      */
     @Override
     public Color getColor(int iteration) {
-        int boundedIteration = Math.clamp(iteration, 0, maxIterations);
-        double ratio = (double) boundedIteration / maxIterations;
-        return new Color(
-                interpolate(startColor.getRed(), endColor.getRed(), ratio),
-                interpolate(startColor.getGreen(), endColor.getGreen(), ratio),
-                interpolate(startColor.getBlue(), endColor.getBlue(), ratio));
+        if (maxIteration <= 0) {
+            return color1;
+        }
+        int bounded = Math.min(iteration, maxIteration);
+        double ratio = (double) bounded / maxIteration;
+
+        int red = (int) (color1.getRed() + ratio*(color2.getRed()-color1.getRed()));
+        int green = (int) (color1.getGreen() + ratio*(color2.getGreen()- color1.getGreen()));
+        int blue= (int) (color1.getBlue() + ratio*(color2.getBlue()- color1.getBlue()));
+        return new Color(red, green, blue);
     }
 
-    private static int interpolate(int start, int end, double ratio) {
-        return (int) Math.round(start + ratio * (end - start));
-    }
 }
