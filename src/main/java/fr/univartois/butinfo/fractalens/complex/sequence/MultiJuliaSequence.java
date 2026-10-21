@@ -31,11 +31,6 @@ public class MultiJuliaSequence extends JuliaSequence {
      * @return next term calculated using the formula z^power + c
      */
     public IComplex computeNext(IComplex z) {
-        IComplex result = z;
-
-        for (int i = 1; i < power; i++) {
-            result = result.multiply(z);
-        }
-        return result.add(getC());
+        return z.pow(power).add(getC());
     }
 }
