@@ -1,3 +1,4 @@
+
 package fr.univartois.butinfo.fractalens;
 
 import fr.univartois.butinfo.fractalens.complex.*;
@@ -12,14 +13,14 @@ import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 
 /**
- * Generates fractal images for sprints 3 and 4.
+ * Generates the fractal images for sprints 3 and 4.
  */
 public class Main {
 
     /**
-     * Generates all fractal images.
+     * Generates all fractal images with multicolor gradients.
      *
-     * @param args optional filenames for the two Julia images
+     * @param args optional output filenames for the two Julia fractals
      * @throws IOException if an image cannot be saved
      */
     public static void main(String[] args) throws IOException {
@@ -33,77 +34,122 @@ public class Main {
         // Sprint 3: Julia fractals.
         generateFractal(800, 800, 250, 0.001,
                 new Complex(0.1, 0.6),
-                new GradientColorStrategy(Color.BLUE, Color.WHITE, 250),
+                gradient(250, Color.BLACK, Color.BLUE, Color.CYAN, Color.WHITE),
                 (z0, n) -> new JuliaSequence(z0, c1, n),
                 args.length == 2 ? args[0] : "Julia-1.png");
 
         generateFractal(800, 800, 250, 0.001,
                 new Complex(-0.47, -0.21),
-                new ColorComponentDecorator(
-                        new InvertedColorDecorator(new GrayScaleColorStrategy(250)),
-                        false, true, true),
+                gradient(250, Color.BLACK, Color.MAGENTA, Color.PINK, Color.WHITE),
                 (z0, n) -> new JuliaSequence(z0, c2, n),
                 args.length == 2 ? args[1] : "Julia-2.png");
 
         // Sprint 4: Mandelbrot.
-        generateFractal(600, 800, 250, 0.004,
+        generateFractal(800, 600, 250, 0.004,
                 new Complex(-0.75, 0),
-                new GrayScaleColorStrategy(250),
+                gradient(250, Color.BLACK, Color.BLUE, Color.MAGENTA, Color.ORANGE),
                 (z0, n) -> new MandelBrotSequence(z0, n),
                 "Mandelbrot.png");
 
         // Sprint 4: Burning Ship.
         generateFractal(1000, 1000, 64, 0.0001,
                 new Complex(-1.755, -0.03),
-                new GrayScaleColorStrategy(64),
+                gradient(64, Color.BLACK, Color.RED, Color.ORANGE, Color.YELLOW, Color.WHITE),
                 (z0, n) -> new BurningShipSequence(new Complex(0, 0), z0, n),
                 "BurningShip.png");
+        generateFractal(1000, 1000, 64, 0.0001,
+                new Complex(-1.755, -0.03),
+                gradient(64, Color.BLACK, Color.RED, Color.ORANGE, Color.YELLOW, Color.WHITE),
+                (z0, n) -> new BurningShipSequence(new Complex(-0.4, 0.6), z0, n),
+                "BurningShip1.png");
 
-        // Sprint 4: a sequence defined using a lambda expression.
-        BinaryOperator<IComplex> formula =
-                (z, z0) -> z.pow(3).add(z0);
+        // Sprint 4: sequence defined with a lambda expression.
+        BinaryOperator<IComplex> formula = (z, z0) -> z.pow(3).add(z0);
 
         generateFractal(800, 800, 150, 0.004,
                 new Complex(0, 0),
-                new GrayScaleColorStrategy(150),
+                gradient(150, Color.BLACK, Color.GREEN, Color.CYAN, Color.WHITE),
                 (z0, n) -> new GenericComplexSequence(formula, z0, n),
                 "Lambda.png");
 
-        // Sprint 4: other complex sequences.
+        // Sprint 4: MultiJulia.
         generateFractal(800, 800, 150, 0.004,
                 new Complex(0, 0),
-                new GrayScaleColorStrategy(150),
+                gradient(150, Color.BLACK, Color.MAGENTA, Color.BLUE, Color.WHITE),
                 (z0, n) -> new MultiJuliaSequence(z0, c1, n, 3),
                 "MultiJulia.png");
 
+        // Sprint 4: Multibrot.
         generateFractal(800, 800, 150, 0.004,
                 new Complex(0, 0),
-                new GrayScaleColorStrategy(150),
+                gradient(150, Color.BLACK, Color.RED, Color.YELLOW, Color.WHITE),
                 (z0, n) -> new MultiBrotSequence(z0, n, 3),
                 "Multibrot.png");
 
+        // Sprint 4: generalized Burning Ship.
         generateFractal(800, 800, 150, 0.004,
                 new Complex(0, 0),
-                new GrayScaleColorStrategy(150),
+                gradient(150, Color.BLACK, Color.RED, Color.PINK, Color.YELLOW),
                 (z0, n) -> new MultiBurningShipSequence(new Complex(0, 0), z0, 3, n),
                 "MultiBurningShip.png");
 
-        // Tricorn and MultiTricorn are always generated.
+        // Sprint 4: Tricorn.
         generateFractal(800, 800, 150, 0.004,
                 new Complex(0, 0),
-                new GrayScaleColorStrategy(150),
+                gradient(150, Color.BLACK, Color.BLUE, Color.CYAN, Color.MAGENTA, Color.WHITE),
                 (z0, n) -> new TricornSequence(new Complex(0, 0), z0, n),
                 "Tricorn.png");
 
+        // Sprint 4: MultiTricorn.
         generateFractal(800, 800, 150, 0.004,
                 new Complex(0, 0),
-                new GrayScaleColorStrategy(150),
+                gradient(150, Color.BLACK, Color.MAGENTA, Color.PINK, Color.CYAN, Color.WHITE),
                 (z0, n) -> new MultiTricornSequence(new Complex(0, 0), z0, 3, n),
                 "MultiTricorn.png");
     }
 
     /**
-     * Creates and saves a fractal image.
+     * Creates a smooth gradient between multiple colors.
+     * Points that do not diverge are colored black.
+     *
+     * @param maxIterations maximum number of iterations
+     * @param colors colors of the gradient
+     * @return the color strategy
+     */
+    private static IColorStrategy gradient(int maxIterations, Color... colors) {
+        if (maxIterations <= 0 || colors == null || colors.length < 2) {
+            throw new IllegalArgumentException("At least two colors are required");
+        }
+
+        return iteration -> {
+            if (iteration >= maxIterations) {
+                return Color.BLACK;
+            }
+
+            double position = (double) Math.max(0, iteration)
+                    / maxIterations * (colors.length - 1);
+
+            int index = Math.min((int) position, colors.length - 2);
+            double ratio = position - index;
+
+            Color first = colors[index];
+            Color second = colors[index + 1];
+
+            int red = (int) Math.round(first.getRed()
+                    + (second.getRed() - first.getRed()) * ratio);
+
+            int green = (int) Math.round(first.getGreen()
+                    + (second.getGreen() - first.getGreen()) * ratio);
+
+            int blue = (int) Math.round(first.getBlue()
+                    + (second.getBlue() - first.getBlue()) * ratio);
+
+            return new Color(red, green, blue);
+        };
+    }
+
+    /**
+     * Generates and saves a fractal image.
      *
      * @param width image width
      * @param height image height
@@ -121,7 +167,7 @@ public class Main {
             BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory,
             String filename) throws IOException {
 
-        // Zoom first, then move the center.
+        // Apply the zoom before moving the image center.
         IComplexPlane plane = new TranslatedComplexPlane(
                 new ScaledComplexPlane(new ComplexPlane(width, height), zoom),
                 center);
@@ -130,6 +176,7 @@ public class Main {
                 width, height, maxIterations, plane, palette, sequenceFactory);
 
         generator.generateImage().saveAs(filename);
+
         System.out.println("Image saved: " + Path.of(filename).toAbsolutePath());
     }
 }
