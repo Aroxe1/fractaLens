@@ -27,6 +27,15 @@ public class JuliaSequence implements  IComplexSequence
     }
 
     /**
+     * Returns the complex constant used in the Julia sequence.
+     *
+     * @return the complex constant
+     */
+    public IComplex getC(){
+        return this.c;
+    }
+
+    /**
      * Calculates the next term of the sequence from the previous term.
      *
      * @param previous previous term of the sequence
