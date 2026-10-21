@@ -35,6 +35,15 @@ public class GenericComplexSequence implements IComplexSequence{
         this.maxIterations = maxIterations;
     }
 
+    /**
+     * Returns the current complex number in the sequence.
+     *
+     * @return the current complex number
+     */
+    public IComplex getCurrent() {
+        return current;
+    }
+
 
     /**
      * {@inheritDoc}
