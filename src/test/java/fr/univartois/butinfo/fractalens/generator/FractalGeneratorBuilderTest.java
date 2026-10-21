@@ -19,6 +19,47 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class FractalGeneratorBuilderTest {
 
+    @Test
+    void testCompleteConfiguration(@org.junit.jupiter.api.io.TempDir java.nio.file.Path directory)
+            throws java.io.IOException {
+        java.nio.file.Path output = directory.resolve("fractal.png");
+        java.util.List<Integer> terms = new java.util.ArrayList<>();
+        java.util.List<IComplex> points = new java.util.ArrayList<>();
+        FractalGenerator generator = new FractalGeneratorBuilder()
+                .setWidth(4).setHeight(2).setMaxIterations(7)
+                .setZoom(0.5).setCenter(new Complex(-1, 1))
+                .setSequence((point, count) -> {
+                    points.add(point);
+                    terms.add(count);
+                    return new fr.univartois.butinfo.fractalens.complex.sequence.MandelBrotSequence(point, count);
+                })
+                .setPalette(iteration -> java.awt.Color.RED)
+                .setOutputFile(output.toString()).build();
+
+        generator.saveImage();
+
+        java.awt.image.BufferedImage image = javax.imageio.ImageIO.read(output.toFile());
+        assertEquals(4, image.getWidth());
+        assertEquals(2, image.getHeight());
+        assertEquals(java.awt.Color.RED.getRGB(), image.getRGB(0, 0));
+        assertEquals(8, points.size());
+        assertEquals(-1, points.get(6).getRealPart(), 0.00001);
+        assertEquals(1, points.get(6).getImaginaryPart(), 0.00001);
+        assertTrue(terms.stream().allMatch(count -> count == 7));
+    }
+
+    @Test
+    void testPaletteUsesFinalIterationCount() {
+        FractalGenerator generator = new FractalGeneratorBuilder()
+                .setWidth(2).setHeight(2)
+                .setPalette(fr.univartois.butinfo.fractalens.complex.ColorPaletteType.GRAYSCALE)
+                .setSequence(fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType.MANDELBROT)
+                .setZoom(0.5).setCenter(new Complex(0, 0))
+                .setOutputFile("unused.png").setMaxIterations(7).build();
+
+        assertEquals(java.awt.Color.BLACK, generator.computePixelColor(1, 1));
+    }
+
     /**
      * Tests that setting the image width returns
      * the current builder instance.

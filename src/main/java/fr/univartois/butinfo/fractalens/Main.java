@@ -1,182 +1,51 @@
-
 package fr.univartois.butinfo.fractalens;
 
-import fr.univartois.butinfo.fractalens.complex.*;
-import fr.univartois.butinfo.fractalens.complex.sequence.*;
-import fr.univartois.butinfo.fractalens.generator.FractalGenerator;
-import fr.univartois.butinfo.fractalens.generator.IFractalGenerator;
-
+import fr.univartois.butinfo.fractalens.complex.ColorPaletteType;
+import fr.univartois.butinfo.fractalens.complex.Complex;
+import fr.univartois.butinfo.fractalens.complex.GradientColorStrategy;
+import fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType;
+import fr.univartois.butinfo.fractalens.generator.FractalGeneratorBuilder;
 import java.awt.Color;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.function.BiFunction;
-import java.util.function.BinaryOperator;
 
-/**
- * Generates the fractal images for sprints 3 and 4.
- */
+/** Generates the three images selected for the builder demonstration. */
 public class Main {
 
-    /**
-     * Generates all fractal images with multicolor gradients.
-     *
-     * @param args optional output filenames for the two Julia fractals
-     * @throws IOException if an image cannot be saved
-     */
-    public static void main(String[] args) throws IOException {
-        if (args.length != 0 && args.length != 2) {
-            throw new IllegalArgumentException("Usage: Main [julia1.png julia2.png]");
-        }
+    /** All fractal settings can be changed here for the demonstration. */
+    public static void main(String[] args) {
+        new FractalGeneratorBuilder()
+                .setSequence(ComplexSequenceType.JULIA1)
+                .setMaxIterations(250)
+                .setWidth(800)
+                .setHeight(800)
+                .setZoom(0.001)
+                .setCenter(new Complex(0.1, 0.6))
+                .setPalette(ColorPaletteType.GRADIENT)
+                .setOutputFile("Julia.png")
+                .build()
+                .saveImage();
 
-        IComplex c1 = new Complex(-0.4, 0.6);
-        IComplex c2 = new Complex(0.285, 0.01);
+        new FractalGeneratorBuilder()
+                .setSequence(ComplexSequenceType.MANDELBROT)
+                .setMaxIterations(250)
+                .setWidth(800)
+                .setHeight(600)
+                .setZoom(0.004)
+                .setCenter(new Complex(-0.75, 0))
+                .setPalette(ColorPaletteType.GRAYSCALE)
+                .setOutputFile("Mandelbrot.png")
+                .build()
+                .saveImage();
 
-        // Sprint 3: Julia fractals.
-        generateFractal(800, 800, 250, 0.001,
-                new Complex(0.1, 0.6),
-                gradient(250, Color.BLACK, Color.BLUE, Color.CYAN, Color.WHITE),
-                (z0, n) -> new JuliaSequence(z0, c1, n),
-                args.length == 2 ? args[0] : "Julia-1.png");
-
-        generateFractal(800, 800, 250, 0.001,
-                new Complex(-0.47, -0.21),
-                gradient(250, Color.BLACK, Color.MAGENTA, Color.PINK, Color.WHITE),
-                (z0, n) -> new JuliaSequence(z0, c2, n),
-                args.length == 2 ? args[1] : "Julia-2.png");
-
-        // Sprint 4: Mandelbrot.
-        generateFractal(800, 600, 250, 0.004,
-                new Complex(-0.75, 0),
-                gradient(250, Color.BLACK, Color.BLUE, Color.MAGENTA, Color.ORANGE),
-                (z0, n) -> new MandelBrotSequence(z0, n),
-                "Mandelbrot.png");
-
-        // Sprint 4: Burning Ship.
-        generateFractal(1000, 1000, 64, 0.0001,
-                new Complex(-1.755, -0.03),
-                gradient(64, Color.BLACK, Color.RED, Color.ORANGE, Color.YELLOW, Color.WHITE),
-                (z0, n) -> new BurningShipSequence(new Complex(0, 0), z0, n),
-                "BurningShip.png");
-        generateFractal(1000, 1000, 64, 0.0001,
-                new Complex(-1.755, -0.03),
-                gradient(64, Color.BLACK, Color.RED, Color.ORANGE, Color.YELLOW, Color.WHITE),
-                (z0, n) -> new BurningShipSequence(new Complex(-0.4, 0.6), z0, n),
-                "BurningShip1.png");
-
-        // Sprint 4: sequence defined with a lambda expression.
-        BinaryOperator<IComplex> formula = (z, z0) -> z.pow(3).add(z0);
-
-        generateFractal(800, 800, 150, 0.004,
-                new Complex(0, 0),
-                gradient(150, Color.BLACK, Color.GREEN, Color.CYAN, Color.WHITE),
-                (z0, n) -> new GenericComplexSequence(formula, z0, n),
-                "Lambda.png");
-
-        // Sprint 4: MultiJulia.
-        generateFractal(800, 800, 150, 0.004,
-                new Complex(0, 0),
-                gradient(150, Color.BLACK, Color.MAGENTA, Color.BLUE, Color.WHITE),
-                (z0, n) -> new MultiJuliaSequence(z0, c1, n, 3),
-                "MultiJulia.png");
-
-        // Sprint 4: Multibrot.
-        generateFractal(800, 800, 150, 0.004,
-                new Complex(0, 0),
-                gradient(150, Color.BLACK, Color.RED, Color.YELLOW, Color.WHITE),
-                (z0, n) -> new MultiBrotSequence(z0, n, 3),
-                "Multibrot.png");
-
-        // Sprint 4: generalized Burning Ship.
-        generateFractal(800, 800, 150, 0.004,
-                new Complex(0, 0),
-                gradient(150, Color.BLACK, Color.RED, Color.PINK, Color.YELLOW),
-                (z0, n) -> new MultiBurningShipSequence(new Complex(0, 0), z0, 3, n),
-                "MultiBurningShip.png");
-
-        // Sprint 4: Tricorn.
-        generateFractal(800, 800, 150, 0.004,
-                new Complex(0, 0),
-                gradient(150, Color.BLACK, Color.BLUE, Color.CYAN, Color.MAGENTA, Color.WHITE),
-                (z0, n) -> new TricornSequence(new Complex(0, 0), z0, n),
-                "Tricorn.png");
-
-        // Sprint 4: MultiTricorn.
-        generateFractal(800, 800, 150, 0.004,
-                new Complex(0, 0),
-                gradient(150, Color.BLACK, Color.MAGENTA, Color.PINK, Color.CYAN, Color.WHITE),
-                (z0, n) -> new MultiTricornSequence(new Complex(0, 0), z0, 3, n),
-                "MultiTricorn.png");
-    }
-
-    /**
-     * Creates a smooth gradient between multiple colors.
-     * Points that do not diverge are colored black.
-     *
-     * @param maxIterations maximum number of iterations
-     * @param colors colors of the gradient
-     * @return the color strategy
-     */
-    private static IColorStrategy gradient(int maxIterations, Color... colors) {
-        if (maxIterations <= 0 || colors == null || colors.length < 2) {
-            throw new IllegalArgumentException("At least two colors are required");
-        }
-
-        return iteration -> {
-            if (iteration >= maxIterations) {
-                return Color.BLACK;
-            }
-
-            double position = (double) Math.max(0, iteration)
-                    / maxIterations * (colors.length - 1);
-
-            int index = Math.min((int) position, colors.length - 2);
-            double ratio = position - index;
-
-            Color first = colors[index];
-            Color second = colors[index + 1];
-
-            int red = (int) Math.round(first.getRed()
-                    + (second.getRed() - first.getRed()) * ratio);
-
-            int green = (int) Math.round(first.getGreen()
-                    + (second.getGreen() - first.getGreen()) * ratio);
-
-            int blue = (int) Math.round(first.getBlue()
-                    + (second.getBlue() - first.getBlue()) * ratio);
-
-            return new Color(red, green, blue);
-        };
-    }
-
-    /**
-     * Generates and saves a fractal image.
-     *
-     * @param width image width
-     * @param height image height
-     * @param maxIterations maximum number of iterations
-     * @param zoom zoom factor
-     * @param center center of the complex plane
-     * @param palette color strategy
-     * @param sequenceFactory factory creating a sequence for each pixel
-     * @param filename output filename
-     * @throws IOException if the image cannot be saved
-     */
-    private static void generateFractal(
-            int width, int height, int maxIterations, double zoom,
-            IComplex center, IColorStrategy palette,
-            BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory,
-            String filename) throws IOException {
-
-        // Apply the zoom before moving the image center.
-        IComplexPlane plane = new TranslatedComplexPlane(
-                new ScaledComplexPlane(new ComplexPlane(width, height), zoom),
-                center);
-
-        IFractalGenerator generator = new FractalGenerator(
-                width, height, maxIterations, plane, palette, sequenceFactory);
-
-        generator.generateImage().saveAs(filename);
-
-        System.out.println("Image saved: " + Path.of(filename).toAbsolutePath());
+        new FractalGeneratorBuilder()
+                .setSequence(ComplexSequenceType.BURNINGSHIP)
+                .setMaxIterations(64)
+                .setWidth(1000)
+                .setHeight(1000)
+                .setZoom(0.0001)
+                .setCenter(new Complex(-1.755, -0.03))
+                .setPalette(new GradientColorStrategy(Color.BLACK, Color.ORANGE, 64))
+                .setOutputFile("BurningShip.png")
+                .build()
+                .saveImage();
     }
 }
