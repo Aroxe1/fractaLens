@@ -56,7 +56,7 @@ public class BurningShipSequence implements IComplexSequence{
      */
     @Override
     public Iterator<IComplex> iterator() {
-        return new ComplexSequenceIterator(this,c, maxIterations);
+        return new ComplexSequenceIterator(this,z0, maxIterations);
     }
 
 }
