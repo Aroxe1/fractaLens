@@ -32,6 +32,17 @@ public class FractalGenerator implements IFractalGenerator {
 
     private IFractalImage image;
 
+    /** Creates a generator from the complete builder configuration. */
+    public FractalGenerator(FractalGeneratorBuilder builder) {
+        this.width = builder.getWidth();
+        this.height = builder.getHeight();
+        this.maxIterations = builder.getMaxIterations();
+        this.plane = builder.createPlane();
+        this.colorStrategy = builder.getPalette();
+        this.outputFile = builder.getOutputFile();
+        this.sequenceFactory = builder.getSequenceFactory();
+    }
+
     /**
      * Creates a Julia fractal generator with default settings.
      *

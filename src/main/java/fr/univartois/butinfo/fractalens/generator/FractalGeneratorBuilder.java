@@ -1,90 +1,113 @@
-
 package fr.univartois.butinfo.fractalens.generator;
 
-import fr.univartois.butinfo.fractalens.complex.IComplex;
+import fr.univartois.butinfo.fractalens.complex.*;
+import fr.univartois.butinfo.fractalens.complex.sequence.*;
+import java.util.Objects;
+import java.util.function.BiFunction;
 
-/**
- * Builder used to configure and create a fractal generator.
- *
- * <p>This class allows the configuration of the image dimensions,
- * the maximum number of iterations and the complex constant.</p>
- *
- * <p>Each setter returns the builder itself to allow method chaining.</p>
- *
- * @see FractalGenerator
- */
+/** Configures the image, complex sequence, plane and output file. */
 public class FractalGeneratorBuilder {
-
-    /**
-     * The width of the generated image.
-     */
     private int width;
-
-    /**
-     * The height of the generated image.
-     */
     private int height;
-
-    /**
-     * The maximum number of iterations.
-     */
     private int maxIterations;
-
-    /**
-     * The complex constant used to generate the fractal.
-     */
     private IComplex c;
+    private double zoom;
+    private IComplex center;
+    private IColorStrategy palette;
+    private ColorPaletteType paletteType;
+    private String outputFile;
+    private BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory;
 
-    /**
-     * Sets the width of the generated image.
-     *
-     * @param width The image width.
-     * @return The current builder instance.
-     */
     public FractalGeneratorBuilder setWidth(int width) {
         this.width = width;
         return this;
     }
 
-    /**
-     * Sets the height of the generated image.
-     *
-     * @param height The image height.
-     * @return The current builder instance.
-     */
     public FractalGeneratorBuilder setHeight(int height) {
         this.height = height;
         return this;
     }
 
-    /**
-     * Sets the maximum number of iterations.
-     *
-     * @param maxIterations The maximum number of iterations.
-     * @return The current builder instance.
-     */
     public FractalGeneratorBuilder setMaxIterations(int maxIterations) {
         this.maxIterations = maxIterations;
         return this;
     }
 
-    /**
-     * Sets the complex constant used for fractal generation.
-     *
-     * @param c The complex constant.
-     * @return The current builder instance.
-     */
+    /** Configures a Julia sequence with the supplied constant. */
     public FractalGeneratorBuilder setC(IComplex c) {
         this.c = c;
+        this.sequenceFactory = (point, terms) -> new JuliaSequence(point, c, terms);
         return this;
     }
 
-    /**
-     * Creates a fractal generator using the configured parameters.
-     *
-     * @return A new instance of {@link FractalGenerator}.
-     */
+    public FractalGeneratorBuilder setSequence(ComplexSequenceType sequence) {
+        return setSequence(Objects.requireNonNull(sequence)::create);
+    }
+
+    /** Supplies a factory receiving the pixel's complex point and term count. */
+    public FractalGeneratorBuilder setSequence(
+            BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory) {
+        this.sequenceFactory = Objects.requireNonNull(sequenceFactory);
+        return this;
+    }
+
+    /** Sets the complex distance between adjacent pixels (smaller means closer). */
+    public FractalGeneratorBuilder setZoom(double zoom) {
+        this.zoom = zoom;
+        return this;
+    }
+
+    public FractalGeneratorBuilder setCenter(IComplex center) {
+        this.center = Objects.requireNonNull(center);
+        return this;
+    }
+
+    public FractalGeneratorBuilder setPalette(ColorPaletteType paletteType) {
+        this.paletteType = Objects.requireNonNull(paletteType);
+        this.palette = null;
+        return this;
+    }
+
+    public FractalGeneratorBuilder setPalette(IColorStrategy palette) {
+        this.palette = Objects.requireNonNull(palette);
+        this.paletteType = null;
+        return this;
+    }
+
+    public FractalGeneratorBuilder setOutputFile(String outputFile) {
+        this.outputFile = Objects.requireNonNull(outputFile);
+        return this;
+    }
+
     public FractalGenerator build() {
-        return new FractalGenerator(width, height, maxIterations, c);
+        if (width <= 0 || height <= 0 || maxIterations <= 0) {
+            throw new IllegalStateException("Image dimensions and term count must be positive");
+        }
+        // Preserve the original Julia builder API for existing callers.
+        if (center == null && palette == null && paletteType == null
+                && outputFile == null && zoom == 0 && c != null) {
+            return new FractalGenerator(width, height, maxIterations, c);
+        }
+        if (!Double.isFinite(zoom) || zoom <= 0 || center == null
+                || (palette == null && paletteType == null) || sequenceFactory == null
+                || outputFile == null || outputFile.isBlank()) {
+            throw new IllegalStateException("Configure sequence, zoom, center, palette and output file");
+        }
+        return new FractalGenerator(this);
+    }
+
+    int getWidth() { return width; }
+    int getHeight() { return height; }
+    int getMaxIterations() { return maxIterations; }
+    String getOutputFile() { return outputFile; }
+    IColorStrategy getPalette() {
+        return paletteType == null ? palette : paletteType.create(maxIterations);
+    }
+    IComplexPlane createPlane() {
+        return new TranslatedComplexPlane(
+                new ScaledComplexPlane(new ComplexPlane(width, height), zoom), center);
+    }
+    BiFunction<IComplex, Integer, IComplexSequence> getSequenceFactory() {
+        return sequenceFactory;
     }
 }
