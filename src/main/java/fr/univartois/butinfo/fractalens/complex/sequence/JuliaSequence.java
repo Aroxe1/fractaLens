@@ -53,24 +53,7 @@ public class JuliaSequence implements  IComplexSequence
      */
     @Override
     public Iterator<IComplex> iterator() {
-       return new Iterator<IComplex>() {
-            private IComplex actual = z0;
-            private int iteration = 0;
-
-            @Override
-            public boolean hasNext() {
-                return iteration < maxIterations && actual.abs() <= 2;
-            }
-            @Override
-            public IComplex next() {
-
-                IComplex result = actual;
-                actual = computeNext(actual);
-                iteration++;
-
-                return result;
-            }
-        };
+        return new ComplexSequenceIterator(this , z0 , maxIterations);
     }
 
 }
