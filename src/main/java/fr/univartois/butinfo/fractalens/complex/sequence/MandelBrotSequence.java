@@ -13,4 +13,14 @@ public class MandelBrotSequence extends GenericComplexSequence {
     public MandelBrotSequence(IComplex z0, int maxIterations) {
         super((z, first) -> z.pow(2).add(first), z0, maxIterations);
     }
+
+    /**
+     * Returns the initial complex number of the sequence.
+     *
+     * @return the initial complex number
+     */
+    public IComplex getZ0() {
+        return getCurrent();
+    }
+
 }
