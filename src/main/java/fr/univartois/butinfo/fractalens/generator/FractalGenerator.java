@@ -1,4 +1,3 @@
-
 package fr.univartois.butinfo.fractalens.generator;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
@@ -14,7 +13,6 @@ import fr.univartois.butinfo.fractalens.image.IFractalImage;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.function.BiFunction;
 
 /**
@@ -27,8 +25,10 @@ public class FractalGenerator implements IFractalGenerator {
     private final int width;
     private final int maxIterations;
     private final IComplexPlane plane;
+    private final String outputFile;
 
-    private final BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory;
+    private final BiFunction<IComplex, Integer, IComplexSequence>
+            sequenceFactory;
 
     private IFractalImage image;
 
@@ -42,11 +42,27 @@ public class FractalGenerator implements IFractalGenerator {
      */
     public FractalGenerator(int width, int height,
                             int maxIterations, IComplex c) {
+        this(width, height, maxIterations, c, "Fractal.png");
+    }
+
+    /**
+     * Creates a Julia fractal generator with a custom output file.
+     *
+     * @param width width of the image
+     * @param height height of the image
+     * @param maxIterations maximum number of iterations
+     * @param c constant used in the Julia sequence
+     * @param outputFile name of the output file
+     */
+    public FractalGenerator(int width, int height,
+                            int maxIterations, IComplex c,
+                            String outputFile) {
         this(width, height, maxIterations, c,
                 (row, column) -> new Complex(
                         (double) column / width * 4 - 2,
                         (double) row / height * 4 - 2),
-                new GrayScaleColorStrategy(maxIterations));
+                new GrayScaleColorStrategy(maxIterations),
+                outputFile);
     }
 
     /**
@@ -63,9 +79,28 @@ public class FractalGenerator implements IFractalGenerator {
                             int maxIterations, IComplex c,
                             IComplexPlane plane,
                             IColorStrategy colorStrategy) {
+        this(width, height, maxIterations, c, plane,
+                colorStrategy, "Fractal.png");
+    }
 
+    /**
+     * Creates a Julia generator with a custom plane, palette and file.
+     *
+     * @param width width of the image
+     * @param height height of the image
+     * @param maxIterations maximum number of iterations
+     * @param c constant used in the Julia sequence
+     * @param plane complex plane
+     * @param colorStrategy color strategy
+     * @param outputFile name of the output file
+     */
+    public FractalGenerator(int width, int height,
+                            int maxIterations, IComplex c,
+                            IComplexPlane plane,
+                            IColorStrategy colorStrategy,
+                            String outputFile) {
         this(width, height, maxIterations, plane,
-                colorStrategy, juliaFactory(c));
+                colorStrategy, outputFile, juliaFactory(c));
     }
 
     /**
@@ -85,14 +120,38 @@ public class FractalGenerator implements IFractalGenerator {
             IComplexPlane plane,
             IColorStrategy colorStrategy,
             BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory) {
+        this(width, height, maxIterations, plane,
+                colorStrategy, "Fractal.png", sequenceFactory);
+    }
+
+    /**
+     * Creates a generator using a custom sequence and output file.
+     *
+     * @param width width of the image
+     * @param height height of the image
+     * @param maxIterations maximum number of iterations
+     * @param plane complex plane
+     * @param colorStrategy color strategy
+     * @param outputFile name of the output file
+     * @param sequenceFactory factory used to create sequences
+     */
+    public FractalGenerator(
+            int width,
+            int height,
+            int maxIterations,
+            IComplexPlane plane,
+            IColorStrategy colorStrategy,
+            String outputFile,
+            BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory) {
 
         this.width = width;
         this.height = height;
         this.maxIterations = maxIterations;
 
-        this.plane = Objects.requireNonNull(plane);
-        this.colorStrategy = Objects.requireNonNull(colorStrategy);
-        this.sequenceFactory = Objects.requireNonNull(sequenceFactory);
+        this.plane = plane;
+        this.colorStrategy = colorStrategy;
+        this.outputFile = outputFile;
+        this.sequenceFactory = sequenceFactory;
     }
 
     /**
@@ -103,8 +162,6 @@ public class FractalGenerator implements IFractalGenerator {
      */
     private static BiFunction<IComplex, Integer, IComplexSequence>
     juliaFactory(IComplex c) {
-        Objects.requireNonNull(c, "c must not be null");
-
         return (z0, nbTerms) -> new JuliaSequence(z0, c, nbTerms);
     }
 
@@ -116,8 +173,7 @@ public class FractalGenerator implements IFractalGenerator {
     @Override
     public IFractalImage generateImage() {
         BufferedImage bufferedImage = new BufferedImage(
-                width, height, BufferedImage.TYPE_INT_RGB
-        );
+                width, height, BufferedImage.TYPE_INT_RGB);
 
         image = new BufferedImageAdapter(bufferedImage);
 
@@ -164,7 +220,7 @@ public class FractalGenerator implements IFractalGenerator {
         }
 
         try {
-            image.saveAs("Fractal.png");
+            image.saveAs(outputFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
