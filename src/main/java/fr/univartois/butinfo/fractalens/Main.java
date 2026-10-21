@@ -25,7 +25,7 @@ public class Main {
             throw new IllegalArgumentException("Usage: Main [first.png second.png]");
         }
         generateJulia(new Complex(-0.4, 0.6), new Complex(0.1, 0.6),
-                new GradientColorStrategy(Color.YELLOW, Color.RED, MAX_ITERATIONS),
+                new GradientColorStrategy(Color.BLUE, Color.white, MAX_ITERATIONS),
                 args.length == 2 ? args[0] : "Julia-1.png");
         generateJulia(new Complex(0.285, 0.01), new Complex(-0.47, -0.21),
                 new ColorComponentDecorator(
