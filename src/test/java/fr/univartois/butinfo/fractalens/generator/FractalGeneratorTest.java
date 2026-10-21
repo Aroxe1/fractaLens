@@ -26,13 +26,25 @@ import fr.univartois.butinfo.fractalens.image.IFractalImage;
  */
 class FractalGeneratorTest {
 
+    private FractalGeneratorBuilder juliaBuilder(int width, int height) {
+        return new FractalGeneratorBuilder()
+                .withImageWidth(width)
+                .withImageHeight(height)
+                .withNumberOfTerms(10)
+                .withJuliaConstant(new Complex(0, 0))
+                .withZoomFactor(1)
+                .centeredAt(new Complex(0, 0))
+                .withColorPalette(new GrayScaleColorStrategy(10))
+                .savingTo("unused.png");
+    }
+
     /**
      * Checks that the generated image has the correct dimensions.
      */
     @Test
     void testGenerateImageDimensions() {
         FractalGenerator generator =
-                new FractalGenerator(3, 2, 10, new Complex(0, 0));
+                juliaBuilder(3, 2).build();
 
         IFractalImage image = generator.generateImage();
 
@@ -48,7 +60,7 @@ class FractalGeneratorTest {
     @Test
     void testComputePixelColorOnDivergence() {
         FractalGenerator generator =
-                new FractalGenerator(4, 4, 10, new Complex(0, 0));
+                juliaBuilder(4, 4).build();
 
         GrayScaleColorStrategy strategy = new GrayScaleColorStrategy(10);
 
@@ -73,7 +85,7 @@ class FractalGeneratorTest {
             @TempDir Path tempDirectory) throws IOException {
 
         FractalGenerator generator =
-                new FractalGenerator(4, 3, 10, new Complex(0, 0));
+                juliaBuilder(4, 3).build();
 
         IFractalImage image = generator.generateImage();
 
@@ -110,8 +122,21 @@ class FractalGeneratorTest {
         Color expected = Color.GREEN;
         IColorStrategy strategy =
                 iteration -> iteration == 10 ? expected : Color.MAGENTA;
-        FractalGenerator generator = new FractalGenerator(
-                2, 2, 10, new Complex(0, 0), plane, strategy);
+        FractalGenerator generator = new FractalGeneratorBuilder() {
+            @Override
+            IComplexPlane createPlane() {
+                return plane;
+            }
+        }
+                .withImageWidth(2)
+                .withImageHeight(2)
+                .withNumberOfTerms(10)
+                .withJuliaConstant(new Complex(0, 0))
+                .withZoomFactor(1)
+                .centeredAt(new Complex(0, 0))
+                .withColorPalette(strategy)
+                .savingTo("unused.png")
+                .build();
 
         assertEquals(expected, generator.computePixelColor(0, 0));
     }
@@ -125,9 +150,25 @@ class FractalGeneratorTest {
         IColorStrategy strategy = new ColorComponentDecorator(
                 iteration -> new Color(120, 200, 60),
                 true, false, false);
-        FractalGenerator generator = new FractalGenerator(
-                2, 2, 10, new Complex(0, 0), plane, strategy);
+        FractalGenerator generator = new FractalGeneratorBuilder() {
+            @Override
+            IComplexPlane createPlane() {
+                return plane;
+            }
+        }
+                .withImageWidth(2)
+                .withImageHeight(2)
+                .withNumberOfTerms(10)
+                .withJuliaConstant(new Complex(0, 0))
+                .withZoomFactor(1)
+                .centeredAt(new Complex(0, 0))
+                .withColorPalette(strategy)
+                .savingTo("unused.png")
+                .build();
 
         assertEquals(new Color(120, 0, 0), generator.computePixelColor(0, 0));
     }
 }
+
+
+

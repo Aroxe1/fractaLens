@@ -60,4 +60,8 @@ public enum ColorPaletteType {
      * @return The created color strategy.
      */
     public abstract IColorStrategy getColor(int iteration);
+
+    public IColorStrategy create(int maxIterations) {
+        return getColor(maxIterations);
+    }
 }
