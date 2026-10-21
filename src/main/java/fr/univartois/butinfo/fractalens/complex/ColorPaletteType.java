@@ -1,18 +1,63 @@
 package fr.univartois.butinfo.fractalens.complex;
 
-import java.awt.Color;
+import java.awt.*;
+import java.util.List;
 
-/** Available palettes; iteration-dependent palettes are created at build time. */
 public enum ColorPaletteType {
-    GRAYSCALE,
-    GRADIENT,
-    FIXED;
 
-    public IColorStrategy create(int maxIterations) {
-        return switch (this) {
-            case GRAYSCALE -> new GrayScaleColorStrategy(maxIterations);
-            case GRADIENT -> new GradientColorStrategy(Color.BLUE, Color.WHITE, maxIterations);
-            case FIXED -> new FixedColorStrategy(Color.BLACK);
-        };
-    }
+    /**
+     * The palette coloring pixels in grayscale.
+     */
+    GRAY{
+        @Override
+        public IColorStrategy getColor(int iteration) {
+            return new GrayScaleColorStrategy(iteration);
+        }
+    },
+    /**
+     * The grayscale palette, keeping only the green and blue components
+     * (which gives shades of cyan).
+     */
+    COMPONENT{
+        @Override
+        public IColorStrategy getColor(int iteration) {
+            return new ColorComponentDecorator(new GrayScaleColorStrategy(iteration), false, true, true);
+        }
+    },
+    /**
+     * The palette producing a gradient from black to blue.
+     */
+    GRADIENT{
+        @Override
+        public IColorStrategy getColor(int iteration) {
+            return new GradientColorStrategy(Color.BLACK,Color.BLUE, iteration);
+        }
+    },
+    /**
+     * The palette using a fixed list of colors (red, green and blue).
+     */
+    FIXED{
+        @Override
+        public IColorStrategy getColor(int iteration) {
+            return new FixedColorStrategy(List.of(Color.RED, Color.GREEN, Color.BLUE));
+        }
+    },
+    /**
+     * The grayscale palette, with its colors inverted.
+     */
+    INVERTED{
+        @Override
+        public IColorStrategy getColor(int iteration) {
+            return new InvertedColorDecorator(new GrayScaleColorStrategy(iteration));
+        }
+    };
+
+    /**
+     * Creates the color strategy associated with this palette.
+     *
+     * @param iteration The maximum number of iterations.
+     *
+     * @return The created color strategy.
+     */
+    public abstract IColorStrategy getColor(int iteration);
 }
