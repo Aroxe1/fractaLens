@@ -13,26 +13,26 @@ public class GenericComplexSequence implements IComplexSequence{
     private final BinaryOperator<IComplex> function;
 
     /**
-     * The complex number added after raising the term to the power.
-     */
-    private final IComplex constant;
-
-    /**
      * The current term of the sequence.
      */
     private final IComplex current;
 
     /**
+     * The maximum of iterations.
+     */
+    private int maxIterations;
+
+    /**
      * Creates a new instance of {@link GenericComplexSequence}.
      *
      * @param function the function computing the next term
-     * @param constant the constant used by the function
      * @param current the first term of the sequence
+     * @param maxIterations
      */
-    public GenericComplexSequence(BinaryOperator<IComplex> function, IComplex constant, IComplex current){
+    public GenericComplexSequence(BinaryOperator<IComplex> function, IComplex current, int maxIterations){
         this.function = function;
-        this.constant = constant;
         this.current = current;
+        this.maxIterations = maxIterations;
     }
 
 
@@ -44,7 +44,7 @@ public class GenericComplexSequence implements IComplexSequence{
      */
     @Override
     public IComplex computeNext(IComplex previous) {
-        return function.apply(previous, constant);
+        return function.apply(previous, current);
     }
 
     /**
@@ -55,21 +55,6 @@ public class GenericComplexSequence implements IComplexSequence{
      */
     @Override
     public Iterator<IComplex> iterator(){
-        return new Iterator<IComplex>() {
-
-            private IComplex nextTerm = current;
-
-            @Override
-            public boolean hasNext() {
-                return true;
-            }
-
-            @Override
-            public IComplex next() {
-                IComplex result = nextTerm;
-                nextTerm = computeNext(nextTerm);
-                return result;
-            }
-        };
+        return new ComplexSequenceIterator(this, current, maxIterations);
     }
 }
