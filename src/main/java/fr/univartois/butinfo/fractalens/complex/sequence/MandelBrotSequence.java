@@ -2,8 +2,15 @@ package fr.univartois.butinfo.fractalens.complex.sequence;
 
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 
-public class MandelBrotSequence extends GenericComplexSequence {
+import java.util.Iterator;
 
+public class MandelBrotSequence implements IComplexSequence {
+    /**
+     * first
+     */
+    private IComplex z0;
+
+    private int maxIterations;
     /**
      * Creates a Mandelbrot sequence.
      *
@@ -11,7 +18,12 @@ public class MandelBrotSequence extends GenericComplexSequence {
      * @param maxIterations the maximum number of iterations
      */
     public MandelBrotSequence(IComplex z0, int maxIterations) {
-        super((z, first) -> z.pow(2).add(first), z0, maxIterations);
+        this.z0 = z0;
+        this.maxIterations = maxIterations;
+    }
+
+    public IComplex computeNext(IComplex z){
+        return z.pow(2).add(getZ0());
     }
 
     /**
@@ -20,7 +32,11 @@ public class MandelBrotSequence extends GenericComplexSequence {
      * @return the initial complex number
      */
     public IComplex getZ0() {
-        return getCurrent();
+        return this.z0;
     }
 
+    @Override
+    public Iterator<IComplex> iterator() {
+        return new ComplexSequenceIterator(this , z0 , maxIterations);
+    }
 }
