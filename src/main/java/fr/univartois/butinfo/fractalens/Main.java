@@ -51,4 +51,5 @@ public class Main {
         generator.generateImage().saveAs(path);
         System.out.println("Julia fractal saved to: " + path);
     }
+
 }
