@@ -136,6 +136,26 @@ public class Complex implements IComplex{
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
+     * The power is computed by multiplying this complex number by itself
+     * {@code exponent} times, starting from 1.
+     *
+     * @throws IllegalArgumentException if the exponent is negative
+     */
+    @Override
+    public IComplex pow(int exponent){
+        if(exponent < 0){
+            throw new IllegalArgumentException("The exponent must not be negative");
+        }
+        IComplex result = new Complex(1,0);
+        for(int i = 0; i<exponent; i++){
+            result = result.multiply(this);
+        }
+        return result;
+    }
+
+    /**
      * Checks whether this object is equal to another complex number.
      *
      * @param obj object to compare
@@ -152,6 +172,8 @@ public class Complex implements IComplex{
         IComplex other = (IComplex) obj;
         return real == other.getRealPart() && imaginary == other.getImaginaryPart();
     }
+
+
 
     /**
      * Calculates the hash code of the complex number.

@@ -259,6 +259,27 @@ class ComplexTest {
         assertEquals(createComplex(2, -2), z.divide(i));
     }
 
+
+    /**
+     * Tests that {@link IComplex#pow(int)} correctly raises a complex number
+     * to an integer power.
+     */
+    @Test
+    void testPow() {
+        IComplex zero = createComplex(0, 0);
+        IComplex one = createComplex(1, 0);
+        IComplex i = createComplex(0, 1);
+        IComplex z = createComplex(2, 2);
+
+        assertEquals(one, z.pow(0));
+        assertEquals(z, z.pow(1));
+        assertEquals(createComplex(0, 8), z.pow(2));
+        assertEquals(createComplex(-16, 16), z.pow(3));
+        assertEquals(createComplex(-1, 0), i.pow(2));
+        assertEquals(zero, zero.pow(5));
+        assertEquals(one, one.pow(10));
+    }
+
     /**
      * Test method for
      * {@link fr.univartois.butinfo.fractalens.complex.IComplex#hashCode()}.
