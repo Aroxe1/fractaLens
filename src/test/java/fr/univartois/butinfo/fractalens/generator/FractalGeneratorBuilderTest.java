@@ -1,84 +1,123 @@
 
-package fr.univartois.butinfo.fractalens.fractals;
+package fr.univartois.butinfo.fractalens.generator;
 
+import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
-import fr.univartois.butinfo.fractalens.complex.IComplexSequence;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.function.BiFunction;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the {@link FractalGeneratorBuilder} class.
+ *
+ * <p>These tests verify the configuration methods,
+ * method chaining and fractal generator creation.</p>
+ *
+ * @see FractalGeneratorBuilder
+ * @see FractalGenerator
+ */
 class FractalGeneratorBuilderTest {
 
+    /**
+     * Tests that setting the image width returns
+     * the current builder instance.
+     */
     @Test
-    void testBuilderCreatesGenerator() {
-        FractalGenerator generator =
-                new FractalGeneratorBuilder().build();
+    void testSetWidth() {
+        FractalGeneratorBuilder builder =
+                new FractalGeneratorBuilder();
+
+        assertSame(builder, builder.setWidth(800));
+    }
+
+    /**
+     * Tests that setting the image height returns
+     * the current builder instance.
+     */
+    @Test
+    void testSetHeight() {
+        FractalGeneratorBuilder builder =
+                new FractalGeneratorBuilder();
+
+        assertSame(builder, builder.setHeight(600));
+    }
+
+    /**
+     * Tests that setting the maximum number of iterations
+     * returns the current builder instance.
+     */
+    @Test
+    void testSetMaxIterations() {
+        FractalGeneratorBuilder builder =
+                new FractalGeneratorBuilder();
+
+        assertSame(builder, builder.setMaxIterations(100));
+    }
+
+    /**
+     * Tests that setting the complex constant returns
+     * the current builder instance.
+     */
+    @Test
+    void testSetC() {
+        FractalGeneratorBuilder builder =
+                new FractalGeneratorBuilder();
+
+        IComplex c = null;
+
+        assertSame(builder, builder.setC(c));
+    }
+
+
+    /**
+     * Tests that the builder creates a fractal generator
+     * using a valid complex constant.
+     */
+    @Test
+    void testBuild() {
+        IComplex c = new Complex(-0.7, 0.27015);
+
+        FractalGenerator generator = new FractalGeneratorBuilder()
+                .setWidth(800)
+                .setHeight(600)
+                .setMaxIterations(100)
+                .setC(c)
+                .build();
 
         assertNotNull(generator);
     }
 
+    /**
+     * Tests that all configuration methods can be chained.
+     */
     @Test
-    void testImageSize() {
+    void testMethodChaining() {
         FractalGeneratorBuilder builder =
                 new FractalGeneratorBuilder();
 
-        assertSame(builder, builder.withSize(800, 600));
+        FractalGeneratorBuilder result = builder
+                .setWidth(800)
+                .setHeight(600)
+                .setMaxIterations(100)
+                .setC(null);
+
+        assertSame(builder, result);
     }
 
-    @Test
-    void testZoom() {
-        FractalGeneratorBuilder builder =
-                new FractalGeneratorBuilder();
-
-        assertSame(builder, builder.withZoom(2.0));
-    }
-
-    @Test
-    void testCenter() {
-        FractalGeneratorBuilder builder =
-                new FractalGeneratorBuilder();
-
-        assertSame(builder, builder.withCenter(-0.5, 0.0));
-    }
-
-    @Test
-    void testMaxIterations() {
-        FractalGeneratorBuilder builder =
-                new FractalGeneratorBuilder();
-
-        assertSame(builder, builder.withMaxIterations(100));
-    }
-
-    @Test
-    void testOutputFile() {
-        FractalGeneratorBuilder builder =
-                new FractalGeneratorBuilder();
-
-        assertSame(builder,
-                builder.withOutputFile("fractale.png"));
-    }
-
-    @Test
-    void testCompleteConfiguration() {
-        FractalGenerator generator =
-                new FractalGeneratorBuilder()
-                        .withSize(800, 600)
-                        .withZoom(1.5)
-                        .withCenter(-0.5, 0.0)
-                        .withMaxIterations(150)
-                        .withOutputFile("julia.png")
-                        .build();
-
-        assertNotNull(generator);
-    }
-
+    /**
+     * Tests that two calls to build create
+     * two different fractal generator instances.
+     */
     @Test
     void testDifferentGenerators() {
-        FractalGeneratorBuilder builder =
-                new FractalGeneratorBuilder();
+        IComplex c = new Complex(-0.7, 0.27015);
+
+        FractalGeneratorBuilder builder = new FractalGeneratorBuilder()
+                .setWidth(800)
+                .setHeight(600)
+                .setMaxIterations(100)
+                .setC(c);
 
         FractalGenerator first = builder.build();
         FractalGenerator second = builder.build();
