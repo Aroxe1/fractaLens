@@ -26,15 +26,15 @@ class FractalGeneratorBuilderTest {
         java.util.List<Integer> terms = new java.util.ArrayList<>();
         java.util.List<IComplex> points = new java.util.ArrayList<>();
         FractalGenerator generator = new FractalGeneratorBuilder()
-                .setWidth(4).setHeight(2).setMaxIterations(7)
-                .setZoom(0.5).setCenter(new Complex(-1, 1))
-                .setSequence((point, count) -> {
+                .withImageWidth(4).withImageHeight(2).withNumberOfTerms(7)
+                .withZoomFactor(0.5).centeredAt(new Complex(-1, 1))
+                .usingSequence((point, count) -> {
                     points.add(point);
                     terms.add(count);
                     return new fr.univartois.butinfo.fractalens.complex.sequence.MandelBrotSequence(point, count);
                 })
-                .setPalette(iteration -> java.awt.Color.RED)
-                .setOutputFile(output.toString()).build();
+                .withColorPalette(iteration -> java.awt.Color.RED)
+                .savingTo(output.toString()).build();
 
         generator.saveImage();
 
@@ -51,11 +51,11 @@ class FractalGeneratorBuilderTest {
     @Test
     void testPaletteUsesFinalIterationCount() {
         FractalGenerator generator = new FractalGeneratorBuilder()
-                .setWidth(2).setHeight(2)
-                .setPalette(fr.univartois.butinfo.fractalens.complex.ColorPaletteType.GRAYSCALE)
-                .setSequence(fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType.MANDELBROT)
-                .setZoom(0.5).setCenter(new Complex(0, 0))
-                .setOutputFile("unused.png").setMaxIterations(7).build();
+                .withImageWidth(2).withImageHeight(2)
+                .withColorPalette(fr.univartois.butinfo.fractalens.complex.ColorPaletteType.GRAY)
+                .usingSequence(fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType.MANDELBROT)
+                .withZoomFactor(0.5).centeredAt(new Complex(0, 0))
+                .savingTo("unused.png").withNumberOfTerms(7).build();
 
         assertEquals(java.awt.Color.BLACK, generator.computePixelColor(1, 1));
     }
@@ -69,7 +69,7 @@ class FractalGeneratorBuilderTest {
         FractalGeneratorBuilder builder =
                 new FractalGeneratorBuilder();
 
-        assertSame(builder, builder.setWidth(800));
+        assertSame(builder, builder.withImageWidth(800));
     }
 
     /**
@@ -81,7 +81,7 @@ class FractalGeneratorBuilderTest {
         FractalGeneratorBuilder builder =
                 new FractalGeneratorBuilder();
 
-        assertSame(builder, builder.setHeight(600));
+        assertSame(builder, builder.withImageHeight(600));
     }
 
     /**
@@ -93,7 +93,7 @@ class FractalGeneratorBuilderTest {
         FractalGeneratorBuilder builder =
                 new FractalGeneratorBuilder();
 
-        assertSame(builder, builder.setMaxIterations(100));
+        assertSame(builder, builder.withNumberOfTerms(100));
     }
 
     /**
@@ -107,7 +107,7 @@ class FractalGeneratorBuilderTest {
 
         IComplex c = null;
 
-        assertSame(builder, builder.setC(c));
+        assertSame(builder, builder.withJuliaConstant(c));
     }
 
 
@@ -120,10 +120,14 @@ class FractalGeneratorBuilderTest {
         IComplex c = new Complex(-0.7, 0.27015);
 
         FractalGenerator generator = new FractalGeneratorBuilder()
-                .setWidth(800)
-                .setHeight(600)
-                .setMaxIterations(100)
-                .setC(c)
+                .withImageWidth(800)
+                .withImageHeight(600)
+                .withNumberOfTerms(100)
+                .withJuliaConstant(c)
+                .withZoomFactor(0.005)
+                .centeredAt(new Complex(0, 0))
+                .withColorPalette(fr.univartois.butinfo.fractalens.complex.ColorPaletteType.GRAY)
+                .savingTo("julia.png")
                 .build();
 
         assertNotNull(generator);
@@ -138,10 +142,10 @@ class FractalGeneratorBuilderTest {
                 new FractalGeneratorBuilder();
 
         FractalGeneratorBuilder result = builder
-                .setWidth(800)
-                .setHeight(600)
-                .setMaxIterations(100)
-                .setC(null);
+                .withImageWidth(800)
+                .withImageHeight(600)
+                .withNumberOfTerms(100)
+                .withJuliaConstant(null);
 
         assertSame(builder, result);
     }
@@ -155,10 +159,14 @@ class FractalGeneratorBuilderTest {
         IComplex c = new Complex(-0.7, 0.27015);
 
         FractalGeneratorBuilder builder = new FractalGeneratorBuilder()
-                .setWidth(800)
-                .setHeight(600)
-                .setMaxIterations(100)
-                .setC(c);
+                .withImageWidth(800)
+                .withImageHeight(600)
+                .withNumberOfTerms(100)
+                .withJuliaConstant(c)
+                .withZoomFactor(0.005)
+                .centeredAt(new Complex(0, 0))
+                .withColorPalette(fr.univartois.butinfo.fractalens.complex.ColorPaletteType.GRAY)
+                .savingTo("julia.png");
 
         FractalGenerator first = builder.build();
         FractalGenerator second = builder.build();
@@ -167,4 +175,35 @@ class FractalGeneratorBuilderTest {
         assertNotNull(second);
         assertNotSame(first, second);
     }
+
+    @Test
+    void testEverySequenceAndPalette() {
+        for (var sequence : fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType.values()) {
+            for (var palette : fr.univartois.butinfo.fractalens.complex.ColorPaletteType.values()) {
+                FractalGenerator generator = new FractalGeneratorBuilder()
+                        .usingSequence(sequence)
+                        .withNumberOfTerms(10)
+                        .withImageWidth(4)
+                        .withImageHeight(4)
+                        .withZoomFactor(0.5)
+                        .centeredAt(new Complex(0, 0))
+                        .withColorPalette(palette)
+                        .savingTo("unused.png")
+                        .build();
+
+                assertNotNull(generator.generateImage(), sequence + " / " + palette);
+            }
+        }
+    }
+
+    @Test
+    void testIncompleteConfigurationIsRejected() {
+        assertThrows(IllegalStateException.class, () -> new FractalGeneratorBuilder()
+                .withImageWidth(4)
+                .withImageHeight(4)
+                .withNumberOfTerms(10)
+                .build());
+    }
 }
+
+

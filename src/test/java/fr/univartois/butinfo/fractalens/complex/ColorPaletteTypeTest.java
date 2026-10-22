@@ -12,6 +12,18 @@ import org.junit.jupiter.api.Test;
 
 class ColorPaletteTypeTest {
 
+    @Test
+    void testCreateReturnsTheExpectedPalette() {
+        for (ColorPaletteType type : ColorPaletteType.values()) {
+            IColorStrategy palette = type.create(MAX);
+            assertNotNull(palette, type.name());
+            for (int iteration : new int[] {0, MAX / 2, MAX}) {
+                assertEquals(type.getColor(MAX).getColor(iteration),
+                        palette.getColor(iteration), type.name());
+            }
+        }
+    }
+
     /**
      * The maximum number of iterations used in the tests.
      */

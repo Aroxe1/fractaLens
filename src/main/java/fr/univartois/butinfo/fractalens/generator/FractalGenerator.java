@@ -44,58 +44,6 @@ public class FractalGenerator implements IFractalGenerator {
         this.outputFile = builder.getOutputFile();
         this.sequenceFactory = builder.getSequenceFactory();
     }
-
-    /**
-     * Creates a generator using a custom complex sequence.
-     *
-     * @param width width of the image
-     * @param height height of the image
-     * @param maxIterations maximum number of iterations
-     * @param plane complex plane
-     * @param colorStrategy color strategy
-     * @param sequenceFactory factory used to create sequences
-     */
-    public FractalGenerator(
-            int width,
-            int height,
-            int maxIterations,
-            IComplexPlane plane,
-            IColorStrategy colorStrategy,
-            BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory) {
-
-        this(width, height, maxIterations, plane,
-                colorStrategy, "Fractal.png", sequenceFactory);
-    }
-
-    /**
-     * Creates a generator using a custom sequence and output file.
-     *
-     * @param width width of the image
-     * @param height height of the image
-     * @param maxIterations maximum number of iterations
-     * @param plane complex plane
-     * @param colorStrategy color strategy
-     * @param outputFile name of the output file
-     * @param sequenceFactory factory used to create sequences
-     */
-    public FractalGenerator(
-            int width,
-            int height,
-            int maxIterations,
-            IComplexPlane plane,
-            IColorStrategy colorStrategy,
-            String outputFile,
-            BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory) {
-
-        this.width = width;
-        this.height = height;
-        this.maxIterations = maxIterations;
-        this.plane = plane;
-        this.colorStrategy = colorStrategy;
-        this.outputFile = outputFile;
-        this.sequenceFactory = sequenceFactory;
-    }
-
     /**
      * Generates the fractal image by coloring each pixel.
      *
