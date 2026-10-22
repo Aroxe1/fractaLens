@@ -10,6 +10,8 @@ import java.util.List;
 
 public class AnimatedFractalGenerator implements IFractalGenerator {
 
+    private List<IFractalImage> images = new ArrayList<>();
+
     /**
      * The generators producing the frames of the animation, in order.
      */
@@ -48,7 +50,10 @@ public class AnimatedFractalGenerator implements IFractalGenerator {
      */
     @Override
     public IFractalImage generateImage() {
-        return generatorList.get(0).generateImage();
+        for (IFractalGenerator generator : generatorList) {
+            images.add(generator.generateImage());
+        }
+        return images.get(0);
     }
 
     /**
@@ -75,10 +80,6 @@ public class AnimatedFractalGenerator implements IFractalGenerator {
      */
     @Override
     public void saveImage() {
-        List<BufferedImage> images = new ArrayList<>();
-        for (IFractalGenerator generator : generatorList) {
-            images.add(generator.generateImage().asBufferedImage());
-        }
 
         AnimatedGifEncoder encoder = new AnimatedGifEncoder();
         encoder.start(outputPath);
@@ -86,8 +87,8 @@ public class AnimatedFractalGenerator implements IFractalGenerator {
         encoder.setRepeat(0);
         encoder.setQuality(10);
 
-        for (BufferedImage image : images) {
-            encoder.addFrame(image);
+        for (IFractalImage image : images) {
+            encoder.addFrame(image.asBufferedImage());
         }
 
         encoder.finish();
