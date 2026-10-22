@@ -1,18 +1,21 @@
 package fr.univartois.butinfo.fractalens.generator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.awt.Color;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
+import fr.univartois.butinfo.fractalens.image.IFractalImage;
 import org.junit.jupiter.api.Test;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.ColorPaletteType;
+import fr.univartois.butinfo.fractalens.generator.FractalGeneratorBuilder;
+import fr.univartois.butinfo.fractalens.generator.IFractalGenerator;
+import fr.univartois.butinfo.fractalens.generator.ZoomFractalGenerator;
+import org.junit.jupiter.api.io.TempDir;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 class ZoomFractalGeneratorTest {
 
@@ -32,82 +35,62 @@ class ZoomFractalGeneratorTest {
                 .savingTo("test-zoom.png");
     }
 
-    /**
-     * Checks that the expected number of generators is created.
-     */
-    @Test
-    void testNumberOfGenerators() {
-        ZoomFractalGenerator zoom = new ZoomFractalGenerator(createBuilder(), 0.2, 0.25, 3);
-
-        assertEquals(3, zoom.getGenerators().size());
+    private static ZoomFractalGenerator createZoom(int nbImages, String outputPath) {
+        return new ZoomFractalGenerator(createBuilder(), 0.2, 0.25, nbImages, outputPath, 100);
     }
+
+
+    @Test
+    void testGenerateImage() {
+        IFractalImage image = createZoom(3, "test-zoom.gif").generateImage();
+
+        assertNotNull(image);
+        assertEquals(20, image.getWidth());
+        assertEquals(20, image.getHeight());
+    }
+
+    @Test
+    void testSaveImageCreatesGif(@TempDir Path directory) {
+        Path output = directory.resolve("zoom.gif");
+
+        createZoom(3, output.toString()).saveImage();
+
+        assertTrue(Files.exists(output));
+    }
+
 
     /**
      * Checks that no generator is created when no image is requested.
      */
     @Test
     void testNoImage() {
-        ZoomFractalGenerator zoom = new ZoomFractalGenerator(createBuilder(), 0.2, 0.25, 0);
-
-        assertTrue(zoom.getGenerators().isEmpty());
+        assertThrows(IllegalArgumentException.class,
+                () -> new ZoomFractalGenerator(createBuilder(), 0.2, 0.25, 0,"test-zoom.gif", 100));
     }
 
-    /**
-     * Checks that every generator is a distinct object.
-     */
     @Test
-    void testGeneratorsAreDistinct() {
-        List<IFractalGenerator> generators = new ZoomFractalGenerator(createBuilder(), 0.2, 0.25, 3).getGenerators();
+    void testComputePixelColorUsesFirstFrame() {
+        ZoomFractalGenerator zoom = createZoom(3, "test-zoom.gif");
+        IFractalGenerator sameZoomAlone = createBuilder().withZoomFactor(0.2).build();
+        IFractalGenerator moreZoomed = createBuilder().withZoomFactor(0.0125).build();
 
-        assertNotSame(generators.get(0), generators.get(1));
-        assertNotSame(generators.get(1), generators.get(2));
-        assertNotSame(generators.get(0), generators.get(2));
+        // The first frame has a zoom of 0.2: the top-left pixel is white.
+        assertEquals(Color.WHITE, zoom.computePixelColor(0, 0));
+        assertEquals(sameZoomAlone.computePixelColor(0, 0), zoom.computePixelColor(0, 0));
+        assertNotEquals(moreZoomed.computePixelColor(0, 0), zoom.computePixelColor(0, 0));
     }
 
-    /**
-     * Checks that the zoom really changes between the generators.
-     * With a zoom of 0.2, the top-left pixel of a 20x20 image is the point
-     * -2 + 2i, whose modulus is greater than 2: the sequence diverges at once
-     * and the pixel is white. With a smaller zoom, this pixel is much closer
-     * to the center and the sequence does not diverge, so the pixel is dark.
-     */
+
+
     @Test
-    void testZoomChangesBetweenGenerators() {
-        List<IFractalGenerator> generators = new ZoomFractalGenerator(createBuilder(), 0.2, 0.25, 3).getGenerators();
-
-        Color first = generators.get(0).computePixelColor(0, 0);
-        Color last = generators.get(2).computePixelColor(0, 0);
-
-        assertEquals(Color.WHITE, first);
-        assertNotEquals(first, last);
-    }
-
-    /**
-     * Checks that the first generators keep their own zoom, even if the
-     * builder is modified afterwards to create the following ones.
-     */
-    @Test
-    void testFirstGeneratorKeepsItsZoom() {
+    void testInvalidParameters() {
         FractalGeneratorBuilder builder = createBuilder();
-        IFractalGenerator alone = builder.withZoomFactor(0.2).build();
-        Color expected = alone.computePixelColor(0, 0);
 
-        List<IFractalGenerator> generators = new ZoomFractalGenerator(builder, 0.2, 0.25, 3).getGenerators();
-
-        assertEquals(expected, generators.get(0).computePixelColor(0, 0));
+        assertThrows(IllegalArgumentException.class,
+                () -> new ZoomFractalGenerator(builder, 0.2, 1.5, 3, "test-zoom.gif", 100));
+        assertThrows(IllegalArgumentException.class,
+                () -> new ZoomFractalGenerator(builder, 0.2, 0.25, 0, "test-zoom.gif", 100));
     }
 
-    /**
-     * Checks that all the generators produce an image of the same size.
-     */
-    @Test
-    void testGeneratedImagesHaveTheSameSize() {
-        List<IFractalGenerator> generators = new ZoomFractalGenerator(createBuilder(), 0.2, 0.5, 2).getGenerators();
 
-        var first = generators.get(0).generateImage();
-        var second = generators.get(1).generateImage();
-
-        assertEquals(first.getWidth(), second.getWidth());
-        assertEquals(first.getHeight(), second.getHeight());
-    }
 }
