@@ -60,7 +60,7 @@ public enum ComplexSequenceType {
     /**
      * Multitricorn sequence of power 3: {@code z(n+1) = conj(z(n))³ + z0}.
      */
-    MULTITRICORN((z0, max) -> new MultiTricornSequence(z0, z0, 3, max)),
+    MULTITRICORN((z0, max) -> new MultiTricornSequence(z0, z0,3, max)),
 
     /**
      * Multi Burning Ship sequence of power 3:
