@@ -47,6 +47,14 @@ public class BufferedImageAdapter implements IFractalImage{
     }
 
     /**
+     * Gives the adapted BufferedImage.
+     *
+     * @return The adapted image.
+     */
+    public BufferedImage getImage(){
+        return image;
+    }
+    /**
      * Updates the color of the pixel at the given position in this image.
      *
      * @param row The row of the pixel to update.
@@ -72,6 +80,18 @@ public class BufferedImageAdapter implements IFractalImage{
         if (!ImageIO.write(image, format, new File(path))) {
             throw new IOException("Unsupported image format: " + format);
         }
+    }
+
+    /**
+     * Gives the adapted image.
+     *
+     * @return The {@link BufferedImage} adapted by this object.
+     *
+     * @see IFractalImage#asBufferedImage()
+     */
+    @Override
+    public BufferedImage asBufferedImage() {
+        return image;
     }
 
 }
