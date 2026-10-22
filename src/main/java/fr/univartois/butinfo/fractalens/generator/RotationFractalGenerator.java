@@ -3,6 +3,8 @@ package fr.univartois.butinfo.fractalens.generator;
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 
+import java.util.Objects;
+
 /**
  * Rotates a complex constant to generate different Julia fractals.
  */
@@ -17,7 +19,7 @@ public class RotationFractalGenerator {
      */
 
     public RotationFractalGenerator(IComplex initialconst) {
-        this.initialconst = initialconst;
+        this.initialconst = Objects.requireNonNull(initialconst);
     }
 
     /**
