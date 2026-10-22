@@ -1,65 +1,39 @@
 package fr.univartois.butinfo.fractalens.generator;
 
-import fr.univartois.butinfo.fractalens.complex.Complex;
-import fr.univartois.butinfo.fractalens.complex.IComplex;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RotationFractalGeneratorTest {
+/**
+ * Tests the RotatingFractalGenerator class.
+ */
+class RotatingFractalGeneratorTest {
 
+    /**
+     * Tests that the constructor rejects a non-positive number of frames.
+     */
     @Test
-    void testRotationAngleZero() {
-        IComplex initial = new Complex(2, 3);
-        RotationFractalGenerator generator =
-                new RotationFractalGenerator(initial);
+    void testInvalidNumberOfFrames() {
+        FractalGeneratorBuilder builder = new FractalGeneratorBuilder();
 
-        IComplex result = generator.rotate(0);
-
-        assertEquals(2.0, result.getRealPart(), 1e-10);
-        assertEquals(3.0, result.getImaginaryPart(), 1e-10);
-    }
-
-    @Test
-    void testRotationAngle90Degrees() {
-        IComplex initial = new Complex(2, 3);
-        RotationFractalGenerator generator =
-                new RotationFractalGenerator(initial);
-
-        IComplex result = generator.rotate(Math.PI / 2);
-
-        assertEquals(-3.0, result.getRealPart(), 1e-10);
-        assertEquals(2.0, result.getImaginaryPart(), 1e-10);
-    }
-
-    @Test
-    void testRotationAngle180Degrees() {
-        IComplex initial = new Complex(2, 3);
-        RotationFractalGenerator generator =
-                new RotationFractalGenerator(initial);
-
-        IComplex result = generator.rotate(Math.PI);
-
-        assertEquals(-2.0, result.getRealPart(), 1e-10);
-        assertEquals(-3.0, result.getImaginaryPart(), 1e-10);
-    }
-
-    @Test
-    void testRotationKeepsModulus() {
-        IComplex initial = new Complex(2, 3);
-        RotationFractalGenerator generator =
-                new RotationFractalGenerator(initial);
-
-        IComplex result = generator.rotate(Math.PI / 4);
-
-        assertEquals(initial.abs(), result.abs(), 1e-10);
-    }
-
-    @Test
-    void testNullConstant() {
         assertThrows(
-                NullPointerException.class,
-                () -> new RotationFractalGenerator(null)
+                IllegalArgumentException.class,
+                () -> new RotatingFractalGenerator(
+                        builder, 0, "animation.gif", 100)
+        );
+    }
+
+    /**
+     * Tests that the constructor rejects a negative number of frames.
+     */
+    @Test
+    void testNegativeNumberOfFrames() {
+        FractalGeneratorBuilder builder = new FractalGeneratorBuilder();
+
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new RotatingFractalGenerator(
+                        builder, -1, "animation.gif", 100)
         );
     }
 }
