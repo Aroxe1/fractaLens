@@ -83,14 +83,14 @@ IFractalGenerator --> IComplexSequence : << uses >>
 | Sequence of complex numbers                            |                     | ML        |
 | Iterator over a sequence of complex numbers            |                     | ML        |
 | Julia sequence                                         |                     | TG        |
-| Mandelbrot sequence                                    |                     |           |
-| Multijulia sequence                                    |                     |           |
-| Multibrot sequence                                     |                     |           |
-| Generic sequences                                      |                     |           |
-| Color palette                                          |                     |           |
-| Grey scale palette                                     |                     |           |
-| Red/Green/Blue/... scale palette                       |                     |           |
-| Inverted color palette                                 |                     |           |
+| Mandelbrot sequence                                    |                     | TG        |
+| Multijulia sequence                                    |                     | RM        |
+| Multibrot sequence                                     |                     | TG        |
+| Generic sequences                                      |                     | RM        |
+| Color palette                                          |                     | DA        |
+| Grey scale palette                                     |                     | DA        |
+| Red/Green/Blue/... scale palette                       |                     | DA        |
+| Inverted color palette                                 |                     | DA        |
 | Gradient-based color palette                           |                     |           |
 | Predefined color palette                               |                     |           |
 | `BufferedImage` used as an `IFractalImage`             |                     |           |

@@ -18,6 +18,7 @@ import org.junit.jupiter.api.io.TempDir;
 import org.w3c.dom.Node;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
+import fr.univartois.butinfo.fractalens.complex.ColorPaletteType;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 /**
@@ -43,7 +44,16 @@ class AnimatedFractalGeneratorTest {
      * @return The created generator.
      */
     private static IFractalGenerator julia(int width, int height, double real) {
-        return new FractalGenerator(width, height, 20, new Complex(real, 0.27015));
+        return new FractalGeneratorBuilder()
+                .withImageWidth(width)
+                .withImageHeight(height)
+                .withNumberOfTerms(20)
+                .withJuliaConstant(new Complex(real, 0.27015))
+                .withZoomFactor(0.01)
+                .centeredAt(new Complex(0, 0))
+                .withColorPalette(ColorPaletteType.GRAY)
+                .savingTo("unused.png")
+                .build();
     }
 
     /**

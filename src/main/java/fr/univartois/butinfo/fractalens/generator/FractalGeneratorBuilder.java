@@ -105,6 +105,7 @@ public class FractalGeneratorBuilder {
     BiFunction<IComplex, Integer, IComplexSequence> getSequenceFactory() {
         return sequenceFactory;
     }
+
 }
 
 

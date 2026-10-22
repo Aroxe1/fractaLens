@@ -66,4 +66,5 @@ public class GenericComplexSequence implements IComplexSequence{
     public Iterator<IComplex> iterator(){
         return new ComplexSequenceIterator(this, current, maxIterations);
     }
+    
 }
