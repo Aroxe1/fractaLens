@@ -32,5 +32,6 @@ public final class Main {
         AnimatedFractalGenerator animation = new AnimatedFractalGenerator(
                 zoom.getGenerators(), outputPath, 80);
         animation.saveImage();
+
     }
 }
