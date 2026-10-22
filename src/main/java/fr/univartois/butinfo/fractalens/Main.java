@@ -27,11 +27,13 @@ public final class Main {
                 .withColorPalette(ColorPaletteType.GRADIENT)
                 .savingTo("unused.png");
 
-        ZoomFractalGenerator zoom = new ZoomFractalGenerator(
-                builder, 0.005, 0.92, 30);
-        AnimatedFractalGenerator animation = new AnimatedFractalGenerator(
-                zoom.getGenerators(), outputPath, 80);
-        animation.saveImage();
+        //ZoomFractalGenerator zoom = new ZoomFractalGenerator(builder, 0.005, 0.92, 30);
+        //AnimatedFractalGenerator animation = new AnimatedFractalGenerator(
+        //zoom.getGenerators(), outputPath, 80);
+        //animation.saveImage();
 
+        ZoomFractalGenerator zoom = new ZoomFractalGenerator(
+                builder, 0.005, 0.92, 30, outputPath, 80);
+        zoom.saveImage();
     }
 }
