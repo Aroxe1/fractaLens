@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests inversion of colors provided by a color strategy.
+ * @author Lylian Michel (unit tests)
  */
 class InvertedColorDecoratorTest {
 

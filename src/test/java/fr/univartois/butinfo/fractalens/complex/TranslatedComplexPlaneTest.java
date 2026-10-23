@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests the translated complex plane.
+ * @author Gautier Tinchon (unit tests)
  */
 class TranslatedComplexPlaneTest {
 

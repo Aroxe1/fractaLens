@@ -38,6 +38,7 @@ import fr.univartois.butinfo.fractalens.complex.Complex;
  * @author Romain Wallon
  *
  * @version 0.1.0
+ * @author Gautier Tinchon (unit tests)
  */
 class ComplexSequenceTest {
 

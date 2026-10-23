@@ -1,5 +1,9 @@
 package fr.univartois.butinfo.fractalens.complex;
 
+/**
+ * Stores the iteration budget shared by color strategies.
+ * @author Maxence Royon (implementation)
+ */
 public abstract class AbstractColorStrategy {
     /**
      * The maximum number of iterations.

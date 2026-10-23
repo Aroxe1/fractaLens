@@ -10,17 +10,16 @@ import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.function.BiFunction;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Generates a fractal image using a complex sequence.
+ * @author Gautier Tinchon (implementation)
  */
 public class FractalGenerator implements IFractalGenerator {
 
-    private static final Logger LOGGER =
-            Logger.getLogger(FractalGenerator.class.getName());
     /**
      * The strategy used to determine the color of a pixel.
      */
@@ -133,8 +132,8 @@ public class FractalGenerator implements IFractalGenerator {
 
         try {
             image.saveAs(outputFile);
-        } catch (Exception e) {
-            LOGGER.log(Level.INFO, "Erreur lors de la sauvegarde de l'image", e);
+        } catch (IOException e) {
+            throw new UncheckedIOException("Cannot save fractal image: " + outputFile, e);
         }
     }
 }

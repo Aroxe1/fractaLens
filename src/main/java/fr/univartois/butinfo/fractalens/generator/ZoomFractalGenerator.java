@@ -7,6 +7,10 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Generates an animation with progressively smaller complex-plane scales.
+ * @author Alice Demey (implementation)
+ */
 public class ZoomFractalGenerator implements IFractalGenerator {
     /**
      * The generators created for the animation, from the first image (the
@@ -25,6 +29,8 @@ public class ZoomFractalGenerator implements IFractalGenerator {
      * @param factor The value by which the zoom is multiplied for each new
      *        generator (between 0 and 1, so that the image zooms in).
      * @param nbImages The number of generators to create.
+     * @param outputPath the path of the animated GIF
+     * @param delayMS the duration of each frame in milliseconds
      */
     public ZoomFractalGenerator(FractalGeneratorBuilder builder, double startZoom, double factor, int nbImages, String outputPath, int delayMS)  {
         if (startZoom <= 0 || factor <= 0 || factor >= 1 || nbImages <= 0) {

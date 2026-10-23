@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * Represents a complex number composed of a real part and an imaginary part.
+ * @author Maxence Royon (implementation)
  */
 public class Complex implements IComplex{
     private double real;

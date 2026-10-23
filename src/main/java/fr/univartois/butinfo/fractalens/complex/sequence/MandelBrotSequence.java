@@ -4,6 +4,10 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 import java.util.Iterator;
 
+/**
+ * Computes Mandelbrot terms for a point of the complex plane.
+ * @author Maxence Royon (implementation)
+ */
 public class MandelBrotSequence implements IComplexSequence {
     /**
      * first

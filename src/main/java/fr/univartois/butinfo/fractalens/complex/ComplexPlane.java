@@ -2,6 +2,7 @@ package fr.univartois.butinfo.fractalens.complex;
 
 /**
  * Maps image pixel coordinates to points on a complex plane.
+ * @author Alice Demey (implementation)
  */
 public class ComplexPlane implements IComplexPlane {
 

@@ -3,6 +3,10 @@ package fr.univartois.butinfo.fractalens.complex;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * Creates the predefined color palettes accepted by the command line.
+ * @author Alice Demey (implementation)
+ */
 public enum ColorPaletteType {
 
     /**
@@ -61,6 +65,11 @@ public enum ColorPaletteType {
      */
     public abstract IColorStrategy getColor(int iteration);
 
+    /**
+     * Creates the palette for the supplied iteration budget.
+     * @param maxIterations the maximum number of iterations
+     * @return the configured color strategy
+     */
     public IColorStrategy create(int maxIterations) {
         return getColor(maxIterations);
     }

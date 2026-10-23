@@ -2,6 +2,7 @@ package fr.univartois.butinfo.fractalens.complex;
 
 /**
  * Represents a scaled complex plane.
+ * @author Maxence Royon (implementation)
  */
 public class ScaledComplexPlane implements IComplexPlane {
 

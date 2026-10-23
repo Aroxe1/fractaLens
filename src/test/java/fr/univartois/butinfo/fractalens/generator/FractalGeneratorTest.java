@@ -23,6 +23,7 @@ import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 /**
  * Tests the Julia fractal generator.
+ * @author Lylian Michel (unit tests)
  */
 class FractalGeneratorTest {
 

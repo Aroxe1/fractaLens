@@ -1,73 +1,50 @@
 package fr.univartois.butinfo.fractalens;
 
-import fr.univartois.butinfo.fractalens.complex.Complex;
-import fr.univartois.butinfo.fractalens.complex.GradientColorStrategy;
-import fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType;
-import fr.univartois.butinfo.fractalens.generator.FractalGeneratorBuilder;
-import fr.univartois.butinfo.fractalens.generator.RotatingFractalGenerator;
-import fr.univartois.butinfo.fractalens.generator.ZoomFractalGenerator;
+import java.io.PrintWriter;
+import picocli.CommandLine;
 
-import java.awt.Color;
-import java.util.List;
-
-/** Entry point demonstrating a rotating Julia fractal. */
+/**
+ * Starts the Picocli interface and reports command-line errors in English.
+ *
+ * @author Lylian Michel
+ */
 public final class Main {
-
     private Main() {
         // Utility class.
     }
 
-    /** Generates both a Julia rotation GIF and a fractal zoom GIF. */
+    /**
+     * Executes the application with the supplied command-line options.
+     *
+     * @param args the options parsed by Picocli
+     */
     public static void main(String[] args) {
-        String rotationOutput = args.length > 0 ? args[0] : "julia_rotation.gif";
-        String zoomOutput = args.length > 1 ? args[1] : "multijulia_zoom1.gif";
+        int status = run(args, new PrintWriter(System.out, true), new PrintWriter(System.err, true));
+        if (status != 0) {
+            System.exit(status);
+        }
+    }
 
-        FractalGeneratorBuilder rotationBuilder = new FractalGeneratorBuilder()
-                .withNumberOfTerms(150)
-                .withImageWidth(800)
-                .withImageHeight(600)
-                .withZoomFactor(0.005)
-                .centeredAt(new Complex(0, 0))
-                .withColorPalette(new GradientColorStrategy(
-                        List.of(
-                                new Color(8, 0, 24),
-                                new Color(35, 5, 85),
-                                new Color(75, 15, 145),
-                                new Color(125, 25, 180),
-                                new Color(185, 35, 165),
-                                new Color(225, 55, 125),
-                                new Color(250, 85, 75),
-                                new Color(255, 135, 45),
-                                new Color(255, 190, 80),
-                                new Color(18, 5, 35)),
-                        150))
-                .savingTo("unused.png");
-
-        new RotatingFractalGenerator(
-                rotationBuilder, 60, rotationOutput, 80).saveImage();
-
-        FractalGeneratorBuilder zoomBuilder = new FractalGeneratorBuilder()
-                .usingSequence(ComplexSequenceType.MULTIJULIA)
-                .withNumberOfTerms(150)
-                .withImageWidth(800)
-                .withImageHeight(600)
-                .centeredAt(new Complex(-0.522225, 0.05))
-                .withColorPalette(new GradientColorStrategy(
-                        List.of(
-                                new Color(2, 8, 28),
-                                new Color(5, 25, 75),
-                                new Color(8, 55, 130),
-                                new Color(5, 100, 175),
-                                new Color(0, 145, 205),
-                                new Color(0, 185, 210),
-                                new Color(20, 215, 180),
-                                new Color(90, 230, 135),
-                                new Color(180, 240, 115),
-                                new Color(3, 20, 35)),
-                        150))
-                .savingTo("unused.png");
-
-        new ZoomFractalGenerator(
-                zoomBuilder, 0.005, 0.92, 100, zoomOutput, 80).saveImage();
+    /**
+     * Runs the command with configurable output streams.
+     *
+     * @param args the command-line arguments
+     * @param out the standard output writer
+     * @param err the error output writer
+     * @return zero on success, two on invalid usage, or one on generation failure
+     */
+    static int run(String[] args, PrintWriter out, PrintWriter err) {
+        CommandLine commandLine = new CommandLine(new FractalCommand())
+                .setOut(out).setErr(err).setCaseInsensitiveEnumValuesAllowed(true);
+        commandLine.setExecutionExceptionHandler((exception, command, result) -> {
+            err.println("Error: " + exception.getMessage());
+            command.usage(err);
+            return exception instanceof IllegalArgumentException ? 2 : 1;
+        });
+        if (args.length == 0) {
+            commandLine.usage(out);
+            return 0;
+        }
+        return commandLine.execute(args);
     }
 }

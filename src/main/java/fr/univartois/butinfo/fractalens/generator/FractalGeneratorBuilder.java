@@ -5,8 +5,14 @@ import fr.univartois.butinfo.fractalens.complex.sequence.*;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
-/** Configures the image, complex sequence, plane and output file. */
+/** Configures the image, complex sequence, plane and output file.
+ * @author Lylian Michel (implementation)
+ */
 public class FractalGeneratorBuilder {
+    /** Creates an empty builder that must be configured before building. */
+    public FractalGeneratorBuilder() {
+        // Configuration is supplied through the fluent methods.
+    }
     /**
      * The width of the image, in pixels.
      */

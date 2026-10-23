@@ -15,6 +15,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests the BufferedImage adapter.
+ * @author Lylian Michel (unit tests)
  */
 class BufferedImageAdapterTest {
 

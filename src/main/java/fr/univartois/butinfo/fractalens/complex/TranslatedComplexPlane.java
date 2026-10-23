@@ -2,6 +2,7 @@ package fr.univartois.butinfo.fractalens.complex;
 
 /**
  * Translates the complex coordinates produced by another complex plane.
+ * @author Maxence Royon (implementation)
  */
 public class TranslatedComplexPlane implements IComplexPlane{
     /**

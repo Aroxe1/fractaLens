@@ -6,6 +6,10 @@ import java.util.function.BinaryOperator;
 
 import java.util.Iterator;
 
+/**
+ * Iterates a recurrence supplied as a binary complex function.
+ * @author Maxence Royon (implementation)
+ */
 public class GenericComplexSequence implements IComplexSequence{
     /**
      * The function computing the next term from the current term and the constant.
@@ -27,7 +31,7 @@ public class GenericComplexSequence implements IComplexSequence{
      *
      * @param function the function computing the next term
      * @param current the first term of the sequence
-     * @param maxIterations
+     * @param maxIterations the maximum number of generated terms
      */
     public GenericComplexSequence(BinaryOperator<IComplex> function, IComplex current, int maxIterations){
         this.function = function;
@@ -57,7 +61,7 @@ public class GenericComplexSequence implements IComplexSequence{
     }
 
     /**
-     * Gets an iterator over the (infinite) terms of the sequence, starting
+     * Gets an iterator over the bounded terms of the sequence, starting
      * with the first term.
      *
      * @return an iterator over the terms of the sequence

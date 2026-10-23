@@ -1,6 +1,10 @@
 package fr.univartois.butinfo.fractalens;
 
 
+/**
+ * Lists the static and animated image formats supported by the command.
+ * @author Maxence Royon (implementation)
+ */
 public enum ImageType {
     /**
      * A single static image.

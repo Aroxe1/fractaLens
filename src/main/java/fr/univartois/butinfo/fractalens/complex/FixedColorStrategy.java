@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Selects a color from a fixed palette according to the iteration count.
+ * @author Gautier Tinchon (implementation)
  */
 public class FixedColorStrategy implements IColorStrategy {
     /**

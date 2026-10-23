@@ -5,6 +5,10 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 import java.util.Iterator;
 
+/**
+ * Computes Burning Ship terms using absolute real and imaginary components.
+ * @author Alice Demey (implementation)
+ */
 public class BurningShipSequence implements IComplexSequence{
     /**
      * The first term of the sequence.

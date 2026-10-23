@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests interpolation between the endpoint colors of a gradient.
+ * @author Lylian Michel (unit tests)
  */
 class GradientColorStrategyTest {
 

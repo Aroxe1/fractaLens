@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Test;
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 
+/**
+ * Tests the behavior of MultiBurningShipSequence.
+ * @author Alice Demey (unit tests)
+ */
 class MultiBurningShipSequenceTest {
 
     /**

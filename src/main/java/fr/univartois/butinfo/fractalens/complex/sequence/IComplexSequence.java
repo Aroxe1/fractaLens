@@ -32,6 +32,7 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
  * @author Romain Wallon
  *
  * @version 0.1.0
+ * @author Gautier Tinchon (implementation)
  */
 public interface IComplexSequence extends Iterable<IComplex> {
 

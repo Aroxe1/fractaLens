@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests the validation of fractal command parameters.
+ * @author Gautier Tinchon (unit tests)
  */
 class FractalCommandValidatorTest {
 

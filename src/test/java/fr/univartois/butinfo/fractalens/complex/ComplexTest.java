@@ -34,6 +34,7 @@ import org.junit.jupiter.api.Test;
  * @author Romain Wallon
  *
  * @version 0.1.0
+ * @author Maxence Royon (unit tests)
  */
 class ComplexTest {
 

@@ -4,6 +4,7 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 /**
  * Represents a generalized Julia sequence using a configurable power.
+ * @author Gautier Tinchon (implementation)
  */
 public class MultiJuliaSequence extends JuliaSequence {
     /**

@@ -10,6 +10,10 @@ import java.awt.Color;
 import org.junit.jupiter.api.Test;
 
 
+/**
+ * Tests the behavior of ColorPaletteType.
+ * @author Alice Demey (unit tests)
+ */
 class ColorPaletteTypeTest {
 
     @Test

@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @see FractalGeneratorBuilder
  * @see FractalGenerator
+ * @author Lylian Michel (unit tests)
  */
 class FractalGeneratorBuilderTest {
 

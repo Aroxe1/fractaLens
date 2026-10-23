@@ -7,6 +7,7 @@ package fr.univartois.butinfo.fractalens;
  * <p>This validator checks the focus coordinates, image dimensions,
  * maximum number of iterations, scale, image count for animations,
  * and output file name.</p>
+ * @author Gautier Tinchon (implementation)
  */
 public class FractalCommandValidator {
 
@@ -61,6 +62,26 @@ public class FractalCommandValidator {
                 || command.getOutput().isBlank()) {
             throw new IllegalArgumentException(
                     "Output must not be null");
+        }
+
+        if (command.getType() == ImageType.ZOOM
+                && (!Double.isFinite(command.getZoomRatio()) || command.getZoomRatio() <= 0
+                || command.getZoomRatio() >= 1)) {
+            throw new IllegalArgumentException("Zoom ratio must be finite and strictly between 0 and 1");
+        }
+        if (command.getType() != ImageType.SINGLE && command.getFrameDelay() < 10) {
+            throw new IllegalArgumentException("GIF frame delay must be at least 10 milliseconds");
+        }
+        if (command.getType() != ImageType.SINGLE
+                && !command.getOutput().toLowerCase(java.util.Locale.ROOT).endsWith(".gif")) {
+            throw new IllegalArgumentException("Animated output must use the .gif extension");
+        }
+        if (command.getType() == ImageType.SINGLE) {
+            String name = java.nio.file.Path.of(command.getOutput()).getFileName().toString();
+            int dot = name.lastIndexOf('.');
+            if (dot < 0 || !javax.imageio.ImageIO.getImageWritersBySuffix(name.substring(dot + 1)).hasNext()) {
+                throw new IllegalArgumentException("Static output must use a supported image extension, such as .png or .jpg");
+            }
         }
     }
 }
