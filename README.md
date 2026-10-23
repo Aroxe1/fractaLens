@@ -105,7 +105,7 @@ recorded by the team; they do not replace the Git history.
 
 ## Overview
 ## Diagramme UML
-```
+``` plantuml
 @startuml
 title FractaLens - Diagramme UML simplifié
 
