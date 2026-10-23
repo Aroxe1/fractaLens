@@ -18,16 +18,46 @@ import java.util.function.BiFunction;
  */
 public class FractalGenerator implements IFractalGenerator {
 
+    /**
+     * The strategy used to determine the color of a pixel.
+     */
     private final IColorStrategy colorStrategy;
+
+    /**
+     * The height of the generated image, in pixels.
+     */
     private final int height;
+
+    /**
+     * The width of the generated image, in pixels.
+     */
     private final int width;
+
+    /**
+     * The maximum number of iterations to perform for a pixel.
+     */
     private final int maxIterations;
+
+    /**
+     * The complex plane used to get the complex number of a pixel.
+     */
     private final IComplexPlane plane;
+
+    /**
+     * The path of the file in which to save the image.
+     */
     private final String outputFile;
 
+    /**
+     * The function creating the complex sequence from the complex number of a
+     * pixel and the maximum number of iterations.
+     */
     private final BiFunction<IComplex, Integer, IComplexSequence>
             sequenceFactory;
 
+    /**
+     * The generated image, or {@code null} if it has not been generated yet.
+     */
     private IFractalImage image;
 
     /**

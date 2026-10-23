@@ -14,7 +14,9 @@ public class MultiBurningShipSequence implements IComplexSequence {
      * The complex constant added at each step.
      */
     private IComplex c;
-
+    /**
+     * The power to which each term is raised.
+     */
     private int power;
     /**
      * The maximum number of iterations.

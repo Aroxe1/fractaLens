@@ -3,8 +3,11 @@ package fr.univartois.butinfo.fractalens.complex.sequence;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 public class MultiBrotSequence extends MandelBrotSequence{
-
+    /**
+     * The power to which each term is raised.
+     */
     private int power;
+
     /**
      * Creates a Mandelbrot sequence.
      *
