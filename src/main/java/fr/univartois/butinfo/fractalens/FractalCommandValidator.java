@@ -30,6 +30,27 @@ public class FractalCommandValidator {
             throw new NullPointerException("command must not be null");
         }
 
+        validateImageParameters(command);
+
+        if (command.getImageCount() <= 0
+                && command.getType() != ImageType.SINGLE) {
+            throw new IllegalArgumentException(
+                    "Image count must be positive for animation");
+        }
+
+        if (command.getOutput() == null
+                || command.getOutput().isBlank()) {
+            throw new IllegalArgumentException(
+                    "Output must not be null");
+        }
+
+        validateAnimationParameters(command);
+        validateOutputFormat(command);
+    }
+
+    /** Checks coordinates, dimensions, iteration count and image scale. */
+    private void validateImageParameters(FractalCommand command) {
+
         if (!Double.isFinite(command.getFocusX())
                 || !Double.isFinite(command.getFocusY())) {
             throw new IllegalArgumentException(
@@ -52,18 +73,10 @@ public class FractalCommandValidator {
                     "Scale must be finite and positive");
         }
 
-        if (command.getImageCount() <= 0
-                && command.getType() != ImageType.SINGLE) {
-            throw new IllegalArgumentException(
-                    "Image count must be positive for animation");
-        }
+    }
 
-        if (command.getOutput() == null
-                || command.getOutput().isBlank()) {
-            throw new IllegalArgumentException(
-                    "Output must not be null");
-        }
-
+    /** Checks the zoom ratio and GIF frame duration. */
+    private void validateAnimationParameters(FractalCommand command) {
         if (command.getType() == ImageType.ZOOM
                 && (!Double.isFinite(command.getZoomRatio()) || command.getZoomRatio() <= 0
                 || command.getZoomRatio() >= 1)) {
@@ -72,6 +85,10 @@ public class FractalCommandValidator {
         if (command.getType() != ImageType.SINGLE && command.getFrameDelay() < 10) {
             throw new IllegalArgumentException("GIF frame delay must be at least 10 milliseconds");
         }
+    }
+
+    /** Checks the file extension against the requested image type. */
+    private void validateOutputFormat(FractalCommand command) {
         if (command.getType() != ImageType.SINGLE
                 && !command.getOutput().toLowerCase(java.util.Locale.ROOT).endsWith(".gif")) {
             throw new IllegalArgumentException("Animated output must use the .gif extension");

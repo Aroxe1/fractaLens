@@ -104,8 +104,109 @@ and package skeletons are retained. These entries document the responsibilities
 recorded by the team; they do not replace the Git history.
 
 ## Overview
+## Diagramme UML
+```
+@startuml
+title FractaLens - Diagramme UML simplifié
 
-This library is composed of the following classes:
+hide empty members
+skinparam classAttributeIconSize 0
+
+package "CLI" {
+class Main
+class FractalCommand
+class FractalCommandValidator
+enum ImageType
+}
+
+package "Génération" {
+interface IFractalGenerator
+class FractalGeneratorBuilder
+class FractalGenerator
+class AnimatedFractalGenerator
+class ZoomFractalGenerator
+class RotatingFractalGenerator
+}
+
+package "Nombres complexes" {
+interface IComplex
+class Complex
+
+      interface IComplexPlane
+      class ComplexPlane
+      class ScaledComplexPlane
+      class TranslatedComplexPlane
+}
+
+package "Suites" {
+interface IComplexSequence
+class JuliaSequence
+class MandelBrotSequence
+class BurningShipSequence
+enum ComplexSequenceType
+}
+
+package "Couleurs" {
+interface IColorStrategy
+class GrayScaleColorStrategy
+class GradientColorStrategy
+class FixedColorStrategy
+enum ColorPaletteType
+}
+
+package "Images" {
+interface IFractalImage
+class BufferedImageAdapter
+}
+
+Main ..> FractalCommand
+FractalCommand ..> FractalCommandValidator
+FractalCommand --> ImageType
+FractalCommand ..> FractalGeneratorBuilder
+
+FractalGeneratorBuilder ..> FractalGenerator : construit
+FractalGeneratorBuilder --> ComplexSequenceType
+FractalGeneratorBuilder --> ColorPaletteType
+
+IFractalGenerator <|.. FractalGenerator
+IFractalGenerator <|.. AnimatedFractalGenerator
+IFractalGenerator <|.. ZoomFractalGenerator
+IFractalGenerator <|.. RotatingFractalGenerator
+
+AnimatedFractalGenerator o-- IFractalGenerator
+ZoomFractalGenerator --> AnimatedFractalGenerator
+RotatingFractalGenerator --> AnimatedFractalGenerator
+
+FractalGenerator --> IComplexPlane
+FractalGenerator --> IComplexSequence
+FractalGenerator --> IColorStrategy
+FractalGenerator --> IFractalImage
+
+IComplex <|.. Complex
+IComplexPlane <|.. ComplexPlane
+IComplexPlane <|.. ScaledComplexPlane
+IComplexPlane <|.. TranslatedComplexPlane
+
+IComplexPlane ..> IComplex
+ScaledComplexPlane --> IComplexPlane
+TranslatedComplexPlane --> IComplexPlane
+
+IComplexSequence <|.. JuliaSequence
+IComplexSequence <|.. MandelBrotSequence
+IComplexSequence <|.. BurningShipSequence
+IComplexSequence ..> IComplex
+ComplexSequenceType ..> IComplexSequence : crée
+
+IColorStrategy <|.. GrayScaleColorStrategy
+IColorStrategy <|.. GradientColorStrategy
+IColorStrategy <|.. FixedColorStrategy
+ColorPaletteType ..> IColorStrategy : crée
+
+IFractalImage <|.. BufferedImageAdapter
+
+@enduml
+
+```
 
 ```plantuml
 hide empty members
