@@ -6,7 +6,9 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
  * Represents a generalized Julia sequence using a configurable power.
  */
 public class MultiJuliaSequence extends JuliaSequence {
-
+    /**
+     * The power to which each term is raised.
+     */
     private int power;
 
     /**

@@ -8,8 +8,16 @@ import java.util.List;
  * Selects a color from a fixed palette according to the iteration count.
  */
 public class FixedColorStrategy implements IColorStrategy {
-
+    /**
+     * The colors of the palette, or {@code null} if this strategy uses a single
+     * color.
+     */
     private final List<Color> colors;
+
+    /**
+     * The single color used for every iteration, or {@code null} if this
+     * strategy uses a palette.
+     */
     private final Color color;
 
     /**

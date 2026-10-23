@@ -8,6 +8,10 @@ import java.util.Objects;
  * Interpolates between two colors according to the iteration count.
  */
 public class GradientColorStrategy extends AbstractColorStrategy implements IColorStrategy {
+    /**
+     * The colors of the palette, or {@code null} if this strategy uses a single
+     * color.
+     */
 
     private final List<Color> colors;
 
