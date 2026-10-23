@@ -10,10 +10,8 @@ import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.function.BiFunction;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
