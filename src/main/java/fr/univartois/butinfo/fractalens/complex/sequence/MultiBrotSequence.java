@@ -26,6 +26,7 @@ public class MultiBrotSequence extends MandelBrotSequence{
      * @param z the current complex number
      * @return the next complex number in the sequence
      */
+    @Override
     public IComplex computeNext(IComplex z){
         return z.pow(power).add(getZ0());
     }

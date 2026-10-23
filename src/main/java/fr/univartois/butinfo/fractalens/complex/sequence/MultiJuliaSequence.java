@@ -32,6 +32,7 @@ public class MultiJuliaSequence extends JuliaSequence {
      * @param z current term of the sequence
      * @return next term calculated using the formula z^power + c
      */
+    @Override
     public IComplex computeNext(IComplex z) {
         return z.pow(power).add(getC());
     }

@@ -3,16 +3,12 @@ package fr.univartois.butinfo.fractalens.generator;
 import java.awt.Color;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 import org.junit.jupiter.api.Test;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.ColorPaletteType;
-import fr.univartois.butinfo.fractalens.generator.FractalGeneratorBuilder;
-import fr.univartois.butinfo.fractalens.generator.IFractalGenerator;
-import fr.univartois.butinfo.fractalens.generator.ZoomFractalGenerator;
 import org.junit.jupiter.api.io.TempDir;
 
 import static org.junit.jupiter.api.Assertions.*;
