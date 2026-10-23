@@ -12,12 +12,17 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.function.BiFunction;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 /**
  * Generates a fractal image using a complex sequence.
  */
 public class FractalGenerator implements IFractalGenerator {
 
+    private static final Logger LOGGER =
+            Logger.getLogger(FractalGenerator.class.getName());
     /**
      * The strategy used to determine the color of a pixel.
      */
@@ -130,8 +135,8 @@ public class FractalGenerator implements IFractalGenerator {
 
         try {
             image.saveAs(outputFile);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            LOGGER.log(Level.INFO, "Erreur lors de la sauvegarde de l'image", e);
         }
     }
 }
