@@ -4,7 +4,6 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 
 /**
@@ -13,8 +12,7 @@ import java.util.Objects;
  * <p>The iterator is independent of any particular recurrence formula: all
  * terms are computed through IComplexSequence.computeNext(IComplex).</p>
  *
- * <p>Integration: adjust the package declaration and the two API method names
- * (computeNext, modulus) to match the existing repository interfaces.</p>
+ * @author Lylian Michel (implementation)
  */
 public final class ComplexSequenceIterator implements Iterator<IComplex> {
 
@@ -29,17 +27,16 @@ public final class ComplexSequenceIterator implements Iterator<IComplex> {
      * Builds an independent iterator starting at the given initial complex number.
      *
      * @param sequence source defining the recurrence
-     * @param initial initial term z0 (not returned by next())
+     * @param initial initial term z0, returned by the first call to next()
      * @param maxIterations maximum number of computed terms
-     * @throws NullPointerException if sequence or initial is null
      * @throws IllegalArgumentException if maxIterations is negative
      */
     public ComplexSequenceIterator(
             IComplexSequence sequence,
             IComplex initial,
             int maxIterations) {
-        this.sequence = Objects.requireNonNull(sequence, "sequence");
-        this.current = Objects.requireNonNull(initial, "initial");
+        this.sequence = sequence;
+        this.current = initial;
         if (maxIterations < 0) {
             throw new IllegalArgumentException("maxIterations must be >= 0");
         }
@@ -51,17 +48,18 @@ public final class ComplexSequenceIterator implements Iterator<IComplex> {
     @Override
     public boolean hasNext() {
         return iterations < maxIterations
-                && current.abs() <= 2;
+                && current.abs() <= ESCAPE_RADIUS;
     }
 
-    /** Computes and returns exactly one new term of the complex sequence. */
+    /** Returns the current term and advances the recurrence by one step. */
     @Override
     public IComplex next() {
         if (!hasNext()) {
             throw new NoSuchElementException("Complex sequence is exhausted");
         }
-        current = Objects.requireNonNull(sequence.computeNext(current), "next term");
+        IComplex previous = current;
+        current = sequence.computeNext(current);
         iterations++;
-        return current;
+        return previous;
     }
 }

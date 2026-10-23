@@ -29,6 +29,7 @@ package fr.univartois.butinfo.fractalens.complex;
  * @author Romain Wallon
  *
  * @version 0.1.0
+ * @author Maxence Royon (implementation)
  */
 public interface IComplex {
 
@@ -111,5 +112,14 @@ public interface IComplex {
      * @return The result of {@code this / other}.
      */
     IComplex divide(IComplex other);
+
+    /**
+     * Raises this complex number to the power of another complex number.
+     *
+     * @param exponent the exponent
+     *
+     * @return a new complex number equal to {@code this} raised to the power {@code other}
+     */
+    IComplex pow(int exponent);
 
 }
