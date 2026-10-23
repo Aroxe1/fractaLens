@@ -107,7 +107,7 @@ recorded by the team; they do not replace the Git history.
 ## Diagramme UML
 ``` plantuml
 @startuml
-title FractaLens - Diagramme UML simplifié
+title FractaLens - Diagramme UML 
 
 hide empty members
 skinparam classAttributeIconSize 0
