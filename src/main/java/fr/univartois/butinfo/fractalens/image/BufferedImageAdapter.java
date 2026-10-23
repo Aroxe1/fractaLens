@@ -1,7 +1,5 @@
 package fr.univartois.butinfo.fractalens.image;
 
-import fr.univartois.butinfo.fractalens.complex.IColorStrategy;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;

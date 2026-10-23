@@ -4,7 +4,6 @@ import com.madgag.gif.fmsware.AnimatedGifEncoder;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
