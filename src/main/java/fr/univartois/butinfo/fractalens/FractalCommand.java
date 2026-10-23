@@ -88,6 +88,105 @@ public class FractalCommand implements Callable<Integer> {
     private boolean help;
 
     /**
+     * Returns the name of the fractal to generate.
+     *
+     * @return The fractal sequence type.
+     */
+    public ComplexSequenceType getFractalName() {
+        return fractalName;
+    }
+
+    /**
+     * Returns the maximum number of iterations.
+     *
+     * @return The maximum number of iterations.
+     */
+    public int getMaxIterations() {
+        return maxIterations;
+    }
+
+    /**
+     * Returns the height of the image in pixels.
+     *
+     * @return The image height.
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * Returns the width of the image in pixels.
+     *
+     * @return The image width.
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * Returns the scale applied to the image.
+     *
+     * @return The image scale.
+     */
+    public double getScale() {
+        return scale;
+    }
+
+    /**
+     * Returns the real part of the image center.
+     *
+     * @return The real coordinate of the image center.
+     */
+    public double getFocusX() {
+        return focusX;
+    }
+
+    /**
+     * Returns the imaginary part of the image center.
+     *
+     * @return The imaginary coordinate of the image center.
+     */
+    public double getFocusY() {
+        return focusY;
+    }
+
+    /**
+     * Returns the color palette used to generate the fractal.
+     *
+     * @return The selected color palette.
+     */
+    public ColorPaletteType getPaletteName() {
+        return paletteName;
+    }
+
+    /**
+     * Returns the type of image to generate.
+     *
+     * @return The image generation type.
+     */
+    public ImageType getType() {
+        return type;
+    }
+
+    /**
+     * Returns the number of images to generate for animations.
+     *
+     * @return The number of images.
+     */
+    public int getImageCount() {
+        return imageCount;
+    }
+
+    /**
+     * Returns the output file name.
+     *
+     * @return The output file name.
+     */
+    public String getOutput() {
+        return output;
+    }
+
+    /**
      * Generates the fractal image configured by the command-line options,
      * and saves it in the output file.
      *
