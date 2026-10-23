@@ -12,6 +12,7 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
  * point being tested ({@code z0}) and the maximum number of iterations. The constant
  * {@code c} of the Julia sequences and the power of the "multi" sequences are fixed
  * in each constant.</p>
+ * @author Maxence Royon (implementation)
  */
 public enum ComplexSequenceType {
 

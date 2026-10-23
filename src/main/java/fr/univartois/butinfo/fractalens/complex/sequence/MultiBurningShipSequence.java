@@ -5,6 +5,10 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 import java.util.Iterator;
 
+/**
+ * Generalizes the Burning Ship recurrence to an integer power.
+ * @author Alice Demey (implementation)
+ */
 public class MultiBurningShipSequence implements IComplexSequence {
     /**
      * The first term of the sequence.
@@ -29,6 +33,7 @@ public class MultiBurningShipSequence implements IComplexSequence {
      * @param z0 The first term of the sequence.
      * @param c The complex constant used to compute the next terms.
      * @param maxIterations The maximum number of iterations.
+     * @param power the integer exponent of the recurrence
      */
     public MultiBurningShipSequence(IComplex z0, IComplex c, int power, int maxIterations) {
         this.z0 = z0;

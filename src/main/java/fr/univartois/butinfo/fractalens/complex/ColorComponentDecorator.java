@@ -4,6 +4,8 @@ import java.awt.Color;
 
 /**
  * Decorates a color strategy by keeping only selected RGB components.
+ * @author Alice Demey (implementation)
+ * @author Maxence Royon (implementation)
  */
 public class ColorComponentDecorator implements IColorStrategy {
     /**

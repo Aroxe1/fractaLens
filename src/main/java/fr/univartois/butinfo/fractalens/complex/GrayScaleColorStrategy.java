@@ -1,6 +1,10 @@
 package fr.univartois.butinfo.fractalens.complex;
 import java.awt.Color;
 
+/**
+ * Maps the iteration count to grayscale values.
+ * @author Alice Demey (implementation)
+ */
 public class GrayScaleColorStrategy extends AbstractColorStrategy implements IColorStrategy {
 
     /**

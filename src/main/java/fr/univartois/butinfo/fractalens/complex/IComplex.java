@@ -29,6 +29,7 @@ package fr.univartois.butinfo.fractalens.complex;
  * @author Romain Wallon
  *
  * @version 0.1.0
+ * @author Maxence Royon (implementation)
  */
 public interface IComplex {
 

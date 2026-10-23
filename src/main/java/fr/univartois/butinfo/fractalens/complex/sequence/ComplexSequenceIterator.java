@@ -12,8 +12,7 @@ import java.util.NoSuchElementException;
  * <p>The iterator is independent of any particular recurrence formula: all
  * terms are computed through IComplexSequence.computeNext(IComplex).</p>
  *
- * <p>Integration: adjust the package declaration and the two API method names
- * (computeNext, modulus) to match the existing repository interfaces.</p>
+ * @author Lylian Michel (implementation)
  */
 public final class ComplexSequenceIterator implements Iterator<IComplex> {
 
@@ -28,7 +27,7 @@ public final class ComplexSequenceIterator implements Iterator<IComplex> {
      * Builds an independent iterator starting at the given initial complex number.
      *
      * @param sequence source defining the recurrence
-     * @param initial initial term z0 (not returned by next())
+     * @param initial initial term z0, returned by the first call to next()
      * @param maxIterations maximum number of computed terms
      * @throws IllegalArgumentException if maxIterations is negative
      */
@@ -49,10 +48,10 @@ public final class ComplexSequenceIterator implements Iterator<IComplex> {
     @Override
     public boolean hasNext() {
         return iterations < maxIterations
-                && current.abs() <= 2;
+                && current.abs() <= ESCAPE_RADIUS;
     }
 
-    /** Computes and returns exactly one new term of the complex sequence. */
+    /** Returns the current term and advances the recurrence by one step. */
     @Override
     public IComplex next() {
         if (!hasNext()) {

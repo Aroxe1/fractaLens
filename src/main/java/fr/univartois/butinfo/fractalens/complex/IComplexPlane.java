@@ -30,6 +30,7 @@ package fr.univartois.butinfo.fractalens.complex;
  * @author Romain Wallon
  *
  * @version 0.1.0
+ * @author Alice Demey (implementation)
  */
 public interface IComplexPlane {
 

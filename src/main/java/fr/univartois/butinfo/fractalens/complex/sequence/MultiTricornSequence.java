@@ -9,6 +9,7 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
  * Represents a generalized Tricorn complex sequence.
  * The conjugate of each term is raised to a given power,
  * then a constant is added.
+ * @author Lylian Michel (implementation)
  */
 public class MultiTricornSequence implements IComplexSequence {
 

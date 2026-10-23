@@ -19,6 +19,7 @@ import picocli.CommandLine.ParseResult;
  * Unit tests for the {@link FractalCommand} class.
  *
  * @see FractalCommand
+ * @author Maxence Royon (unit tests)
  */
 class FractalCommandTest {
 

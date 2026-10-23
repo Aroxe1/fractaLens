@@ -9,16 +9,29 @@ import fr.univartois.butinfo.fractalens.generator.RotatingFractalGenerator;
 import fr.univartois.butinfo.fractalens.generator.ZoomFractalGenerator;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
+import picocli.CommandLine.Spec;
+import picocli.CommandLine.Model.CommandSpec;
 
 import java.util.concurrent.Callable;
 
-@Command(name = "fractalens", description = "Generates fractal images.")
+/**
+ * Defines Picocli options and configures the fractal generator through its builder.
+ *
+ * @author Maxence Royon (command-line parsing)
+ * @author Alice Demey (command execution)
+ */
+@Command(name = "fractalens", description = "Generates static fractals and animated GIFs.", showDefaultValues = true)
 public class FractalCommand implements Callable<Integer> {
+
+    /** Creates a command using the documented default generation settings. */
+    public FractalCommand() {
+        // Picocli fills the annotated fields after construction.
+    }
 
     /**
      * The name of the fractal to generate.
      */
-    @Option(names = {"-f", "--fractal-name"}, description = "Name of the fractal to generate.")
+    @Option(names = {"-f", "--fractal-name"}, description = "Fractal sequence: ${COMPLETION-CANDIDATES}.")
     private ComplexSequenceType fractalName = ComplexSequenceType.MANDELBROT;
 
     /**
@@ -60,7 +73,7 @@ public class FractalCommand implements Callable<Integer> {
     /**
      * The name of the color palette used to color the fractal.
      */
-    @Option(names = {"-p", "--palette-name"}, description = "Name of the color palette.")
+    @Option(names = {"-p", "--palette-name"}, description = "Color palette: ${COMPLETION-CANDIDATES}.")
     private ColorPaletteType paletteName = ColorPaletteType.GRAY;
 
     /**
@@ -80,6 +93,18 @@ public class FractalCommand implements Callable<Integer> {
      */
     @Option(names = {"-o", "--output"}, description = "Name of the output file.")
     private String output = "fractal.png";
+
+    /** Picocli metadata used to distinguish explicit output names from defaults. */
+    @Spec
+    private CommandSpec specification;
+
+    /** The scale multiplier between successive zoom frames. */
+    @Option(names = "--zoom-ratio", description = "Zoom scale multiplier, strictly between 0 and 1.")
+    private double zoomRatio = 0.92;
+
+    /** The duration of each GIF frame in milliseconds. */
+    @Option(names = "--frame-delay", description = "GIF frame duration in milliseconds (at least 10).")
+    private int frameDelay = 80;
 
     /**
      * Whether the user asked to display the help message.
@@ -183,8 +208,25 @@ public class FractalCommand implements Callable<Integer> {
      * @return The output file name.
      */
     public String getOutput() {
+        if (type != ImageType.SINGLE && specification != null
+                && specification.commandLine().getParseResult() != null
+                && !specification.commandLine().getParseResult().hasMatchedOption("--output")) {
+            return "fractal.gif";
+        }
         return output;
     }
+
+    /**
+     * Returns the multiplier between successive zoom scales.
+     * @return the zoom scale multiplier
+     */
+    public double getZoomRatio() { return zoomRatio; }
+
+    /**
+     * Returns the duration of a GIF frame.
+     * @return the frame duration in milliseconds
+     */
+    public int getFrameDelay() { return frameDelay; }
 
     /**
      * Generates the fractal image configured by the command-line options,
@@ -192,10 +234,13 @@ public class FractalCommand implements Callable<Integer> {
      *
      * @return The exit code of the command ({@code 0} if the image has been generated).
      *
-     * @throws Exception If an error occurs while generating the image.
+     * @throws IllegalArgumentException if generation parameters are invalid
+     * @throws java.io.UncheckedIOException if the static output cannot be saved
      */
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
+
+        new FractalCommandValidator().validate(this);
 
         FractalGeneratorBuilder builder = new FractalGeneratorBuilder()
                 .usingSequence(fractalName)
@@ -205,13 +250,13 @@ public class FractalCommand implements Callable<Integer> {
                 .withZoomFactor(scale)
                 .centeredAt(new Complex(focusX, focusY))
                 .withColorPalette(paletteName)
-                .savingTo(output);
+                .savingTo(getOutput());
 
         IFractalGenerator generator =
                 switch (type) {
                     case SINGLE -> builder.build();
-                    case ZOOM -> new ZoomFractalGenerator(builder, scale, 0.92, imageCount, output, 80);
-                    case ROTATION -> new RotatingFractalGenerator(builder, imageCount, output, 80);
+                    case ZOOM -> new ZoomFractalGenerator(builder, scale, zoomRatio, imageCount, getOutput(), frameDelay);
+                    case ROTATION -> new RotatingFractalGenerator(builder, imageCount, getOutput(), frameDelay);
                 };
 
         generator.saveImage();

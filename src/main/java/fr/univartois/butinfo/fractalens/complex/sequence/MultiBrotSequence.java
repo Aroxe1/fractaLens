@@ -2,6 +2,10 @@ package fr.univartois.butinfo.fractalens.complex.sequence;
 
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 
+/**
+ * Generalizes the Mandelbrot recurrence to an integer power.
+ * @author Gautier Tinchon (implementation)
+ */
 public class MultiBrotSequence extends MandelBrotSequence{
     /**
      * The power to which each term is raised.
@@ -13,6 +17,7 @@ public class MultiBrotSequence extends MandelBrotSequence{
      *
      * @param z0            the point of the complex plane being tested (first term of the sequence)
      * @param maxIterations the maximum number of iterations
+     * @param power the integer exponent of the recurrence
      */
     public MultiBrotSequence(IComplex z0, int maxIterations,int power) {
         super(z0, maxIterations);

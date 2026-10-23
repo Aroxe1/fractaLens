@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests the grayscale color strategy.
+ * @author Gautier Tinchon (unit tests)
  */
 class GrayScaleColorStrategyTest {
 

@@ -33,6 +33,7 @@ import org.junit.jupiter.api.Test;
  * @author Romain Wallon
  *
  * @version 0.1.0
+ * @author Alice Demey (unit tests)
  */
 class ComplexPlaneTest {
 

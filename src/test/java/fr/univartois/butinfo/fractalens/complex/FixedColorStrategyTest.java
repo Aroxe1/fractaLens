@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests color selection from a fixed, repeating palette.
+ * @author Lylian Michel (unit tests)
  */
 class FixedColorStrategyTest {
 

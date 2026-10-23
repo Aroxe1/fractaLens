@@ -25,6 +25,7 @@ import fr.univartois.butinfo.fractalens.image.IFractalImage;
  * Unit tests for the {@link AnimatedFractalGenerator} class.
  *
  * @see AnimatedFractalGenerator
+ * @author Maxence Royon (unit tests)
  */
 class AnimatedFractalGeneratorTest {
 

@@ -19,6 +19,7 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
  * The maximum number of iterations is different from the powers used by the
  * "multi" sequences, so that swapping them in a constructor call makes the test
  * fail.</p>
+ * @author Maxence Royon (unit tests)
  */
 class ComplexSequenceTypeTest {
 

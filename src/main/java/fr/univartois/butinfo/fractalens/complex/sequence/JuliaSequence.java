@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 /**
  * Represents a sequence of complex numbers used for the Julia set.
+ * @author Gautier Tinchon (implementation)
  */
 public class JuliaSequence implements  IComplexSequence
 {

@@ -13,6 +13,9 @@ import org.junit.jupiter.api.io.TempDir;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests the behavior of ZoomFractalGenerator.
+ */
 class ZoomFractalGeneratorTest {
 
     /**

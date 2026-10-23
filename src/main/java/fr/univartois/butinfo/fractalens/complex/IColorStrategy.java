@@ -4,6 +4,7 @@ import java.awt.Color;
 
 /**
  * Defines a strategy for choosing a color from an iteration count.
+ * @author Maxence Royon (implementation)
  */
 public interface IColorStrategy {
 

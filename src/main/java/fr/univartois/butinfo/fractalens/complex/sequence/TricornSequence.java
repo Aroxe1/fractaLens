@@ -9,6 +9,7 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
  * Represents a Tricorn complex sequence.
  * Each term is calculated by squaring the conjugate
  * of the previous term and adding a constant.
+ * @author Lylian Michel (implementation)
  */
 public class TricornSequence implements IComplexSequence {
 

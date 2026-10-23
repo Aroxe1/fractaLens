@@ -8,6 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Tests the behavior of MultiJuliaSequence.
+ * @author Gautier Tinchon (unit tests)
+ */
 class MultiJuliaSequenceTest {
 
     @Test

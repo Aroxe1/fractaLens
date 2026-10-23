@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Tests the behavior of MultiBrotSequence.
+ * @author Gautier Tinchon (unit tests)
+ */
 class MultiBrotSequenceTest {
 
     @Test

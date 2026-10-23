@@ -10,6 +10,7 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 /**
  * Tests the Tricorn complex sequence.
+ * @author Lylian Michel (unit tests)
  */
 class TricornSequenceTest {
 

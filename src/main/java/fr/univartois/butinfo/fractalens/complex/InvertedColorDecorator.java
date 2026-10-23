@@ -2,6 +2,10 @@ package fr.univartois.butinfo.fractalens.complex;
 
 import java.awt.Color;
 
+/**
+ * Inverts the RGB channels produced by another color strategy.
+ * @author Maxence Royon (implementation)
+ */
 public class InvertedColorDecorator implements IColorStrategy {
     /**
      * The color palette to decorate.

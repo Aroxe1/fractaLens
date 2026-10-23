@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Tests that the color component decorator keeps only selected RGB components.
+ * @author Lylian Michel (unit tests)
  */
 class ColorComponentDecoratorTest {
 

@@ -17,6 +17,7 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 /**
  * Tests for {@link MandelBrotSequence}.
+ * @author Maxence Royon (unit tests)
  */
 class MandelBrotSequenceTest {
 
