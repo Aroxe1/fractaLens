@@ -92,6 +92,7 @@ public class AnimatedFractalGenerator implements IFractalGenerator {
         encoder.setRepeat(0);
         encoder.setQuality(10);
 
+        boolean finished;
         try {
             for (IFractalGenerator generator : generatorList) {
                 if (!encoder.addFrame(generator.generateImage().asBufferedImage())) {
@@ -99,9 +100,11 @@ public class AnimatedFractalGenerator implements IFractalGenerator {
                 }
             }
         } finally {
-            if (!encoder.finish()) {
-                throw new IllegalStateException("Cannot finish animation output: " + outputPath);
-            }
+            finished = encoder.finish();
+        }
+
+        if (!finished) {
+            throw new IllegalStateException("Cannot finish animation output: " + outputPath);
         }
     }
 }
