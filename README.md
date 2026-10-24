@@ -6,6 +6,8 @@ Julia set, Mandelbrot set, and other generalized sequences, to create
 static or animated fractal images using different color palettes and
 transformations.
 
+![Démonstration du projet](multibrot-zoom.gif)
+
 ## Command-line interface (Sprint 7)
 
 Java 25 is required. Arguments are parsed by **Picocli 4.7.6**; `Main` delegates
