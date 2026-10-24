@@ -6,7 +6,10 @@ Julia set, Mandelbrot set, and other generalized sequences, to create
 static or animated fractal images using different color palettes and
 transformations.
 
+# Exemples
+
 <img src="multijulia_zoom1.gif" alt="Démonstration du projet" width="600">
+<img src="julia_rotation.gif" alt="Démonstration du projet" width="600">
 
 ## Command-line interface (Sprint 7)
 
